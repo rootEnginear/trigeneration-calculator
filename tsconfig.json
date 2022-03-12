@@ -16,17 +16,11 @@
 		"incremental": true,
 
 		"baseUrl": ".",
-		"types": ["react", "node", "jest"],
+		"types": ["react", "node"],
 		"skipDefaultLibCheck": true,
 		"paths": {
-			"config/*": ["src/config/*"],
-			"data/*": ["src/data/*"],
-			"components/*": ["src/components/*"],
 			"pages/*": ["src/pages/*"],
-			"hooks/*": ["src/hooks/*"],
-			"libs/*": ["src/libs/*"],
-			"styles/*": ["src/styles/*"],
-			"utils/*": ["src/utils/*"]
+			"hooks/*": ["src/hooks/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
