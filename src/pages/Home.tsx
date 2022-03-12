@@ -20,13 +20,13 @@ const Home: NextPage = () => {
 			</Head>
 
 			<Container maxW="container.lg">
-				<Center h="100vh">
+				<Center minH="100vh" py="4">
 					<Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="8" background="white">
 						<VStack spacing="8">
-							<Heading as="h1" size="2xl" isTruncated>
+							<Heading as="h1" size="2xl" isTruncated w="full" textAlign="center">
 								Trigeneration Calculator
 							</Heading>
-							<Stack direction={['column', 'row']} spacing="4" w="100%">
+							<Stack direction={['column', 'row']} spacing="4" w="full">
 								<Button
 									variant="outline"
 									flex="1 1 0%"
@@ -34,7 +34,7 @@ const Home: NextPage = () => {
 									whiteSpace="initial"
 									py="4"
 									onClick={gotoTrigen}>
-									<VStack spacing="4" w="100%">
+									<VStack spacing="4" w="full">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
 									</VStack>
 								</Button>
 								<Button variant="outline" flex="1 1 0%" height="unset" whiteSpace="initial" py="4">
-									<VStack spacing="4" w="100%">
+									<VStack spacing="4" w="full">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
 											fill="none"

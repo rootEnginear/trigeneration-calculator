@@ -11,7 +11,7 @@ const Template: NextPage = () => {
 			</Head>
 
 			<Container maxW="container.lg">
-				<Center h="100vh">
+				<Center minH="100vh" py="4">
 					<Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="8" background="white">
 						This is a template.
 					</Box>
