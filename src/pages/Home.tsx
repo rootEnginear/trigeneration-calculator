@@ -1,9 +1,18 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 import { Container, Center, Box, VStack, Heading, Stack, Button } from '@chakra-ui/react'
 
 const Home: NextPage = () => {
+	const router = useRouter()
+
+	const gotoTrigen = () => {
+		router.push('/trigen')
+	}
+
+	const gotoCompare = () => {}
+
 	return (
 		<>
 			<Head>
@@ -18,7 +27,13 @@ const Home: NextPage = () => {
 								Trigeneration Calculator
 							</Heading>
 							<Stack direction={['column', 'row']} spacing="4" w="100%">
-								<Button variant="outline" flex="1 1 0%" height="unset" whiteSpace="initial" py="4">
+								<Button
+									variant="outline"
+									flex="1 1 0%"
+									height="unset"
+									whiteSpace="initial"
+									py="4"
+									onClick={gotoTrigen}>
 									<VStack spacing="4" w="100%">
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
