@@ -1,58 +1,73 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
+
+import { Container, Center, Box, VStack, Heading, Stack, Button } from '@chakra-ui/react'
 
 const Home: NextPage = () => {
 	return (
-		<div>
+		<>
 			<Head>
-				<title>Create Next App</title>
+				<title>Trigeneration Calculator</title>
 			</Head>
 
-			<main>
-				<h1>
-					Welcome to <a href="https://nextjs.org">Next.js!</a>
-				</h1>
+			<Container maxW="container.lg">
+				<Center h="100vh">
+					<Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="8" background="white">
+						<VStack spacing="8">
+							<Heading as="h1" size="2xl" isTruncated>
+								Trigeneration Calculator
+							</Heading>
+							<Stack direction={['column', 'row']} spacing="4" w="100%">
+								<Button variant="outline" flex="1 1 0%" height="unset" whiteSpace="initial" py="4">
+									<VStack spacing="4" w="100%">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											strokeWidth={2}>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+											/>
+										</svg>
+										<Heading as="h2" size="md" textAlign="center">
+											คำนวณ Trigeneration System
+										</Heading>
+									</VStack>
+								</Button>
+								<Button variant="outline" flex="1 1 0%" height="unset" whiteSpace="initial" py="4">
+									<VStack spacing="4" w="100%">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											strokeWidth={2}>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+											/>
+										</svg>
+										<Heading as="h2" size="md" textAlign="center">
+											เปรียบเทียบ Boiler
+										</Heading>
+									</VStack>
+								</Button>
+								{/* <Text>
 
-				<p>
-					Get started by editing <code>pages/index.tsx</code>
-				</p>
+								</Text>
+								<Text>
 
-				<div>
-					<a href="https://nextjs.org/docs">
-						<h2>Documentation &rarr;</h2>
-						<p>Find in-depth information about Next.js features and API.</p>
-					</a>
-
-					<a href="https://nextjs.org/learn">
-						<h2>Learn &rarr;</h2>
-						<p>Learn about Next.js in an interactive course with quizzes!</p>
-					</a>
-
-					<a href="https://github.com/vercel/next.js/tree/canary/examples">
-						<h2>Examples &rarr;</h2>
-						<p>Discover and deploy boilerplate example Next.js projects.</p>
-					</a>
-
-					<a href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app">
-						<h2>Deploy &rarr;</h2>
-						<p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-					</a>
-				</div>
-			</main>
-
-			<footer>
-				<a
-					href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-					target="_blank"
-					rel="noopener noreferrer">
-					Powered by{' '}
-					<span>
-						<Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-					</span>
-				</a>
-			</footer>
-		</div>
+								</Text> */}
+							</Stack>
+						</VStack>
+					</Box>
+				</Center>
+			</Container>
+		</>
 	)
 }
 

@@ -4,7 +4,7 @@ import Head from 'next/head'
 
 const theme = extendTheme({
 	fonts: {
-		heading: 'Kanit, sans-serif',
+		heading: 'Prompt, sans-serif',
 		body: 'Sarabun, sans-serif',
 	},
 })
