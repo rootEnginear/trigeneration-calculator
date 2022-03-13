@@ -1,4 +1,4 @@
-import { TrigenInputDataType } from 'types/TrigenInputDataType'
+import { TrigenInputDataType } from 'types/trigenTypes'
 
 import type { NextPage } from 'next'
 import { useState } from 'react'

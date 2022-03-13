@@ -1,4 +1,4 @@
-import { TrigenInputDataType } from 'types/TrigenInputDataType'
+import { TrigenInputDataType } from 'types/trigenTypes'
 
 import { Heading, Box, VStack } from '@chakra-ui/react'
 
@@ -6,7 +6,8 @@ import FormField from 'components/FormField'
 import FormActionButton from 'components/FromActionButton'
 import { Formik, Form } from 'formik'
 
-const SELECTED_KEYS = [
+import { FieldDataKey } from 'data/fieldData'
+const SELECTED_KEYS: FieldDataKey[] = [
 	'max_steam_volume',
 	'max_steam_pressure',
 	'prod_steam_volume',
@@ -48,7 +49,7 @@ const Section2 = ({
 					<Form>
 						<VStack>
 							{Object.keys(INITIAL_VAL).map((key) => (
-								<FormField name={key} key={key} />
+								<FormField name={key as FieldDataKey} key={key} />
 							))}
 						</VStack>
 						<FormActionButton submitForm={submitForm} nextStep={nextStep} prevStep={prevStep} />

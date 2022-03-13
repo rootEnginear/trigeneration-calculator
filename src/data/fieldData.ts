@@ -1,7 +1,9 @@
-import { TrigenInputDataType } from 'types/TrigenInputDataType'
+import { TrigenInputDataType } from 'types/trigenTypes'
 
-type FieldDataType = Record<
-	keyof Omit<TrigenInputDataType, 'fuel_type'>,
+export type FieldDataKey = Exclude<keyof TrigenInputDataType, 'fuel_type'>
+
+export type FieldDataType = Record<
+	FieldDataKey,
 	{
 		label: string
 		placeholder?: string

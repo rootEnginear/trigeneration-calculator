@@ -1,9 +1,9 @@
-import { FIELD_DATA } from 'data/fieldData'
+import { FIELD_DATA, FieldDataKey } from 'data/fieldData'
 
 import { Field } from 'formik'
 import FormInput from './FormInput'
 
-const FormField = ({ name }: { name: string }) => {
+const FormField = ({ name }: { name: FieldDataKey }) => {
 	return (
 		<Field name={name} key={name}>
 			{({ field }: any) => (

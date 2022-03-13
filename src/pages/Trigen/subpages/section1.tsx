@@ -1,4 +1,4 @@
-import { TrigenInputDataType } from 'types/TrigenInputDataType'
+import { TrigenInputDataType } from 'types/trigenTypes'
 
 import { Heading, Box, VStack, Stack } from '@chakra-ui/react'
 
@@ -6,7 +6,8 @@ import FormField from 'components/FormField'
 import FormActionButton from 'components/FromActionButton'
 import { Formik, Form } from 'formik'
 
-const SELECTED_KEYS = ['hr_per_day', 'day_per_year', 'electrical_cost']
+import { FieldDataKey } from 'data/fieldData'
+const SELECTED_KEYS: FieldDataKey[] = ['hr_per_day', 'day_per_year', 'electrical_cost']
 
 const Section1 = ({
 	formValue,
