@@ -77,12 +77,6 @@ const Home: NextPage = () => {
 										</Heading>
 									</VStack>
 								</Button>
-								{/* <Text>
-
-								</Text>
-								<Text>
-
-								</Text> */}
 							</Stack>
 						</VStack>
 					</Box>

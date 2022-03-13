@@ -12,8 +12,7 @@ const FormActionButton = ({
 }) => {
 	return (
 		<>
-			<Box mt={8}></Box>
-			<Flex>
+			<Flex mt={8}>
 				{prevStep && (
 					<Button
 						leftIcon={<ArrowBackIcon />}

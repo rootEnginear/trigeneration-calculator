@@ -25,10 +25,9 @@ const Section1 = ({
 
 	return (
 		<>
-			<Heading as="h1" size="2xl" w="full">
+			<Heading as="h1" size="2xl" w="full" mb={4}>
 				ข้อมูลทั่วไป
 			</Heading>
-			<Box mt={4}></Box>
 			<Formik
 				initialValues={INITIAL_VAL}
 				onSubmit={(values: Partial<TrigenInputDataType>) => {

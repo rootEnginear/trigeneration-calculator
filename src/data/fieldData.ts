@@ -40,7 +40,7 @@ export const FIELD_DATA: FieldDataType = {
 	},
 	max_steam_pressure: {
 		label: 'ความดันไอน้ำที่ผลิตสูงสุด',
-		addonText: 'บาร์เกจ',
+		addonText: 'Barg',
 		min: 0,
 		max: 0,
 	},
@@ -52,7 +52,7 @@ export const FIELD_DATA: FieldDataType = {
 	},
 	prod_steam_pressure: {
 		label: 'ความดันไอน้ำใช้งาน',
-		addonText: 'บาร์เกจ',
+		addonText: 'Barg',
 		min: 0,
 		max: 0,
 	},
@@ -70,7 +70,7 @@ export const FIELD_DATA: FieldDataType = {
 	},
 	input_steam_pressure: {
 		label: 'ความดันน้ำป้อนเข้า',
-		addonText: 'บาร์เกจ',
+		addonText: 'Barg',
 		min: 0,
 		max: 0,
 	},
