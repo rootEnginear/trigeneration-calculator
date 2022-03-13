@@ -41,10 +41,10 @@ const Trigen: NextPage = () => {
 		max_steam_pressure: 0,
 
 		prod_steam_volume: 0,
-		prod_steam_pressure: 0,
-		prod_steam_temp: 0,
+		prod_steam_pressure: 22.5,
+		prod_steam_temp: 226,
 
-		input_steam_temp: 0,
+		input_steam_temp: 107,
 		input_steam_pressure: 0,
 
 		boiler_efficiency: 0,

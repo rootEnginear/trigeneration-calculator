@@ -1,6 +1,6 @@
 import { TrigenInputDataType } from 'types/trigenTypes'
 
-export type FieldDataKey = Exclude<keyof TrigenInputDataType, 'fuel_type'>
+export type FieldDataKey = keyof TrigenInputDataType
 
 export type FieldDataType = Record<
 	FieldDataKey,
@@ -77,6 +77,12 @@ export const FIELD_DATA: FieldDataType = {
 	boiler_efficiency: {
 		label: 'ประสิทธิภาพของหม้อน้ำ',
 		addonText: '%',
+		min: 0,
+		max: 0,
+	},
+	fuel_type: {
+		label: 'เชื้อเพลิงที่ใช้',
+		addonText: '',
 		min: 0,
 		max: 0,
 	},
