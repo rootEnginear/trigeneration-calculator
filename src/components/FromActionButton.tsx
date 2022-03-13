@@ -1,4 +1,5 @@
 import { Box, Button, Flex, Spacer } from '@chakra-ui/react'
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 
 const FormActionButton = ({
 	submitForm,
@@ -15,21 +16,23 @@ const FormActionButton = ({
 			<Flex>
 				{prevStep && (
 					<Button
+						leftIcon={<ArrowBackIcon />}
 						onClick={() => {
 							submitForm()
 							prevStep()
 						}}>
-						&laquo;
+						ย้อนกลับ
 					</Button>
 				)}
 				<Spacer />
 				{nextStep && (
 					<Button
+						rightIcon={<ArrowForwardIcon />}
 						onClick={() => {
 							submitForm()
 							nextStep()
 						}}>
-						&raquo;
+						ถัดไป
 					</Button>
 				)}
 			</Flex>
