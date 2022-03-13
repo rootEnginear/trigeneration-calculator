@@ -16,6 +16,7 @@ const StepperWrapper = styled.div`
 `
 
 import Section1 from './subpages/section1'
+import Section2 from './subpages/section2'
 
 const Trigen: NextPage = () => {
 	const TRIGEN_STEPS = [
@@ -84,15 +85,9 @@ const Trigen: NextPage = () => {
 						<Text fontSize="xs">{JSON.stringify(formValue)}</Text>
 
 						{step === 0 && <Section1 nextStep={nextStep} updateFormValue={updateFormValue} />}
-
-						{/*
-						<Box mt={8}></Box>
-						<Flex>
-							{step !== 0 && <Button onClick={prevStep}>«</Button>}
-							<Spacer />
-							{step !== TRIGEN_STEPS.length - 1 && <Button onClick={nextStep}>»</Button>}
-						</Flex>
-						*/}
+						{step === 1 && (
+							<Section2 nextStep={nextStep} prevStep={prevStep} updateFormValue={updateFormValue} />
+						)}
 					</Box>
 				</Center>
 			</Container>
