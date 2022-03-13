@@ -84,10 +84,8 @@ const Trigen: NextPage = () => {
 
 						<Text fontSize="xs">{JSON.stringify(formValue)}</Text>
 
-						{step === 0 && <Section1 nextStep={nextStep} updateFormValue={updateFormValue} />}
-						{step === 1 && (
-							<Section2 nextStep={nextStep} prevStep={prevStep} updateFormValue={updateFormValue} />
-						)}
+						{step === 0 && <Section1 {...{ nextStep, formValue, updateFormValue }} />}
+						{step === 1 && <Section2 {...{ prevStep, nextStep, formValue, updateFormValue }} />}
 					</Box>
 				</Center>
 			</Container>

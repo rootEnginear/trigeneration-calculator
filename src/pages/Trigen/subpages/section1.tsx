@@ -6,19 +6,22 @@ import FormField from 'components/FormField'
 import FormActionButton from 'components/FromActionButton'
 import { Formik, Form } from 'formik'
 
-const INITIAL_VAL: Partial<TrigenInputDataType> = {
-	hr_per_day: 0,
-	day_per_year: 0,
-	electrical_cost: 0,
-}
+const SELECTED_KEYS = ['hr_per_day', 'day_per_year', 'electrical_cost']
 
 const Section1 = ({
+	formValue,
 	updateFormValue,
 	nextStep,
 }: {
+	formValue: TrigenInputDataType
 	updateFormValue: (_: Partial<TrigenInputDataType>) => void
 	nextStep: () => void
 }) => {
+	const INITIAL_VAL = SELECTED_KEYS.reduce(
+		(all, current) => ({ ...all, [current]: formValue[current] }),
+		{}
+	)
+
 	return (
 		<>
 			<Heading as="h1" size="2xl" w="full">

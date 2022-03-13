@@ -6,26 +6,33 @@ import FormField from 'components/FormField'
 import FormActionButton from 'components/FromActionButton'
 import { Formik, Form } from 'formik'
 
-const INITIAL_VAL: Partial<TrigenInputDataType> = {
-	max_steam_volume: 0,
-	max_steam_pressure: 0,
-	prod_steam_volume: 0,
-	prod_steam_pressure: 0,
-	prod_steam_temp: 0,
-	input_steam_temp: 0,
-	input_steam_pressure: 0,
-	boiler_efficiency: 0,
-}
+const SELECTED_KEYS = [
+	'max_steam_volume',
+	'max_steam_pressure',
+	'prod_steam_volume',
+	'prod_steam_pressure',
+	'prod_steam_temp',
+	'input_steam_temp',
+	'input_steam_pressure',
+	'boiler_efficiency',
+]
 
 const Section2 = ({
+	formValue,
 	updateFormValue,
 	nextStep,
 	prevStep,
 }: {
+	formValue: TrigenInputDataType
 	updateFormValue: (_: Partial<TrigenInputDataType>) => void
 	nextStep?: () => void
 	prevStep?: () => void
 }) => {
+	const INITIAL_VAL = SELECTED_KEYS.reduce(
+		(all, current) => ({ ...all, [current]: formValue[current] }),
+		{}
+	)
+
 	return (
 		<>
 			<Heading as="h1" size="2xl" w="full">
