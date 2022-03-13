@@ -7,7 +7,7 @@ import {
 	Center,
 	Box,
 	Heading,
-	// Text,
+	Text,
 	Button,
 	Flex,
 	Spacer,
@@ -19,16 +19,88 @@ import {
 	InputGroup,
 	InputRightAddon,
 } from '@chakra-ui/react'
+
 import styled from '@emotion/styled'
 import Stepper from 'react-stepper-horizontal'
-import { Formik, Field, Form } from 'formik'
-
 const StepperWrapper = styled.div`
 	div > div > div > div > a,
 	div > div > div > div > span {
 		line-height: 30px !important;
 	}
 `
+
+import { Formik, Field, Form } from 'formik'
+import { TrigenInputDataType } from 'types/TrigenInputDataType'
+
+const Section1 = ({
+	updateFormValue,
+	nextStep,
+}: {
+	updateFormValue: (_: Partial<TrigenInputDataType>) => void
+	nextStep: () => void
+}) => {
+	return (
+		<Formik
+			initialValues={
+				{
+					hr_per_day: 0,
+					day_per_year: 0,
+					electrical_cost: 0,
+				} as Partial<TrigenInputDataType>
+			}
+			onSubmit={(values: Partial<TrigenInputDataType>) => {
+				updateFormValue(values)
+				nextStep()
+			}}>
+			{() => (
+				<Form>
+					<VStack>
+						<Stack direction={['column', 'row']} spacing="4" w="full">
+							<Field name="hr_per_day">
+								{({ field }: any) => (
+									<FormControl isRequired>
+										<FormLabel htmlFor="hr_per_day">ชั่วโมงการทำงานต่อวัน</FormLabel>
+										<InputGroup>
+											<Input {...field} id="hr_per_day" placeholder="ชั่วโมงทำงาน (ชั่วโมง/วัน)" />
+											<InputRightAddon>ชั่วโมง/วัน</InputRightAddon>
+										</InputGroup>
+									</FormControl>
+								)}
+							</Field>
+							<Field name="day_per_year">
+								{({ field }: any) => (
+									<FormControl isRequired w="full">
+										<FormLabel htmlFor="day_per_year">วันทำงานต่อปี</FormLabel>
+										<InputGroup>
+											<Input {...field} id="day_per_year" placeholder="วันทำงานต่อปี (วัน/ปี)" />
+											<InputRightAddon>วัน/ปี</InputRightAddon>
+										</InputGroup>
+									</FormControl>
+								)}
+							</Field>
+						</Stack>
+						<Field name="electrical_cost">
+							{({ field }: any) => (
+								<FormControl isRequired>
+									<FormLabel htmlFor="hrperday">ค่าไฟ</FormLabel>
+									<InputGroup>
+										<Input {...field} id="hrperday" placeholder="ค่าไฟ (บาท/ยูนิต)" />
+										<InputRightAddon>บาท/ยูนิต</InputRightAddon>
+									</InputGroup>
+								</FormControl>
+							)}
+						</Field>
+					</VStack>
+					<Box mt={8}></Box>
+					<Flex>
+						<Spacer />
+						<Button type="submit">»</Button>
+					</Flex>
+				</Form>
+			)}
+		</Formik>
+	)
+}
 
 const Trigen: NextPage = () => {
 	const TRIGEN_STEPS = [
@@ -44,8 +116,35 @@ const Trigen: NextPage = () => {
 	const nextStep = () => setStep((_) => (++_ >= TRIGEN_STEPS.length ? --_ : _))
 	const prevStep = () => setStep((_) => (--_ < 0 ? ++_ : _))
 
-	const [value, setValue] = useState('')
-	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setValue(event.target.value)
+	const [formValue, setFormValue] = useState<TrigenInputDataType>({
+		hr_per_day: 0,
+		day_per_year: 0,
+		electrical_cost: 0,
+
+		max_steam_volume: 0,
+		max_steam_pressure: 0,
+
+		prod_steam_volume: 0,
+		prod_steam_pressure: 0,
+		prod_steam_temp: 0,
+
+		input_steam_temp: 0,
+		input_steam_pressure: 0,
+
+		boiler_efficiency: 0,
+
+		fuel_type: 'ไม้สับ',
+
+		isentropic_efficiency: 0,
+		generator_efficiency: 0,
+
+		outlet_pressure: 0,
+
+		required_steam_flow_rate: 0,
+	})
+
+	const updateFormValue = (newFormValue: Partial<TrigenInputDataType>) =>
+		setFormValue((_: TrigenInputDataType) => ({ ..._, ...newFormValue }))
 
 	return (
 		<>
@@ -71,72 +170,19 @@ const Trigen: NextPage = () => {
 							ข้อมูลทั่วไป
 						</Heading>
 						<Box mt={4}></Box>
+						<Text size="sm">{JSON.stringify(formValue)}</Text>
+						<Box mt={4}></Box>
 
-						<Formik
-							initialValues={{ hr_per_day: 24, day_per_year: 330, electrical_cost: 3.7 }}
-							onSubmit={(values, actions) => {
-								setTimeout(() => {
-									alert(JSON.stringify(values, null, 2))
-									actions.setSubmitting(false)
-								}, 1000)
-							}}>
-							{() => (
-								<Form>
-									<VStack>
-										<Stack direction={['column', 'row']} spacing="4" w="full">
-											<Field name="hr_per_day">
-												{({ field }: any) => (
-													<FormControl isRequired>
-														<FormLabel htmlFor="hr_per_day">ชั่วโมงการทำงานต่อวัน</FormLabel>
-														<InputGroup>
-															<Input
-																{...field}
-																id="hr_per_day"
-																placeholder="ชั่วโมงทำงาน (ชั่วโมง/วัน)"
-															/>
-															<InputRightAddon>ชั่วโมง/วัน</InputRightAddon>
-														</InputGroup>
-													</FormControl>
-												)}
-											</Field>
-											<Field name="day_per_year">
-												{({ field }: any) => (
-													<FormControl isRequired w="full">
-														<FormLabel htmlFor="day_per_year">วันทำงานต่อปี</FormLabel>
-														<InputGroup>
-															<Input
-																{...field}
-																id="day_per_year"
-																placeholder="วันทำงานต่อปี (วัน/ปี)"
-															/>
-															<InputRightAddon>วัน/ปี</InputRightAddon>
-														</InputGroup>
-													</FormControl>
-												)}
-											</Field>
-										</Stack>
-										<Field name="electrical_cost">
-											{({ field }: any) => (
-												<FormControl isRequired>
-													<FormLabel htmlFor="hrperday">ค่าไฟ</FormLabel>
-													<InputGroup>
-														<Input {...field} id="hrperday" placeholder="ค่าไฟ (บาท/ยูนิต)" />
-														<InputRightAddon>บาท/ยูนิต</InputRightAddon>
-													</InputGroup>
-												</FormControl>
-											)}
-										</Field>
-									</VStack>
-								</Form>
-							)}
-						</Formik>
+						{step === 0 && <Section1 nextStep={nextStep} updateFormValue={updateFormValue} />}
 
+						{/*
 						<Box mt={8}></Box>
 						<Flex>
 							{step !== 0 && <Button onClick={prevStep}>«</Button>}
 							<Spacer />
 							{step !== TRIGEN_STEPS.length - 1 && <Button onClick={nextStep}>»</Button>}
 						</Flex>
+						*/}
 					</Box>
 				</Center>
 			</Container>

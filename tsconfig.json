@@ -19,8 +19,10 @@
 		"types": ["react", "node"],
 		"skipDefaultLibCheck": true,
 		"paths": {
+			"data/*": ["src/data/*"],
+			"hooks/*": ["src/hooks/*"],
 			"pages/*": ["src/pages/*"],
-			"hooks/*": ["src/hooks/*"]
+			"types/*": ["src/types/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
