@@ -19,6 +19,7 @@
 		"types": ["react", "node"],
 		"skipDefaultLibCheck": true,
 		"paths": {
+			"components/*": ["src/components/*"],
 			"data/*": ["src/data/*"],
 			"hooks/*": ["src/hooks/*"],
 			"pages/*": ["src/pages/*"],
