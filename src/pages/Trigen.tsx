@@ -13,11 +13,15 @@ import {
 	Spacer,
 	Input,
 	VStack,
+	Stack,
 	FormControl,
 	FormLabel,
+	InputGroup,
+	InputRightAddon,
 } from '@chakra-ui/react'
 import styled from '@emotion/styled'
 import Stepper from 'react-stepper-horizontal'
+import { Formik, Field, Form } from 'formik'
 
 const StepperWrapper = styled.div`
 	div > div > div > div > a,
@@ -32,7 +36,7 @@ const Trigen: NextPage = () => {
 		{ title: 'Boiler' },
 		{ title: 'Turbine' },
 		{ title: 'Chiller' },
-		{ title: 'Economic Analysis' },
+		{ title: 'Economical Analysis' },
 	]
 
 	const [step, setStep] = useState(0)
@@ -51,7 +55,13 @@ const Trigen: NextPage = () => {
 
 			<Container maxW="container.lg">
 				<Center minH="100vh" py="4">
-					<Box borderWidth="1px" borderRadius="lg" overflow="hidden" p="8" background="white">
+					<Box
+						borderWidth="1px"
+						borderRadius="lg"
+						overflow="hidden"
+						p="8"
+						background="white"
+						flex="1 1 0%">
 						<StepperWrapper>
 							<Stepper steps={TRIGEN_STEPS} activeStep={step} />
 						</StepperWrapper>
@@ -61,17 +71,65 @@ const Trigen: NextPage = () => {
 							ข้อมูลทั่วไป
 						</Heading>
 						<Box mt={4}></Box>
-						<VStack textAlign="left">
-							<FormControl isRequired>
-								<FormLabel htmlFor="test">Email address</FormLabel>
-								<Input
-									id="test"
-									value={value}
-									onChange={handleChange}
-									placeholder="Here is a sample placeholder"
-								/>
-							</FormControl>
-						</VStack>
+
+						<Formik
+							initialValues={{ hr_per_day: 24, day_per_year: 330, electrical_cost: 3.7 }}
+							onSubmit={(values, actions) => {
+								setTimeout(() => {
+									alert(JSON.stringify(values, null, 2))
+									actions.setSubmitting(false)
+								}, 1000)
+							}}>
+							{() => (
+								<Form>
+									<VStack>
+										<Stack direction={['column', 'row']} spacing="4" w="full">
+											<Field name="hr_per_day">
+												{({ field }: any) => (
+													<FormControl isRequired>
+														<FormLabel htmlFor="hr_per_day">ชั่วโมงการทำงานต่อวัน</FormLabel>
+														<InputGroup>
+															<Input
+																{...field}
+																id="hr_per_day"
+																placeholder="ชั่วโมงทำงาน (ชั่วโมง/วัน)"
+															/>
+															<InputRightAddon>ชั่วโมง/วัน</InputRightAddon>
+														</InputGroup>
+													</FormControl>
+												)}
+											</Field>
+											<Field name="day_per_year">
+												{({ field }: any) => (
+													<FormControl isRequired w="full">
+														<FormLabel htmlFor="day_per_year">วันทำงานต่อปี</FormLabel>
+														<InputGroup>
+															<Input
+																{...field}
+																id="day_per_year"
+																placeholder="วันทำงานต่อปี (วัน/ปี)"
+															/>
+															<InputRightAddon>วัน/ปี</InputRightAddon>
+														</InputGroup>
+													</FormControl>
+												)}
+											</Field>
+										</Stack>
+										<Field name="electrical_cost">
+											{({ field }: any) => (
+												<FormControl isRequired>
+													<FormLabel htmlFor="hrperday">ค่าไฟ</FormLabel>
+													<InputGroup>
+														<Input {...field} id="hrperday" placeholder="ค่าไฟ (บาท/ยูนิต)" />
+														<InputRightAddon>บาท/ยูนิต</InputRightAddon>
+													</InputGroup>
+												</FormControl>
+											)}
+										</Field>
+									</VStack>
+								</Form>
+							)}
+						</Formik>
 
 						<Box mt={8}></Box>
 						<Flex>
