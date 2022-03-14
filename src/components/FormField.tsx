@@ -1,24 +1,25 @@
 import { FIELD_DATA, FieldDataKey } from 'data/fieldData'
 
-import { Field } from 'formik'
+import { Controller, Control } from 'react-hook-form'
 import FormInput from './FormInput'
 
-const FormField = ({ name }: { name: FieldDataKey }) => {
+const FormField = ({ name, control }: { name: FieldDataKey; control: Control<any, any> }) => {
 	return (
-		<Field name={name} key={name}>
-			{({ field }: any) => (
+		<Controller
+			{...{ name, control }}
+			render={({ field }: any) => (
 				<FormInput
 					inputId={name}
-					label={FIELD_DATA[name].label ?? ''}
+					label={FIELD_DATA[name]?.label ?? ''}
 					placeholder={
-						FIELD_DATA[name].placeholder ??
-						`${FIELD_DATA[name].label} (${FIELD_DATA[name].addonText})`
+						FIELD_DATA[name]?.placeholder ??
+						`${FIELD_DATA[name]?.label} (${FIELD_DATA[name]?.addonText})`
 					}
-					addonText={FIELD_DATA[name].addonText ?? ''}
+					addonText={FIELD_DATA[name]?.addonText ?? ''}
 					inputProps={field}
 				/>
 			)}
-		</Field>
+		/>
 	)
 }
 

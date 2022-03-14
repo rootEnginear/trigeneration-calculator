@@ -36,4 +36,11 @@ export interface TrigenInputDataType {
 	outlet_pressure: number
 
 	required_steam_flow_rate: number
+
+	steam_enthalpy: number | null
+	feedwater_enthalpy: number | null
+	fuel_usage_rate: number | null
+	fuel_cost: number | null
+	other_cost: number | null
+	total_cost: number | null
 }

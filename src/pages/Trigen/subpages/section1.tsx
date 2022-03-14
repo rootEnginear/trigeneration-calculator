@@ -1,10 +1,10 @@
 import { TrigenInputDataType } from 'types/trigenTypes'
 
-import { Heading, Box, VStack, Stack } from '@chakra-ui/react'
+import { Heading, VStack, Stack } from '@chakra-ui/react'
 
 import FormField from 'components/FormField'
 import FormActionButton from 'components/FromActionButton'
-import { Formik, Form } from 'formik'
+import { useForm } from 'react-hook-form'
 
 import { FieldDataKey } from 'data/fieldData'
 const SELECTED_KEYS: FieldDataKey[] = ['hr_per_day', 'day_per_year', 'electrical_cost']
@@ -23,29 +23,29 @@ const Section1 = ({
 		{}
 	)
 
+	const { control, handleSubmit } = useForm<TrigenInputDataType>({
+		defaultValues: INITIAL_VAL,
+	})
+
+	const saveData = (values: Partial<TrigenInputDataType>) => {
+		updateFormValue(values)
+	}
+
 	return (
 		<>
 			<Heading as="h1" size="2xl" w="full" mb={4}>
 				ข้อมูลทั่วไป
 			</Heading>
-			<Formik
-				initialValues={INITIAL_VAL}
-				onSubmit={(values: Partial<TrigenInputDataType>) => {
-					updateFormValue(values)
-				}}>
-				{({ submitForm }) => (
-					<Form>
-						<VStack>
-							<Stack direction={['column', 'row']} spacing="4" w="full">
-								<FormField name="hr_per_day" />
-								<FormField name="day_per_year" />
-							</Stack>
-							<FormField name="electrical_cost" />
-						</VStack>
-						<FormActionButton submitForm={submitForm} nextStep={nextStep} />
-					</Form>
-				)}
-			</Formik>
+			<form>
+				<VStack>
+					<Stack direction={['column', 'row']} spacing="4" w="full">
+						<FormField name="hr_per_day" control={control} />
+						<FormField name="day_per_year" control={control} />
+					</Stack>
+					<FormField name="electrical_cost" control={control} />
+				</VStack>
+				<FormActionButton submitForm={handleSubmit(saveData)} nextStep={nextStep} />
+			</form>
 		</>
 	)
 }
