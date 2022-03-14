@@ -1,5 +1,6 @@
 import { TrigenInputDataType } from 'types/trigenTypes'
 
+import { useState } from 'react'
 import {
 	Heading,
 	Box,
@@ -64,6 +65,17 @@ const Section2 = ({
 		(all, current) => ({ ...all, [current]: formValue[current] }),
 		{}
 	)
+
+	const [steamEnthalpy, setSteamEnthalpy] = useState<number | null>(null)
+	const calcSteamEnthalpy = (p: number | string | undefined, T: number | string | undefined) => {
+		const _p = +(p ?? 0) + 1
+		const _T = +(T ?? 0) + 1
+		try {
+			setSteamEnthalpy(h_pT(_p, _T))
+		} catch {
+			setSteamEnthalpy(null)
+		}
+	}
 
 	return (
 		<>
@@ -177,6 +189,7 @@ const Section2 = ({
 											<Th>อัตราการใช้เชื้อเพลิง</Th>
 											<Th isNumeric>
 												{(() => {
+													console.log('update')
 													try {
 														const { prod_steam_volume, boiler_efficiency } = values
 														const lhv = FUEL_DATA[values.fuel_type ?? 'ไม้สับ'].lhv
@@ -202,6 +215,38 @@ const Section2 = ({
 												})()}
 											</Th>
 											<Th>ตัน/ชั่วโมง</Th>
+										</Tr>
+									</Tfoot>
+								</Table>
+								<Divider />
+								<Heading as="h2" w="full">
+									รายละเอียดต้นทุน Steam
+								</Heading>
+								<Table>
+									<Thead>
+										<Tr>
+											<Th>รายการ</Th>
+											<Th>เป็นเงิน</Th>
+											<Th>หน่วย</Th>
+										</Tr>
+									</Thead>
+									<Tbody>
+										<Tr>
+											<Td>ค่าเชื้อเพลิง</Td>
+											<Td isNumeric></Td>
+											<Td>บาท/ตัน</Td>
+										</Tr>
+										<Tr>
+											<Td>อื่นๆ 30%</Td>
+											<Td isNumeric></Td>
+											<Td>บาท/ตัน</Td>
+										</Tr>
+									</Tbody>
+									<Tfoot>
+										<Tr>
+											<Th>รวมต้นทุนทั้งหมด</Th>
+											<Th isNumeric></Th>
+											<Th>บาท/ตัน</Th>
 										</Tr>
 									</Tfoot>
 								</Table>

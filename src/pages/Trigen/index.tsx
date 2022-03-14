@@ -23,7 +23,7 @@ const Trigen: NextPage = () => {
 		{ title: 'ข้อมูลทั่วไป' },
 		{ title: 'Boiler' },
 		{ title: 'Turbine' },
-		{ title: 'Chiller' },
+		{ title: 'Absorption Chiller' },
 		{ title: 'Economical Analysis' },
 	]
 
@@ -33,30 +33,30 @@ const Trigen: NextPage = () => {
 	const prevStep = () => setStep((_) => (--_ < 0 ? ++_ : _))
 
 	const [formValue, setFormValue] = useState<TrigenInputDataType>({
-		hr_per_day: 0,
-		day_per_year: 0,
-		electrical_cost: 0,
+		hr_per_day: 24,
+		day_per_year: 330,
+		electrical_cost: 3.7,
 
-		max_steam_volume: 0,
-		max_steam_pressure: 0,
+		max_steam_volume: 20,
+		max_steam_pressure: 25,
 
-		prod_steam_volume: 0,
+		prod_steam_volume: 16,
 		prod_steam_pressure: 22.5,
 		prod_steam_temp: 226,
 
 		input_steam_temp: 107,
-		input_steam_pressure: 0,
+		input_steam_pressure: 0.3,
 
-		boiler_efficiency: 0,
+		boiler_efficiency: 90.74,
 
 		fuel_type: 'ไม้สับ',
 
-		isentropic_efficiency: 0,
-		generator_efficiency: 0,
+		isentropic_efficiency: 53,
+		generator_efficiency: 95,
 
-		outlet_pressure: 0,
+		outlet_pressure: 12.5,
 
-		required_steam_flow_rate: 0,
+		required_steam_flow_rate: 5,
 	})
 
 	const updateFormValue = (newFormValue: Partial<TrigenInputDataType>) =>
