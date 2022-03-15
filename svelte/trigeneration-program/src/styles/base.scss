@@ -23,5 +23,11 @@ $steps-active-color: $primary;
 	white-space: initial;
 }
 
-@import '../node_modules/bulma/bulma.sass';
-@import '../node_modules/bulma-o-steps/bulma-steps.sass';
+@import 'bulma/bulma.sass';
+@import 'bulma-o-steps/bulma-steps.sass';
+
+.divider {
+	width: 1px;
+	background: $border;
+	height: auto;
+}

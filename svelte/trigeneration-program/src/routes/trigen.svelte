@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Steps from 'components/Steps.svelte';
 	import Input from 'components/Input.svelte';
+	import InlineInput from 'components/InlineInput.svelte';
 	import FormStep from 'components/FormStep.svelte';
 	import NumberFormatter from 'components/NumberFormatter.svelte';
 
@@ -13,10 +14,12 @@
 		fuel_usage_rate,
 		fuel_cost,
 		other_cost,
-		total_cost
+		total_cost,
+		turbine_outlet_enthalpy,
+		turbine_outlet_temp
 	} from 'stores/formData';
 
-	let currentStep = 1;
+	let currentStep = 2;
 </script>
 
 <div class="box">
@@ -161,6 +164,92 @@
 							<th>บาท/ตัน</th>
 						</tr>
 					</tfoot>
+				</table>
+			</div>
+		{:else if currentStep === 2}
+			<h1>3 — Turbine</h1>
+			<h2>Inlet Steam</h2>
+			<div class="table-container">
+				<table class="table">
+					<tbody>
+						<tr>
+							<th>{FIELD_DATA['prod_steam_pressure'].label}</th>
+							<td class="has-text-right">{$formData.prod_steam_pressure}</td>
+							<td>{FIELD_DATA['prod_steam_pressure'].unit}</td>
+						</tr>
+						<tr>
+							<th>{FIELD_DATA['prod_steam_temp'].label}</th>
+							<td class="has-text-right">{$formData.prod_steam_temp}</td>
+							<td>{FIELD_DATA['prod_steam_temp'].unit}</td>
+						</tr>
+						<tr>
+							<th>{FIELD_DATA['prod_steam_volume'].label}</th>
+							<td class="has-text-right">{$formData.prod_steam_volume}</td>
+							<td>{FIELD_DATA['prod_steam_volume'].unit}</td>
+						</tr>
+						<tr>
+							<th>เอลทาลปีไอน้ำขาเข้า</th>
+							<td class="has-text-right">
+								<NumberFormatter value={$steam_enthalpy} />
+							</td>
+							<td>kJ/kg</td>
+						</tr>
+						<tr>
+							<th>ประสิทธิภาพไอเซนโทรปิก</th>
+							<td>
+								<InlineInput fieldName="isentropic_efficiency" />
+							</td>
+							<td>%</td>
+						</tr>
+						<tr>
+							<th>ประสิทธิภาพของเครื่องกำเนิดไฟฟ้า</th>
+							<td>
+								<InlineInput fieldName="generator_efficiency" />
+							</td>
+							<td>%</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<h2>Outlet Steam</h2>
+			<div class="table-container">
+				<table class="table">
+					<tbody>
+						<tr>
+							<td>ความดันไอน้ำใช้งานขาออก</td>
+							<td><InlineInput fieldName="outlet_pressure" /></td>
+							<td>Barg</td>
+						</tr>
+						<tr>
+							<td>เอลทาลปีไอน้ำขาออก</td>
+							<td class="has-text-right">
+								<NumberFormatter value={$turbine_outlet_enthalpy} />
+							</td>
+							<td>kJ/kg</td>
+						</tr>
+						<tr>
+							<td>อุณหภูมิใช้งานขาออก</td>
+							<td class="has-text-right">
+								<NumberFormatter value={$turbine_outlet_temp} />
+							</td>
+							<td>˚C</td>
+						</tr>
+						<tr>
+							<td>{FIELD_DATA['prod_steam_volume'].label}</td>
+							<td class="has-text-right">{$formData.prod_steam_volume}</td>
+							<td>{FIELD_DATA['prod_steam_volume'].unit}</td>
+						</tr>
+						<tr>
+							<td>พลังงานขาออก</td>
+							<td class="has-text-right">A</td>
+							<td>kW</td>
+						</tr>
+						<tr>
+							<td>พลังงานไฟฟ้าที่ผลิตได้</td>
+							<td class="has-text-right">A</td>
+							<td>kW</td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		{/if}

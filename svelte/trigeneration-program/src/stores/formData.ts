@@ -54,3 +54,21 @@ export const other_cost = derived(fuel_cost, ($fuel_cost) => {
 export const total_cost = derived([fuel_cost, other_cost], ([$fuel_cost, $other_cost]) => {
 	return $fuel_cost + $other_cost;
 });
+
+export const turbine_outlet_enthalpy = derived(
+	[formData, steam_enthalpy],
+	([$formData, $steam_enthalpy]) => {
+		const a = s_pT($formData.prod_steam_pressure + 1, $formData.prod_steam_temp);
+		console.log('s_pT', $formData.prod_steam_pressure + 1, $formData.prod_steam_temp, '=', a);
+		const b = h_ps($formData.outlet_pressure + 1, a);
+		console.log('h_ps', $formData.outlet_pressure + 1, a, '=', b);
+		return $steam_enthalpy - ($steam_enthalpy - b) * ($formData.isentropic_efficiency / 100);
+	}
+);
+
+export const turbine_outlet_temp = derived(
+	[formData, turbine_outlet_enthalpy],
+	([$formData, $turbine_outlet_enthalpy]) => {
+		return T_ph($formData.outlet_pressure + 1, $turbine_outlet_enthalpy);
+	}
+);
