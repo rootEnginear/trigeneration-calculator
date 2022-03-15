@@ -43,7 +43,7 @@
 				bind:value
 			/>
 			{#if error}
-				<span class="icon is-small is-left">
+				<span class="icon is-small is-left" class:is-danger={error}>
 					<i class="fas fa-exclamation-triangle" />
 				</span>
 			{/if}

@@ -40,6 +40,12 @@
 </script>
 
 <div class="box">
+	<a href="./" class="button mb-4">
+		<span class="icon is-small">
+			<i class="fa fa-home" />
+		</span>
+		<span>กลับหน้าหลัก</span>
+	</a>
 	<Steps {currentStep} />
 	<hr />
 	<div class="content">
@@ -348,22 +354,32 @@
 				<div class="table-container">
 					<table class="table">
 						<tbody>
-							<tr>
-								<th><a href="#fixedCost" class="button is-fullwidth">Fixed Cost</a></th>
+							<tr class="">
+								<th
+									><a href="#fixedCost" class="button is-fullwidth is-danger is-light">Fixed Cost</a
+									></th
+								>
 								<td class="has-text-right">
 									<MoneyFormatter value={$fc_total} />
 								</td>
 								<td>บาท</td>
 							</tr>
-							<tr>
-								<th><a href="#annualCost" class="button is-fullwidth">Annual Cost</a></th>
+							<tr class="">
+								<th
+									><a href="#annualCost" class="button is-fullwidth is-warning is-light"
+										>Annual Cost</a
+									></th
+								>
 								<td class="has-text-right">
 									<MoneyFormatter value={$ac_total} />
 								</td>
 								<td>บาท/ปี</td>
 							</tr>
-							<tr>
-								<th><a href="#saveCost" class="button is-fullwidth">Save Cost</a></th>
+							<tr class="">
+								<th
+									><a href="#saveCost" class="button is-fullwidth is-success is-light">Save Cost</a
+									></th
+								>
 								<td class="has-text-right">
 									<MoneyFormatter value={$sc_total} />
 								</td>

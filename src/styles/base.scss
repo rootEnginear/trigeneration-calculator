@@ -5,9 +5,27 @@
 $family-sans-serif: 'Sarabun', BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Roboto', 'Oxygen',
 	'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Helvetica', 'Arial',
 	sans-serif;
-$primary: #22d3ee;
-$steps-completed-color: $primary;
-$steps-active-color: $primary;
+
+$red: #ef4444;
+$orange: #f97316;
+$yellow: #fde047;
+$green: #4ade80;
+$turquoise: #2dd4bf;
+$cyan: #22d3ee;
+$blue: #3b82f6;
+$purple: #a855f7;
+
+$light-yellow: #fefce8;
+
+$primary: $yellow;
+
+@import 'bulma/bulma.sass';
+
+$steps-default-color: $border;
+$steps-completed-color: $yellow;
+$steps-active-color: $yellow;
+
+@import 'bulma-o-steps/bulma-steps.sass';
 
 .container {
 	min-height: 100vh;
@@ -23,25 +41,29 @@ $steps-active-color: $primary;
 	white-space: initial;
 }
 
-@import 'bulma/bulma.sass';
-@import 'bulma-o-steps/bulma-steps.sass';
-
 .divider {
 	width: 1px;
 	background: $border;
 	height: auto;
 }
 
-h1 {
+.content h1 {
 	text-align: center;
+	margin-bottom: 1.5rem;
 }
 
-.box.is-shadowless {
+.box {
 	border: 1px solid $border;
 }
 
 body {
 	scroll-behavior: smooth;
+	background: $light-yellow;
+}
+
+hr {
+	background: $border;
+	height: 1px;
 }
 
 tr > th,
@@ -53,4 +75,29 @@ tr > td {
 tr > th,
 tr > td:last-child {
 	white-space: nowrap;
+}
+
+.button .icon:first-child:not(:last-child) {
+	margin-left: -0.25em;
+}
+
+.button .icon:last-child:not(:first-child) {
+	margin-right: -0.25em;
+}
+
+.steps-content > p {
+	white-space: normal;
+	width: 60%;
+	margin: 0.25rem auto 0;
+}
+
+.control.has-icons-left .icon.is-left.is-danger {
+	color: rgba($danger, 0.5);
+}
+
+.control.has-icons-left .input:focus ~ .icon.is-danger,
+.control.has-icons-left .select:focus ~ .icon.is-danger,
+.control.has-icons-right .input:focus ~ .icon.is-danger,
+.control.has-icons-right .select:focus ~ .icon.is-danger {
+	color: $danger;
 }

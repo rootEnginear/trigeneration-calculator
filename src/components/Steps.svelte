@@ -2,7 +2,7 @@
 	export let currentStep = 0;
 </script>
 
-<ul class="steps is-narrow is-medium is-centered has-content-centered">
+<ul class="steps is-narrow is-medium is-centered has-content-centered is-hidden-touch">
 	<li class="steps-segment" class:is-active={currentStep <= 0}>
 		<span class="steps-marker">
 			<span class="icon">
@@ -10,7 +10,7 @@
 			</span>
 		</span>
 		<div class="steps-content">
-			<p class="is-size-5">ข้อมูลทั่วไป</p>
+			<p class="is-size-6">ข้อมูลทั่วไป</p>
 		</div>
 	</li>
 	<li class="steps-segment" class:is-active={currentStep === 1}>
@@ -20,7 +20,7 @@
 			</span>
 		</span>
 		<div class="steps-content">
-			<p class="is-size-5">Boiler</p>
+			<p class="is-size-6">Boiler</p>
 		</div>
 	</li>
 	<li class="steps-segment" class:is-active={currentStep === 2}>
@@ -30,7 +30,7 @@
 			</span>
 		</span>
 		<div class="steps-content">
-			<p class="is-size-5">Turbine</p>
+			<p class="is-size-6">Turbine</p>
 		</div>
 	</li>
 	<li class="steps-segment" class:is-active={currentStep === 3}>
@@ -40,7 +40,7 @@
 			</span>
 		</span>
 		<div class="steps-content">
-			<p class="is-size-5">Absorption Chiller</p>
+			<p class="is-size-6">Absorption Chiller</p>
 		</div>
 	</li>
 	<li class="steps-segment" class:is-active={currentStep >= 4}>
@@ -50,7 +50,7 @@
 			</span>
 		</span>
 		<div class="steps-content">
-			<p class="is-size-5">Economical Analysis</p>
+			<p class="is-size-6">Economical Analysis</p>
 		</div>
 	</li>
 </ul>
