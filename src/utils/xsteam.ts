@@ -46,7 +46,7 @@ export const h_ps = (p: number, s: number) => {
 		case 5:
 			return fromSIunit_h(h5_pT(p, T5_ps(p, s)))
 		default:
-			throw new Error('value error')
+			return NaN
 	}
 }
 
@@ -63,7 +63,7 @@ export const h_pT = (p: number, T: number) => {
 		case 5:
 			return fromSIunit_h(h5_pT(p, T))
 		default:
-			throw new Error('value error')
+			return NaN
 	}
 }
 
@@ -188,7 +188,7 @@ const h4L_p = (p: number) => {
 		}
 		return hs
 	}
-	throw new Error('value error')
+	return NaN
 }
 
 const h4V_p = (p: number) => {
@@ -207,7 +207,7 @@ const h4V_p = (p: number) => {
 		}
 		return hs
 	}
-	throw new Error('value error')
+	return NaN
 }
 
 // Release on the IAPWS Industrial Formulation 1997 for the Thermodynamic Properties of Water and Steam, September 1997
@@ -333,7 +333,7 @@ export const s_pT = (p: number, T: number) => {
 		case 5:
 			return fromSIunit_s(s5_pT(p, T))
 		default:
-			throw new Error('value error')
+			return NaN
 	}
 }
 
@@ -503,7 +503,7 @@ export const T_ph = (p: number, h: number) => {
 		case 5:
 			return fromSIunit_T(T5_ph(p, h))
 		default:
-			throw new Error('value error')
+			return NaN
 	}
 }
 
@@ -1071,7 +1071,7 @@ const x4_ps = (p: number, s: number) => {
 	}
 	if (s < ssL) return 0
 	if (s > ssV) return 1
-	return (s - ssL) / (s - ssV)
+	return (s - ssL) / (ssV - ssL)
 }
 
 // Regions as a function of ph

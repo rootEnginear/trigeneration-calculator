@@ -1,32 +1,16 @@
 {
+	"extends": "./.svelte-kit/tsconfig.json",
 	"compilerOptions": {
-		"target": "es5",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"allowJs": true,
-		"skipLibCheck": true,
-		"strict": true,
-		"forceConsistentCasingInFileNames": true,
-		"noEmit": true,
-		"esModuleInterop": true,
-		"module": "esnext",
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"jsx": "preserve",
-		"incremental": true,
-
-		"baseUrl": ".",
-		"types": ["react", "node"],
-		"skipDefaultLibCheck": true,
 		"paths": {
+			"$lib": ["src/lib"],
+			"$lib/*": ["src/lib/*"],
 			"components/*": ["src/components/*"],
 			"data/*": ["src/data/*"],
-			"hooks/*": ["src/hooks/*"],
-			"pages/*": ["src/pages/*"],
+			"routes/*": ["src/routes/*"],
+			"styles/*": ["src/styles/*"],
+			"stores/*": ["src/stores/*"],
 			"types/*": ["src/types/*"],
 			"utils/*": ["src/utils/*"]
 		}
-	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-	"exclude": ["node_modules"]
+	}
 }
