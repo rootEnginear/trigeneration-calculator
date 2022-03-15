@@ -16,7 +16,9 @@
 		other_cost,
 		total_cost,
 		turbine_outlet_enthalpy,
-		turbine_outlet_temp
+		turbine_outlet_temp,
+		output_energy,
+		prod_energy
 	} from 'stores/formData';
 
 	let currentStep = 2;
@@ -241,12 +243,16 @@
 						</tr>
 						<tr>
 							<td>พลังงานขาออก</td>
-							<td class="has-text-right">A</td>
+							<td class="has-text-right">
+								<NumberFormatter value={$output_energy} />
+							</td>
 							<td>kW</td>
 						</tr>
 						<tr>
 							<td>พลังงานไฟฟ้าที่ผลิตได้</td>
-							<td class="has-text-right">A</td>
+							<td class="has-text-right">
+								<NumberFormatter value={$prod_energy} />
+							</td>
 							<td>kW</td>
 						</tr>
 					</tbody>

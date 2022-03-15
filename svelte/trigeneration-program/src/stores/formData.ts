@@ -72,3 +72,16 @@ export const turbine_outlet_temp = derived(
 		return T_ph($formData.outlet_pressure + 1, $turbine_outlet_enthalpy);
 	}
 );
+
+export const output_energy = derived(
+	[formData, steam_enthalpy, turbine_outlet_enthalpy],
+	([$formData, $steam_enthalpy, $turbine_outlet_enthalpy]) => {
+		return (
+			$formData.prod_steam_volume * 1000 * (1 / 3600) * ($steam_enthalpy - $turbine_outlet_enthalpy)
+		);
+	}
+);
+
+export const prod_energy = derived([output_energy, formData], ([$output_energy, $formData]) => {
+	return $output_energy * ($formData.generator_efficiency / 100);
+});
