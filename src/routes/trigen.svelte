@@ -34,10 +34,14 @@
 		sc_chiller,
 		sc_total,
 		econ_n
-	} from 'stores/formData';
+	} from 'stores/trigenFormData';
 
 	let currentStep = 0;
 </script>
+
+<svelte:head>
+	<title>คำนวณ Trigeneration System — Trigeneration Calculator</title>
+</svelte:head>
 
 <div class="box">
 	<a href="/" class="button mb-4">
@@ -534,11 +538,3 @@
 	<hr />
 	<FormStep bind:currentStep />
 </div>
-<!-- <div class="content">
-	<Input fieldName="start_time" bind:value={start_time} min={0} max={24} unit="hr" />
-	<Input fieldName="stop_time" bind:value={stop_time} min={start_time} max={24} unit="hr" />
-	<hr />
-	<p>
-		{start_time} - {stop_time}
-	</p>
-</div> -->

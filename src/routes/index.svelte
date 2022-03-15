@@ -2,6 +2,10 @@
 	const current_year = new Date().getFullYear();
 </script>
 
+<svelte:head>
+	<title>Trigeneration Calculator</title>
+</svelte:head>
+
 <div style="display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 2rem)">
 	<div class="box content">
 		<h1>Trigeneration Calculator</h1>

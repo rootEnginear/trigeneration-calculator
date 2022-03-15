@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { FIELD_DATA } from 'data/fieldData';
-	import { formData } from 'stores/formData';
+	import { formData } from 'stores/trigenFormData';
 
 	export let fieldName;
 	export let min: number | null = FIELD_DATA[fieldName].min;
