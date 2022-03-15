@@ -1071,7 +1071,7 @@ const x4_ps = (p: number, s: number) => {
 	}
 	if (s < ssL) return 0
 	if (s > ssV) return 1
-	return (s - ssL) / (s - ssV)
+	return (s - ssL) / (ssV - ssL)
 }
 
 // Regions as a function of ph
