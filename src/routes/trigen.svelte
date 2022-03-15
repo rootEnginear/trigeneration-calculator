@@ -4,6 +4,7 @@
 	import InlineInput from 'components/InlineInput.svelte';
 	import FormStep from 'components/FormStep.svelte';
 	import NumberFormatter from 'components/NumberFormatter.svelte';
+	import MoneyFormatter from 'components/MoneyFormatter.svelte';
 
 	import { FIELD_DATA } from 'data/fieldData';
 	import { FUEL_DATA } from 'data/fuelData';
@@ -74,7 +75,6 @@
 					<div class="column"><Input fieldName="boiler_efficiency" /></div>
 				</div>
 			</div>
-
 			<div class="box is-shadowless">
 				<h2>Steam Outlet</h2>
 				<div class="table-container">
@@ -113,7 +113,6 @@
 					</table>
 				</div>
 			</div>
-
 			<div class="box is-shadowless">
 				<h2>ข้อมูลเชื้อเพลิง</h2>
 				<div class="table-container">
@@ -145,7 +144,9 @@
 							</tr>
 							<tr>
 								<td>ค่าเชื้อเพลิง</td>
-								<td class="has-text-right">{FUEL_DATA[$formData.fuel_type].price}</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={FUEL_DATA[$formData.fuel_type].price} />
+								</td>
 								<td>บาท/ตัน</td>
 							</tr>
 						</tbody>
@@ -161,7 +162,6 @@
 					</table>
 				</div>
 			</div>
-
 			<div class="box is-shadowless">
 				<h2>รายละเอียดต้นทุน Steam</h2>
 				<div class="table-container">
@@ -176,19 +176,25 @@
 						<tbody>
 							<tr>
 								<td>ค่าเชื้อเพลิง</td>
-								<td class="has-text-right">{$fuel_cost}</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$fuel_cost} />
+								</td>
 								<td>บาท/ตัน</td>
 							</tr>
 							<tr>
 								<td>อื่นๆ 30%</td>
-								<td class="has-text-right">{$other_cost}</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$other_cost} />
+								</td>
 								<td>บาท/ตัน</td>
 							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
 								<th>รวมต้นทุนทั้งหมด</th>
-								<th class="has-text-right">{$total_cost}</th>
+								<th class="has-text-right">
+									<MoneyFormatter value={$total_cost} />
+								</th>
 								<th>บาท/ตัน</th>
 							</tr>
 						</tfoot>
@@ -318,14 +324,14 @@
 								<td>kJ/kg</td>
 							</tr>
 							<tr>
-								<th>ความเย็นที่ผลิตได้</th>
+								<th>ความเย็นที่ผลิตได้ (kW)</th>
 								<td class="has-text-right">
 									<NumberFormatter value={$kw_cooling} />
 								</td>
 								<td>kW</td>
 							</tr>
 							<tr>
-								<th>ความเย็นที่ผลิตได้</th>
+								<th>ความเย็นที่ผลิตได้ (RT)</th>
 								<td class="has-text-right">
 									<NumberFormatter value={$rt_cooling} />
 								</td>
@@ -345,21 +351,21 @@
 							<tr>
 								<th><a href="#fixedCost" class="button is-fullwidth">Fixed Cost</a></th>
 								<td class="has-text-right">
-									{$fc_total}
+									<MoneyFormatter value={$fc_total} />
 								</td>
 								<td>บาท</td>
 							</tr>
 							<tr>
 								<th><a href="#annualCost" class="button is-fullwidth">Annual Cost</a></th>
 								<td class="has-text-right">
-									{$ac_total}
+									<MoneyFormatter value={$ac_total} />
 								</td>
 								<td>บาท/ปี</td>
 							</tr>
 							<tr>
 								<th><a href="#saveCost" class="button is-fullwidth">Save Cost</a></th>
 								<td class="has-text-right">
-									{$sc_total}
+									<MoneyFormatter value={$sc_total} />
 								</td>
 								<td>บาท/ปี</td>
 							</tr>
@@ -391,28 +397,28 @@
 							<tr>
 								<td>ค่าก่อสร้างและติดตั้ง Boiler </td>
 								<td class="has-text-right">
-									{$fc_boiler}
+									<MoneyFormatter value={$fc_boiler} />
 								</td>
 								<td>บาท</td>
 							</tr>
 							<tr>
 								<td>ค่าก่อสร้างและติดตั้ง Steam Expander</td>
 								<td class="has-text-right">
-									{$fc_steam}
+									<MoneyFormatter value={$fc_steam} />
 								</td>
 								<td>บาท</td>
 							</tr>
 							<tr>
 								<td>ค่าติดตั้ง Absorption Chiller Chiller</td>
 								<td class="has-text-right">
-									{$fc_chiller}
+									<MoneyFormatter value={$fc_chiller} />
 								</td>
 								<td>บาท</td>
 							</tr>
 							<tr>
 								<td>อื่นๆ (ค่าระบบน้ำตรวจวัดประสิทธิภาพ)</td>
 								<td class="has-text-right">
-									{$fc_other}
+									<MoneyFormatter value={$fc_other} />
 								</td>
 								<td>บาท</td>
 							</tr>
@@ -421,7 +427,7 @@
 							<tr>
 								<th>รวมค่าลงทุนทั้งหมด</th>
 								<th class="has-text-right">
-									{$fc_total}
+									<MoneyFormatter value={$fc_total} />
 								</th>
 								<th>บาท</th>
 							</tr>
@@ -444,14 +450,14 @@
 							<tr>
 								<td>ค่าบำรุงรักษา</td>
 								<td class="has-text-right">
-									{$ac_maintenance}
+									<MoneyFormatter value={$ac_maintenance} />
 								</td>
 								<td>บาท/ปี</td>
 							</tr>
 							<tr>
 								<td>ค่าไฟฟ้าสำหรับเดินระบบ Trigeneration (เฉพาะส่วนของ Boiler Turbine)</td>
 								<td class="has-text-right">
-									{$ac_electricity}
+									<MoneyFormatter value={$ac_electricity} />
 								</td>
 								<td>บาท/ปี</td>
 							</tr>
@@ -460,7 +466,7 @@
 							<tr>
 								<th>รวมค่าใช้จ่ายที่เพิ่มขึ้นเมื่อติดตั้งระบบ Trigeneration</th>
 								<th class="has-text-right">
-									{$ac_total}
+									<MoneyFormatter value={$ac_total} />
 								</th>
 								<th>บาท/ปี</th>
 							</tr>
@@ -483,14 +489,14 @@
 							<tr>
 								<td>ค่าไฟที่ประหยัดได้จากการผลิตไฟของ Steam Expander</td>
 								<td class="has-text-right">
-									{$sc_steam}
+									<MoneyFormatter value={$sc_steam} />
 								</td>
 								<td>บาท/ปี</td>
 							</tr>
 							<tr>
 								<td>ค่าไฟฟ้าที่ประหยัดจากการติดตั้ง Absorption Chiller</td>
 								<td class="has-text-right">
-									{$sc_chiller}
+									<MoneyFormatter value={$sc_chiller} />
 								</td>
 								<td>บาท/ปี</td>
 							</tr>
@@ -499,7 +505,7 @@
 							<tr>
 								<th>รวมผลประหยัดทั้งหมด</th>
 								<th class="has-text-right">
-									{$sc_total}
+									<MoneyFormatter value={$sc_total} />
 								</th>
 								<th>บาท/ปี</th>
 							</tr>
