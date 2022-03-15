@@ -18,7 +18,9 @@
 		turbine_outlet_enthalpy,
 		turbine_outlet_temp,
 		output_energy,
-		prod_energy
+		prod_energy,
+		kw_cooling,
+		rt_cooling
 	} from 'stores/formData';
 
 	let currentStep = 3;
@@ -259,7 +261,7 @@
 				</table>
 			</div>
 		{:else if currentStep === 3}
-			<h1>4 — Double Effect Absorbtion Chiller</h1>
+			<h1>4 — Double Effect Absorption Chiller</h1>
 			<div class="table-container">
 				<table class="table">
 					<tbody>
@@ -287,17 +289,23 @@
 						</tr>
 						<tr>
 							<th>ความเย็นที่ผลิตได้</th>
-							<td class="has-text-right">419.17</td>
+							<td class="has-text-right">
+								<NumberFormatter value={$kw_cooling} />
+							</td>
 							<td>kW</td>
 						</tr>
 						<tr>
 							<th>ความเย็นที่ผลิตได้</th>
-							<td class="has-text-right">419.17</td>
+							<td class="has-text-right">
+								<NumberFormatter value={$rt_cooling} />
+							</td>
 							<td>RT</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+		{:else if currentStep === 4}
+			<h1>5 — Economical Analysis</h1>
 		{/if}
 	</div>
 	<hr />

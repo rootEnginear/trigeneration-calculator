@@ -85,3 +85,19 @@ export const output_energy = derived(
 export const prod_energy = derived([output_energy, formData], ([$output_energy, $formData]) => {
 	return $output_energy * ($formData.generator_efficiency / 100);
 });
+
+export const kw_cooling = derived(
+	[formData, turbine_outlet_enthalpy],
+	([$formData, $turbine_outlet_enthalpy]) => {
+		return (
+			1.45 *
+			$formData.required_steam_flow_rate *
+			1000 *
+			(($turbine_outlet_enthalpy - 419.17) / 3600)
+		);
+	}
+);
+
+export const rt_cooling = derived(kw_cooling, ($kw_cooling) => {
+	return $kw_cooling / 3.517;
+});
