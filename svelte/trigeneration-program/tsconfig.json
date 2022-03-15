@@ -8,8 +8,8 @@
 			"data/*": ["src/data/*"],
 			"routes/*": ["src/routes/*"],
 			"styles/*": ["src/styles/*"],
-			"types/*": ["src/styles/*"],
-			"utils/*": ["src/styles/*"]
+			"types/*": ["src/types/*"],
+			"utils/*": ["src/utils/*"]
 		}
 	}
 }

@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
+import type { TrigenInputDataType } from 'types/trigenTypes';
 
-export const formData = writable({
+export const formData = writable<TrigenInputDataType>({
 	hr_per_day: 24,
 	day_per_year: 330,
 	electrical_cost: 3.7,
