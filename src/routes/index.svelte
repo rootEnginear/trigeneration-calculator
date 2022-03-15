@@ -8,7 +8,7 @@
 		<hr />
 		<div class="columns">
 			<div class="column">
-				<a href="./trigen" class="button menu-button is-fullwidth">
+				<a href="/trigen" class="button menu-button is-fullwidth">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -26,7 +26,7 @@
 				</a>
 			</div>
 			<div class="column">
-				<a href="./compare" class="button menu-button is-fullwidth">
+				<a href="/compare" class="button menu-button is-fullwidth">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"

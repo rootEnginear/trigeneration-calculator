@@ -40,7 +40,7 @@
 </script>
 
 <div class="box">
-	<a href="./" class="button mb-4">
+	<a href="/" class="button mb-4">
 		<span class="icon is-small">
 			<i class="fa fa-home" />
 		</span>
