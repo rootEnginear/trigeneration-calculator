@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { afterUpdate } from 'svelte';
+
 	import Steps from 'components/Steps.svelte';
 	import Input from 'components/Input.svelte';
 	import InlineInput from 'components/InlineInput.svelte';
@@ -37,6 +39,18 @@
 	} from 'stores/trigenFormData';
 
 	let currentStep = 0;
+	let isPrinting = false;
+
+	function print() {
+		isPrinting = true;
+	}
+
+	afterUpdate(() => {
+		if (isPrinting) {
+			window.print();
+			isPrinting = false;
+		}
+	});
 </script>
 
 <svelte:head>
@@ -44,23 +58,40 @@
 </svelte:head>
 
 <div class="box">
-	<a href="/" class="button mb-4">
-		<span class="icon is-small">
-			<i class="fa fa-home" />
-		</span>
-		<span>กลับหน้าหลัก</span>
-	</a>
-	<Steps {currentStep} />
-	<hr />
+	<div class="columns is-mobile mb-4" class:is-hidden={isPrinting}>
+		<div class="column is-narrow">
+			<a href="/" class="button">
+				<span class="icon is-small">
+					<i class="fa fa-home" />
+				</span>
+				<span>กลับหน้าหลัก</span>
+			</a>
+		</div>
+		<div class="column" />
+		{#if currentStep === 4}
+			<div class="column is-narrow">
+				<div class="button" on:click={print}>
+					<span>พิมพ์</span>
+					<span class="icon is-small">
+						<i class="fa fa-print" />
+					</span>
+				</div>
+			</div>
+		{/if}
+	</div>
+	<div class:is-hidden={isPrinting}>
+		<Steps {currentStep} />
+	</div>
+	<hr class:is-hidden={isPrinting} />
 	<div class="content">
-		{#if currentStep === 0}
+		{#if currentStep === 0 || isPrinting}
 			<h1>1 — ข้อมูลทั่วไป</h1>
 			<div class="box is-shadowless">
 				<Input fieldName="hr_per_day" />
 				<Input fieldName="day_per_year" />
 				<Input fieldName="electrical_cost" />
 			</div>
-		{:else if currentStep === 1}
+		{/if}{#if currentStep === 1 || isPrinting}
 			<h1>2 — Boiler</h1>
 			<div class="box is-shadowless">
 				<h2>ข้อมูล Boiler</h2>
@@ -211,7 +242,7 @@
 					</table>
 				</div>
 			</div>
-		{:else if currentStep === 2}
+		{/if}{#if currentStep === 2 || isPrinting}
 			<h1>3 — Turbine</h1>
 			<div class="box is-shadowless">
 				<h2>Inlet Steam</h2>
@@ -305,7 +336,7 @@
 					</table>
 				</div>
 			</div>
-		{:else if currentStep === 3}
+		{/if}{#if currentStep === 3 || isPrinting}
 			<h1>4 — Double Effect Absorption Chiller</h1>
 			<div class="box is-shadowless">
 				<div class="table-container">
@@ -351,7 +382,7 @@
 					</table>
 				</div>
 			</div>
-		{:else if currentStep === 4}
+		{/if}{#if currentStep === 4 || isPrinting}
 			<h1>5 — Economical Analysis</h1>
 			<div class="box is-shadowless">
 				<h2>Payback Period</h2>
@@ -535,6 +566,8 @@
 			</div>
 		{/if}
 	</div>
-	<hr />
-	<FormStep bind:currentStep />
+	<hr class:is-hidden={isPrinting} />
+	<div class:is-hidden={isPrinting}>
+		<FormStep bind:currentStep />
+	</div>
 </div>

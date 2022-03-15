@@ -101,3 +101,16 @@ tr > td:last-child {
 .control.has-icons-right .select:focus ~ .icon.is-danger {
 	color: $danger;
 }
+
+.content h1:not(:first-child) {
+	margin-top: unset;
+}
+
+@media print {
+	.box {
+		page-break-inside: avoid;
+	}
+	h1 {
+		page-break-before: always;
+	}
+}
