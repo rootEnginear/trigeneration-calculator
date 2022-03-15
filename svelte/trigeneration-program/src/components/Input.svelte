@@ -1,37 +1,36 @@
 <script lang="ts">
-	export let fieldName;
-	export let unit;
-	export let min: number | null = null;
-	export let max: number | null = null;
+	import { FIELD_DATA } from 'data/fieldData';
+	import { formData } from 'stores/formData';
 
-	export let value = 0;
+	export let fieldName;
+	export let min: number | null = FIELD_DATA[fieldName].min;
+	export let max: number | null = FIELD_DATA[fieldName].max;
+
+	export let value = $formData[fieldName];
 
 	const checkMinMax = (_) => {
-		if (min !== null && value < min) return `${fieldName} must be greater than ${min}`;
-		if (max !== null && value > max) return `${fieldName} must be less than ${max}`;
+		if (min !== null && value < min)
+			return `${FIELD_DATA[fieldName].label}ต้องมากกว่า ${min} ${FIELD_DATA[fieldName].unit}`;
+		if (max !== null && value > max)
+			return `${FIELD_DATA[fieldName].label}ต้องน้อยกว่า ${max} ${FIELD_DATA[fieldName].unit}`;
 		return '';
 	};
 
-	const updateMin = (_) => {
-		if (min !== null && value < min) value = min;
+	const updateFormData = (_) => {
+		$formData[fieldName] = value;
 	};
 
-	const updateMax = (_) => {
-		if (min !== null && value < min) value = min;
-	};
-
-	// $: updateMax({ value, max });
-	// $: updateMin({ value, min });
 	$: error = checkMinMax({ value, min, max });
+	$: updateFormData({ value });
 </script>
 
 <div class="field">
-	<label class="label" for={fieldName}>{fieldName}</label>
+	<label class="label" for={fieldName}>{FIELD_DATA[fieldName].label}</label>
 	<div class="field has-addons">
-		<div class="control is-expanded" class:has-icons-right={error}>
+		<div class="control is-expanded" class:has-icons-left={error}>
 			<input
 				id={fieldName}
-				class="input "
+				class="input"
 				class:is-danger={error}
 				type="number"
 				{min}
@@ -39,14 +38,14 @@
 				bind:value
 			/>
 			{#if error}
-				<span class="icon is-small is-right">
+				<span class="icon is-small is-left">
 					<i class="fas fa-exclamation-triangle" />
 				</span>
 			{/if}
 		</div>
 		<p class="control">
-			<span class="button is-static">{unit}</span>
+			<span class="button is-static">{FIELD_DATA[fieldName].unit}</span>
 		</p>
 	</div>
-	<p class="help is-danger">{error}&nbsp;</p>
+	<p class="help is-danger">{error}</p>
 </div>

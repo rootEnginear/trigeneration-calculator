@@ -6,6 +6,8 @@ $family-sans-serif: 'Sarabun', BlinkMacSystemFont, -apple-system, 'Segoe UI', 'R
 	'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Helvetica', 'Arial',
 	sans-serif;
 $primary: #22d3ee;
+$steps-completed-color: $primary;
+$steps-active-color: $primary;
 
 .container {
 	min-height: 100vh;
@@ -22,3 +24,4 @@ $primary: #22d3ee;
 }
 
 @import '../node_modules/bulma/bulma.sass';
+@import '../node_modules/bulma-o-steps/bulma-steps.sass';
