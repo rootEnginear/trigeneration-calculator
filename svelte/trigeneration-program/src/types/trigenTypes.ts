@@ -9,38 +9,31 @@ export type FuelType =
 	| 'Coal 5000 kcal'
 	| 'Coal 5500 kcal'
 	| 'น้ำมันเตา 600 2%S'
-	| 'น้ำมันเตา 1500 2%S'
+	| 'น้ำมันเตา 1500 2%S';
 
 export interface TrigenInputDataType {
-	hr_per_day: number
-	day_per_year: number
-	electrical_cost: number
+	hr_per_day: number;
+	day_per_year: number;
+	electrical_cost: number;
 
-	max_steam_volume: number
-	max_steam_pressure: number
+	max_steam_volume: number;
+	max_steam_pressure: number;
 
-	prod_steam_volume: number
-	prod_steam_pressure: number
-	prod_steam_temp: number
+	prod_steam_volume: number;
+	prod_steam_pressure: number;
+	prod_steam_temp: number;
 
-	input_steam_temp: number
-	input_steam_pressure: number
+	input_steam_temp: number;
+	input_steam_pressure: number;
 
-	boiler_efficiency: number
+	boiler_efficiency: number;
 
-	fuel_type: FuelType
+	fuel_type: FuelType;
 
-	isentropic_efficiency: number
-	generator_efficiency: number
+	isentropic_efficiency: number;
+	generator_efficiency: number;
 
-	outlet_pressure: number
+	outlet_pressure: number;
 
-	required_steam_flow_rate: number
-
-	steam_enthalpy: number | null
-	feedwater_enthalpy: number | null
-	fuel_usage_rate: number | null
-	fuel_cost: number | null
-	other_cost: number | null
-	total_cost: number | null
+	required_steam_flow_rate: number;
 }

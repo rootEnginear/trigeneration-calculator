@@ -10,9 +10,9 @@
 
 	const checkMinMax = (_) => {
 		if (min !== null && value < min)
-			return `${FIELD_DATA[fieldName].label}ต้องมากกว่า ${min} ${FIELD_DATA[fieldName].unit}`;
+			return `${FIELD_DATA[fieldName].label}ต้องมากกว่าหรือเท่ากับ ${min} ${FIELD_DATA[fieldName].unit}`;
 		if (max !== null && value > max)
-			return `${FIELD_DATA[fieldName].label}ต้องน้อยกว่า ${max} ${FIELD_DATA[fieldName].unit}`;
+			return `${FIELD_DATA[fieldName].label}ต้องน้อยกว่าหรือเท่ากับ ${max} ${FIELD_DATA[fieldName].unit}`;
 		return '';
 	};
 
@@ -20,12 +20,17 @@
 		$formData[fieldName] = value;
 	};
 
+	const guardValue = (_) => {
+		if (value !== 0 && !value) value = min;
+	};
+
+	$: guardValue({ value });
 	$: error = checkMinMax({ value, min, max });
 	$: updateFormData({ value });
 </script>
 
 <div class="field">
-	<label class="label" for={fieldName}>{FIELD_DATA[fieldName].label}</label>
+	<label class="label" for={fieldName}>{FIELD_DATA[fieldName].label}*</label>
 	<div class="field has-addons">
 		<div class="control is-expanded" class:has-icons-left={error}>
 			<input

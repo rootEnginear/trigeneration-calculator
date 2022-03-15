@@ -48,11 +48,13 @@ export const FIELD_DATA: FieldDataType = {
 	},
 	prod_steam_volume: {
 		label: 'อัตราการผลิตไอน้ำใช้งาน',
-		unit: 'ตัน/ชั่วโมง'
+		unit: 'ตัน/ชั่วโมง',
+		min: 0
 	},
 	prod_steam_pressure: {
 		label: 'ความดันไอน้ำใช้งาน',
-		unit: 'Barg'
+		unit: 'Barg',
+		min: 0
 	},
 	prod_steam_temp: {
 		label: 'อุณหภูมิไอน้ำใช้งาน',
