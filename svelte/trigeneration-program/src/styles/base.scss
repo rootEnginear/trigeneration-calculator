@@ -35,3 +35,7 @@ $steps-active-color: $primary;
 h1 {
 	text-align: center;
 }
+
+.box.is-shadowless {
+	border: 1px solid $border;
+}

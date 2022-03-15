@@ -23,7 +23,7 @@
 		rt_cooling
 	} from 'stores/formData';
 
-	let currentStep = 3;
+	let currentStep = 4;
 </script>
 
 <div class="box">
@@ -306,6 +306,144 @@
 			</div>
 		{:else if currentStep === 4}
 			<h1>5 — Economical Analysis</h1>
+			<div class="box is-shadowless">
+				<h2>Payback Period</h2>
+				<div class="table-container">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th><a href="#fixedCost">Fixed Cost</a></th>
+								<td class="has-text-right">94791435</td>
+								<td>บาท</td>
+							</tr>
+							<tr>
+								<th><a href="#annualCost">Annual Cost</a></th>
+								<td class="has-text-right">3750912</td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr>
+								<th><a href="#saveCost">Save Cost</a></th>
+								<td class="has-text-right">32081701</td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr>
+								<th>n</th>
+								<td class="has-text-right">3.35</td>
+								<td>ปี</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="box is-shadowless">
+				<h2 id="fixedCost">Fixed Cost</h2>
+				<div class="table-container">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>รายการปรับปรุง</th>
+								<th class="has-text-right">ราคา</th>
+								<th>หน่วย</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>ค่าก่อสร้างและติดตั้ง Boiler </td>
+								<td class="has-text-right"> 40000000 </td>
+								<td>บาท</td>
+							</tr>
+							<tr>
+								<td>ค่าก่อสร้างและติดตั้ง Steam Expander</td>
+								<td class="has-text-right"> 19354667 </td>
+								<td>บาท</td>
+							</tr>
+							<tr>
+								<td>ค่าติดตั้ง Absorption Chiller Chiller</td>
+								<td class="has-text-right"> 26819365 </td>
+								<td>บาท</td>
+							</tr>
+							<tr>
+								<td>อื่นๆ (ค่าระบบน้ำตรวจวัดประสิทธิภาพ)</td>
+								<td class="has-text-right"> 8617403 </td>
+								<td>บาท</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>รวมค่าลงทุนทั้งหมด</th>
+								<th class="has-text-right"> 94791435 </th>
+								<th>บาท</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<div class="box is-shadowless">
+				<h2 id="annualCost">Annual Cost</h2>
+				<div class="table-container">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>ค่าใช้จ่ายที่เพิ่ม</th>
+								<th class="has-text-right">เป็นเงิน</th>
+								<th>หน่วย</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>ค่าบำรุงรักษา</td>
+								<td class="has-text-right"> 375091.20 </td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr>
+								<td>ค่าไฟฟ้าสำหรับเดินระบบ Trigeneration (เฉพาะส่วนของ Boiler Turbine)</td>
+								<td class="has-text-right"> 3750912 </td>
+								<td>บาท/ปี</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>รวมค่าใช้จ่ายที่เพิ่มขึ้นเมื่อติดตั้งระบบ Trigeneration</th>
+								<th class="has-text-right"> 3750912 </th>
+								<th>บาท/ปี</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<div class="box is-shadowless">
+				<h2 id="saveCost">Save Cost</h2>
+				<div class="table-container">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>รายการประหยัด</th>
+								<th class="has-text-right">เป็นเงิน</th>
+								<th>หน่วย</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>ค่าไฟที่ประหยัดได้จากการผลิตไฟของ Steam Expander</td>
+								<td class="has-text-right"> 7089614 </td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr>
+								<td>ค่าไฟฟ้าที่ประหยัดจากการติดตั้ง Absorption Chiller</td>
+								<td class="has-text-right"> 24992087 </td>
+								<td>บาท/ปี</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>รวมผลประหยัดทั้งหมด</th>
+								<th class="has-text-right"> 32081701 </th>
+								<th>บาท/ปี</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
 		{/if}
 	</div>
 	<hr />
