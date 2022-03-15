@@ -23,7 +23,11 @@ const Section1 = ({
 		{}
 	)
 
-	const { control, handleSubmit } = useForm<TrigenInputDataType>({
+	const {
+		register,
+		formState: { errors },
+		handleSubmit,
+	} = useForm<TrigenInputDataType>({
 		defaultValues: INITIAL_VAL,
 	})
 
@@ -39,10 +43,10 @@ const Section1 = ({
 			<form>
 				<VStack>
 					<Stack direction={['column', 'row']} spacing="4" w="full">
-						<FormField name="hr_per_day" control={control} />
-						<FormField name="day_per_year" control={control} />
+						<FormField name="hr_per_day" {...{ register, errors }} />
+						<FormField name="day_per_year" {...{ register, errors }} />
 					</Stack>
-					<FormField name="electrical_cost" control={control} />
+					<FormField name="electrical_cost" {...{ register, errors }} />
 				</VStack>
 				<FormActionButton submitForm={handleSubmit(saveData)} nextStep={nextStep} />
 			</form>
