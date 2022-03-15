@@ -20,7 +20,19 @@
 		output_energy,
 		prod_energy,
 		kw_cooling,
-		rt_cooling
+		rt_cooling,
+		fc_boiler,
+		fc_steam,
+		fc_chiller,
+		fc_other,
+		fc_total,
+		ac_maintenance,
+		ac_electricity,
+		ac_total,
+		sc_steam,
+		sc_chiller,
+		sc_total,
+		econ_n
 	} from 'stores/formData';
 
 	let currentStep = 4;
@@ -312,26 +324,36 @@
 					<table class="table">
 						<tbody>
 							<tr>
-								<th><a href="#fixedCost">Fixed Cost</a></th>
-								<td class="has-text-right">94791435</td>
+								<th><a href="#fixedCost" class="button is-fullwidth">Fixed Cost</a></th>
+								<td class="has-text-right">
+									{$fc_total}
+								</td>
 								<td>บาท</td>
 							</tr>
 							<tr>
-								<th><a href="#annualCost">Annual Cost</a></th>
-								<td class="has-text-right">3750912</td>
+								<th><a href="#annualCost" class="button is-fullwidth">Annual Cost</a></th>
+								<td class="has-text-right">
+									{$ac_total}
+								</td>
 								<td>บาท/ปี</td>
 							</tr>
 							<tr>
-								<th><a href="#saveCost">Save Cost</a></th>
-								<td class="has-text-right">32081701</td>
+								<th><a href="#saveCost" class="button is-fullwidth">Save Cost</a></th>
+								<td class="has-text-right">
+									{$sc_total}
+								</td>
 								<td>บาท/ปี</td>
-							</tr>
-							<tr>
-								<th>n</th>
-								<td class="has-text-right">3.35</td>
-								<td>ปี</td>
 							</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<th>n</th>
+								<th class="has-text-right">
+									<NumberFormatter value={$econ_n} digits={2} />
+								</th>
+								<th>ปี</th>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>
@@ -349,29 +371,39 @@
 						<tbody>
 							<tr>
 								<td>ค่าก่อสร้างและติดตั้ง Boiler </td>
-								<td class="has-text-right"> 40000000 </td>
+								<td class="has-text-right">
+									{$fc_boiler}
+								</td>
 								<td>บาท</td>
 							</tr>
 							<tr>
 								<td>ค่าก่อสร้างและติดตั้ง Steam Expander</td>
-								<td class="has-text-right"> 19354667 </td>
+								<td class="has-text-right">
+									{$fc_steam}
+								</td>
 								<td>บาท</td>
 							</tr>
 							<tr>
 								<td>ค่าติดตั้ง Absorption Chiller Chiller</td>
-								<td class="has-text-right"> 26819365 </td>
+								<td class="has-text-right">
+									{$fc_chiller}
+								</td>
 								<td>บาท</td>
 							</tr>
 							<tr>
 								<td>อื่นๆ (ค่าระบบน้ำตรวจวัดประสิทธิภาพ)</td>
-								<td class="has-text-right"> 8617403 </td>
+								<td class="has-text-right">
+									{$fc_other}
+								</td>
 								<td>บาท</td>
 							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
 								<th>รวมค่าลงทุนทั้งหมด</th>
-								<th class="has-text-right"> 94791435 </th>
+								<th class="has-text-right">
+									{$fc_total}
+								</th>
 								<th>บาท</th>
 							</tr>
 						</tfoot>
@@ -392,19 +424,25 @@
 						<tbody>
 							<tr>
 								<td>ค่าบำรุงรักษา</td>
-								<td class="has-text-right"> 375091.20 </td>
+								<td class="has-text-right">
+									{$ac_maintenance}
+								</td>
 								<td>บาท/ปี</td>
 							</tr>
 							<tr>
 								<td>ค่าไฟฟ้าสำหรับเดินระบบ Trigeneration (เฉพาะส่วนของ Boiler Turbine)</td>
-								<td class="has-text-right"> 3750912 </td>
+								<td class="has-text-right">
+									{$ac_electricity}
+								</td>
 								<td>บาท/ปี</td>
 							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
 								<th>รวมค่าใช้จ่ายที่เพิ่มขึ้นเมื่อติดตั้งระบบ Trigeneration</th>
-								<th class="has-text-right"> 3750912 </th>
+								<th class="has-text-right">
+									{$ac_total}
+								</th>
 								<th>บาท/ปี</th>
 							</tr>
 						</tfoot>
@@ -425,19 +463,25 @@
 						<tbody>
 							<tr>
 								<td>ค่าไฟที่ประหยัดได้จากการผลิตไฟของ Steam Expander</td>
-								<td class="has-text-right"> 7089614 </td>
+								<td class="has-text-right">
+									{$sc_steam}
+								</td>
 								<td>บาท/ปี</td>
 							</tr>
 							<tr>
 								<td>ค่าไฟฟ้าที่ประหยัดจากการติดตั้ง Absorption Chiller</td>
-								<td class="has-text-right"> 24992087 </td>
+								<td class="has-text-right">
+									{$sc_chiller}
+								</td>
 								<td>บาท/ปี</td>
 							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
 								<th>รวมผลประหยัดทั้งหมด</th>
-								<th class="has-text-right"> 32081701 </th>
+								<th class="has-text-right">
+									{$sc_total}
+								</th>
 								<th>บาท/ปี</th>
 							</tr>
 						</tfoot>

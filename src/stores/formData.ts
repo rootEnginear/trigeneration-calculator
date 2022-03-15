@@ -59,9 +59,7 @@ export const turbine_outlet_enthalpy = derived(
 	[formData, steam_enthalpy],
 	([$formData, $steam_enthalpy]) => {
 		const a = s_pT($formData.prod_steam_pressure + 1, $formData.prod_steam_temp);
-		console.log('s_pT', $formData.prod_steam_pressure + 1, $formData.prod_steam_temp, '=', a);
 		const b = h_ps($formData.outlet_pressure + 1, a);
-		console.log('h_ps', $formData.outlet_pressure + 1, a, '=', b);
 		return $steam_enthalpy - ($steam_enthalpy - b) * ($formData.isentropic_efficiency / 100);
 	}
 );
@@ -101,3 +99,64 @@ export const kw_cooling = derived(
 export const rt_cooling = derived(kw_cooling, ($kw_cooling) => {
 	return $kw_cooling / 3.517;
 });
+
+export const fc_boiler = derived(formData, ($formData) =>
+	Math.ceil($formData.max_steam_volume * 2000000)
+);
+export const fc_steam = derived(prod_energy, ($prod_energy) => Math.ceil($prod_energy * 80000));
+export const fc_chiller = derived(rt_cooling, ($rt_cooling) => Math.ceil($rt_cooling * 20000));
+export const fc_other = derived(
+	[fc_boiler, fc_steam, fc_chiller],
+	([$fc_boiler, $fc_steam, $fc_chiller]) =>
+		Math.ceil(0.1 * [$fc_boiler, $fc_steam, $fc_chiller].reduce((a, b) => a + b, 0))
+);
+export const fc_total = derived(
+	[fc_boiler, fc_steam, fc_chiller, fc_other],
+	([$fc_boiler, $fc_steam, $fc_chiller, $fc_other]) => {
+		return [$fc_boiler, $fc_steam, $fc_chiller, $fc_other].reduce((a, c) => a + c, 0);
+	}
+);
+
+export const ac_electricity = derived(formData, ($formData) =>
+	Math.ceil(
+		$formData.prod_steam_volume *
+			8 *
+			$formData.hr_per_day *
+			$formData.day_per_year *
+			$formData.electrical_cost
+	)
+);
+export const ac_maintenance = derived(ac_electricity, ($ac_electricity) =>
+	Math.ceil(0.1 * $ac_electricity)
+);
+export const ac_total = derived(
+	[ac_maintenance, ac_electricity],
+	([$ac_maintenance, $ac_electricity]) => {
+		return [$ac_maintenance, $ac_electricity].reduce((a, c) => a + c, 0);
+	}
+);
+
+export const sc_steam = derived([prod_energy, formData], ([$prod_energy, $formData]) => {
+	return Math.ceil(
+		$prod_energy * $formData.hr_per_day * $formData.day_per_year * $formData.electrical_cost
+	);
+});
+export const sc_chiller = derived([rt_cooling, formData], ([$rt_cooling, $formData]) => {
+	return Math.ceil(
+		(0.75 - 0.114) *
+			$rt_cooling *
+			$formData.hr_per_day *
+			$formData.day_per_year *
+			$formData.electrical_cost
+	);
+});
+export const sc_total = derived([sc_steam, sc_chiller], ([$sc_steam, $sc_chiller]) => {
+	return [$sc_steam, $sc_chiller].reduce((a, c) => a + c, 0);
+});
+
+export const econ_n = derived(
+	[fc_total, ac_total, sc_total],
+	([$fc_total, $ac_total, $sc_total]) => {
+		return $fc_total / ($sc_total - $ac_total);
+	}
+);
