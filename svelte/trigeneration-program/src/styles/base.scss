@@ -1,0 +1,24 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap');
+
+$family-sans-serif: 'Sarabun', BlinkMacSystemFont, -apple-system, 'Segoe UI', 'Roboto', 'Oxygen',
+	'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Helvetica', 'Arial',
+	sans-serif;
+$primary: #22d3ee;
+
+.container {
+	min-height: 100vh;
+}
+
+@supports (-webkit-touch-callout: none) {
+	.container {
+		min-height: -webkit-fill-available;
+	}
+}
+
+.is-wrap {
+	white-space: initial;
+}
+
+@import '../node_modules/bulma/bulma.sass';
