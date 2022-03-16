@@ -29,19 +29,19 @@ export const FUEL_DATA: FuelDataType = {
 		lhv: 8860.0,
 		price: 830.0
 	},
-	'Anthracite coal': {
+	ถ่านหินแอนทราไซต์: {
 		lhv: 30080.0,
 		price: 5693.0
 	},
-	'Coal 4500 kcal': {
+	'ถ่านหิน 4500 kcal': {
 		lhv: 18840.6,
 		price: 4037.0
 	},
-	'Coal 5000 kcal': {
+	'ถ่านหิน 5000 kcal': {
 		lhv: 20934.0,
 		price: 4704.0
 	},
-	'Coal 5500 kcal': {
+	'ถ่านหิน 5500 kcal': {
 		lhv: 23027.4,
 		price: 5175.0
 	},

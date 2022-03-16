@@ -7,7 +7,10 @@
 </script>
 
 <svelte:head>
-	<title>เปรียบเทียบ Boiler — Trigeneration Calculator</title>
+	<title
+		>เปรียบเทียบข้อมูลโรงงาน หากติดตั้งระบบ Trigeneration — คำนวณความคุ้มค่าในการติดตั้งระบบ
+		Trigeneration</title
+	>
 </svelte:head>
 
 <div class="box">

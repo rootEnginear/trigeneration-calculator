@@ -37,6 +37,12 @@ $steps-active-color: $yellow;
 	}
 }
 
+.menu-button {
+	height: 100%;
+	white-space: normal;
+	justify-content: center;
+}
+
 .is-wrap {
 	white-space: initial;
 }
@@ -113,4 +119,8 @@ tr > td:last-child {
 	h1 {
 		page-break-before: always;
 	}
+}
+
+img {
+	max-width: 500px;
 }

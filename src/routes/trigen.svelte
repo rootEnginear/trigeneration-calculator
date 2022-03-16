@@ -54,7 +54,7 @@
 </script>
 
 <svelte:head>
-	<title>คำนวณ Trigeneration System — Trigeneration Calculator</title>
+	<title>ติดตั้งระบบ Trigeneration — คำนวณความคุ้มค่าในการติดตั้งระบบ Trigeneration</title>
 </svelte:head>
 
 <div class="box">
@@ -93,6 +93,9 @@
 			</div>
 		{/if}{#if currentStep === 1 || isPrinting}
 			<h1>2 — Boiler</h1>
+			<figure class="image">
+				<img src="img/boiler.png" alt="" />
+			</figure>
 			<div class="box is-shadowless">
 				<h2>ข้อมูล Boiler</h2>
 				<div class="columns">
@@ -244,6 +247,9 @@
 			</div>
 		{/if}{#if currentStep === 2 || isPrinting}
 			<h1>3 — Turbine</h1>
+			<figure class="image">
+				<img src="img/turbine.png" alt="" />
+			</figure>
 			<div class="box is-shadowless">
 				<h2>Inlet Steam</h2>
 				<div class="table-container">
@@ -260,7 +266,7 @@
 								<td>{FIELD_DATA['prod_steam_temp'].unit}</td>
 							</tr>
 							<tr>
-								<th>{FIELD_DATA['prod_steam_volume'].label}</th>
+								<th>{FIELD_DATA['prod_steam_volume'].label.replace('การผลิต', '')}</th>
 								<td class="has-text-right">{$formData.prod_steam_volume}</td>
 								<td>{FIELD_DATA['prod_steam_volume'].unit}</td>
 							</tr>
@@ -314,7 +320,7 @@
 								<td>˚C</td>
 							</tr>
 							<tr>
-								<th>{FIELD_DATA['prod_steam_volume'].label}</th>
+								<th>{FIELD_DATA['prod_steam_volume'].label.replace('การผลิต', '')}</th>
 								<td class="has-text-right">{$formData.prod_steam_volume}</td>
 								<td>{FIELD_DATA['prod_steam_volume'].unit}</td>
 							</tr>
@@ -338,6 +344,9 @@
 			</div>
 		{/if}{#if currentStep === 3 || isPrinting}
 			<h1>4 — Double Effect Absorption Chiller</h1>
+			<figure class="image">
+				<img src="img/chiller.png" alt="" />
+			</figure>
 			<div class="box is-shadowless">
 				<div class="table-container">
 					<table class="table">
@@ -349,7 +358,12 @@
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['required_steam_flow_rate'].label}</th>
-								<td><InlineInput fieldName="required_steam_flow_rate" /></td>
+								<td
+									><InlineInput
+										fieldName="required_steam_flow_rate"
+										max={$formData.prod_steam_volume}
+									/></td
+								>
 								<td>{FIELD_DATA['required_steam_flow_rate'].unit}</td>
 							</tr>
 							<tr>
@@ -384,6 +398,9 @@
 			</div>
 		{/if}{#if currentStep === 4 || isPrinting}
 			<h1>5 — Economical Analysis</h1>
+			<figure class="image">
+				<img src="img/econ.jpg" alt="" />
+			</figure>
 			<div class="box is-shadowless">
 				<h2>Payback Period</h2>
 				<div class="table-container">
@@ -460,7 +477,7 @@
 								<td>บาท</td>
 							</tr>
 							<tr>
-								<td>ค่าติดตั้ง Absorption Chiller Chiller</td>
+								<td>ค่าติดตั้ง Absorption Chiller</td>
 								<td class="has-text-right">
 									<MoneyFormatter value={$fc_chiller} />
 								</td>
