@@ -11,7 +11,14 @@
 		<h1>คำนวณความคุ้มค่าในการติดตั้งระบบ Trigeneration</h1>
 		<hr />
 		<figure class="image">
-			<img src="img/trigen_sys.jpg" alt="" />
+			<img
+				src="img/trigen_sys.jpg"
+				alt=""
+				decoding="async"
+				loading="lazy"
+				width="500"
+				height="300"
+			/>
 		</figure>
 		<div class="columns">
 			<div class="column">

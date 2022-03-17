@@ -95,7 +95,7 @@
 		{#if currentStep === 1 || isPrinting}
 			<h1>2 — Boiler</h1>
 			<figure class="image">
-				<img src="img/boiler.png" alt="" />
+				<img src="img/boiler.jpg" alt="" decoding="async" loading="lazy" width="500" height="300" />
 			</figure>
 			<div class="box is-shadowless">
 				<h2>ข้อมูล Boiler</h2>
@@ -268,7 +268,14 @@
 		{#if currentStep === 2 || isPrinting}
 			<h1>3 — Turbine</h1>
 			<figure class="image">
-				<img src="img/turbine.png" alt="" />
+				<img
+					src="img/turbine.jpg"
+					alt=""
+					decoding="async"
+					loading="lazy"
+					width="500"
+					height="300"
+				/>
 			</figure>
 			<div class="box is-shadowless">
 				<h2>Inlet Steam</h2>
@@ -366,7 +373,14 @@
 		{#if currentStep === 3 || isPrinting}
 			<h1>4 — Double Effect Absorption Chiller</h1>
 			<figure class="image">
-				<img src="img/chiller.png" alt="" />
+				<img
+					src="img/chiller.jpg"
+					alt=""
+					decoding="async"
+					loading="lazy"
+					width="500"
+					height="300"
+				/>
 			</figure>
 			<div class="box is-shadowless">
 				<div class="table-container">
@@ -423,7 +437,7 @@
 		{#if currentStep === 4 || isPrinting}
 			<h1>5 — Economical Analysis</h1>
 			<figure class="image">
-				<img src="img/econ.png" alt="" />
+				<img src="img/econ.png" alt="" decoding="async" loading="lazy" width="500" height="300" />
 			</figure>
 			<div class="box is-shadowless">
 				<h2>Payback Period</h2>
