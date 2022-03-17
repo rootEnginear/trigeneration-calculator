@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { FIELD_DATA } from 'data/trigenFieldData';
 	import type { Writable } from 'svelte/store';
 
+	export let FIELD_DATA;
 	export let formData: Writable<any>;
 
 	export let fieldName;

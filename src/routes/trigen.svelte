@@ -87,11 +87,12 @@
 		{#if currentStep === 0 || isPrinting}
 			<h1>1 — ข้อมูลทั่วไป</h1>
 			<div class="box is-shadowless">
-				<Input fieldName="hr_per_day" {formData} />
-				<Input fieldName="day_per_year" {formData} />
-				<Input fieldName="electrical_cost" {formData} />
+				<Input fieldName="hr_per_day" {formData} {FIELD_DATA} />
+				<Input fieldName="day_per_year" {formData} {FIELD_DATA} />
+				<Input fieldName="electrical_cost" {formData} {FIELD_DATA} />
 			</div>
-		{/if}{#if currentStep === 1 || isPrinting}
+		{/if}
+		{#if currentStep === 1 || isPrinting}
 			<h1>2 — Boiler</h1>
 			<figure class="image">
 				<img src="img/boiler.png" alt="" />
@@ -99,24 +100,36 @@
 			<div class="box is-shadowless">
 				<h2>ข้อมูล Boiler</h2>
 				<div class="columns">
-					<div class="column"><Input fieldName="max_steam_volume" {formData} /></div>
-					<div class="column"><Input fieldName="max_steam_pressure" {formData} /></div>
+					<div class="column"><Input fieldName="max_steam_volume" {formData} {FIELD_DATA} /></div>
+					<div class="column"><Input fieldName="max_steam_pressure" {formData} {FIELD_DATA} /></div>
 				</div>
 				<div class="columns">
 					<div class="column">
-						<Input fieldName="prod_steam_volume" max={$formData.max_steam_volume} {formData} />
+						<Input
+							fieldName="prod_steam_volume"
+							max={$formData.max_steam_volume}
+							{formData}
+							{FIELD_DATA}
+						/>
 					</div>
 					<div class="column">
-						<Input fieldName="prod_steam_pressure" max={$formData.max_steam_pressure} {formData} />
+						<Input
+							fieldName="prod_steam_pressure"
+							max={$formData.max_steam_pressure}
+							{formData}
+							{FIELD_DATA}
+						/>
 					</div>
 				</div>
 				<div class="columns">
-					<div class="column"><Input fieldName="prod_steam_temp" {formData} /></div>
-					<div class="column"><Input fieldName="input_steam_temp" {formData} /></div>
+					<div class="column"><Input fieldName="prod_steam_temp" {formData} {FIELD_DATA} /></div>
+					<div class="column"><Input fieldName="input_steam_temp" {formData} {FIELD_DATA} /></div>
 				</div>
 				<div class="columns">
-					<div class="column"><Input fieldName="input_steam_pressure" {formData} /></div>
-					<div class="column"><Input fieldName="boiler_efficiency" {formData} /></div>
+					<div class="column">
+						<Input fieldName="input_steam_pressure" {formData} {FIELD_DATA} />
+					</div>
+					<div class="column"><Input fieldName="boiler_efficiency" {formData} {FIELD_DATA} /></div>
 				</div>
 			</div>
 			<div class="box is-shadowless">
@@ -245,7 +258,8 @@
 					</table>
 				</div>
 			</div>
-		{/if}{#if currentStep === 2 || isPrinting}
+		{/if}
+		{#if currentStep === 2 || isPrinting}
 			<h1>3 — Turbine</h1>
 			<figure class="image">
 				<img src="img/turbine.png" alt="" />
@@ -280,14 +294,14 @@
 							<tr>
 								<th>{FIELD_DATA['isentropic_efficiency'].label}</th>
 								<td>
-									<InlineInput fieldName="isentropic_efficiency" {formData} />
+									<InlineInput fieldName="isentropic_efficiency" {formData} {FIELD_DATA} />
 								</td>
 								<td>{FIELD_DATA['isentropic_efficiency'].unit}</td>
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['generator_efficiency'].label}</th>
 								<td>
-									<InlineInput fieldName="generator_efficiency" {formData} />
+									<InlineInput fieldName="generator_efficiency" {formData} {FIELD_DATA} />
 								</td>
 								<td>{FIELD_DATA['generator_efficiency'].unit}</td>
 							</tr>
@@ -302,7 +316,7 @@
 						<tbody>
 							<tr>
 								<th>{FIELD_DATA['outlet_pressure'].label}</th>
-								<td><InlineInput fieldName="outlet_pressure" {formData} /></td>
+								<td><InlineInput fieldName="outlet_pressure" {formData} {FIELD_DATA} /></td>
 								<td>{FIELD_DATA['outlet_pressure'].unit}</td>
 							</tr>
 							<tr>
@@ -342,7 +356,8 @@
 					</table>
 				</div>
 			</div>
-		{/if}{#if currentStep === 3 || isPrinting}
+		{/if}
+		{#if currentStep === 3 || isPrinting}
 			<h1>4 — Double Effect Absorption Chiller</h1>
 			<figure class="image">
 				<img src="img/chiller.png" alt="" />
@@ -363,6 +378,7 @@
 										fieldName="required_steam_flow_rate"
 										max={$formData.prod_steam_volume}
 										{formData}
+										{FIELD_DATA}
 									/></td
 								>
 								<td>{FIELD_DATA['required_steam_flow_rate'].unit}</td>
@@ -397,7 +413,8 @@
 					</table>
 				</div>
 			</div>
-		{/if}{#if currentStep === 4 || isPrinting}
+		{/if}
+		{#if currentStep === 4 || isPrinting}
 			<h1>5 — Economical Analysis</h1>
 			<figure class="image">
 				<img src="img/econ.png" alt="" />
