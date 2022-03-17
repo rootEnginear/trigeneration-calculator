@@ -113,11 +113,16 @@ tr > td:last-child {
 }
 
 @media print {
-	.box {
+	.box,
+	.column,
+	.columns.print-linear {
 		page-break-inside: avoid;
 	}
 	h1 {
 		page-break-before: always;
+	}
+	.columns.print-linear {
+		flex-direction: column;
 	}
 }
 

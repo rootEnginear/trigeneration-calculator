@@ -133,44 +133,6 @@
 				</div>
 			</div>
 			<div class="box is-shadowless">
-				<h2>Steam Outlet</h2>
-				<div class="table-container">
-					<table class="table">
-						<tbody>
-							<tr>
-								<th>{FIELD_DATA['prod_steam_pressure'].label}</th>
-								<td class="has-text-right">{$formData.prod_steam_pressure}</td>
-								<td>{FIELD_DATA['prod_steam_pressure'].unit}</td>
-							</tr>
-							<tr>
-								<th>{FIELD_DATA['prod_steam_temp'].label}</th>
-								<td class="has-text-right">{$formData.prod_steam_temp}</td>
-								<td>{FIELD_DATA['prod_steam_temp'].unit}</td>
-							</tr>
-							<tr>
-								<th>{FIELD_DATA['prod_steam_volume'].label}</th>
-								<td class="has-text-right">{$formData.prod_steam_volume}</td>
-								<td>{FIELD_DATA['prod_steam_volume'].unit}</td>
-							</tr>
-							<tr>
-								<th>เอลทาลปีไอน้ำ</th>
-								<td class="has-text-right">
-									<NumberFormatter value={$steam_enthalpy} />
-								</td>
-								<td>kJ/kg</td>
-							</tr>
-							<tr>
-								<th>เอลทาลปีน้ำป้อนเข้า</th>
-								<td class="has-text-right">
-									<NumberFormatter value={$feedwater_enthalpy} />
-								</td>
-								<td>kJ/kg</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="box is-shadowless">
 				<h2>ข้อมูลเชื้อเพลิง</h2>
 				<div class="table-container">
 					<table class="table">
@@ -219,43 +181,87 @@
 					</table>
 				</div>
 			</div>
-			<div class="box is-shadowless">
-				<h2>รายละเอียดต้นทุน Steam</h2>
-				<div class="table-container">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>รายการ</th>
-								<th class="has-text-right">เป็นเงิน</th>
-								<th>หน่วย</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>ค่าเชื้อเพลิง</td>
-								<td class="has-text-right">
-									<MoneyFormatter value={$fuel_cost} />
-								</td>
-								<td>บาท/ตัน</td>
-							</tr>
-							<tr>
-								<td>อื่นๆ 30%</td>
-								<td class="has-text-right">
-									<MoneyFormatter value={$other_cost} />
-								</td>
-								<td>บาท/ตัน</td>
-							</tr>
-						</tbody>
-						<tfoot>
-							<tr>
-								<th>รวมต้นทุนทั้งหมด</th>
-								<th class="has-text-right">
-									<MoneyFormatter value={$total_cost} />
-								</th>
-								<th>บาท/ตัน</th>
-							</tr>
-						</tfoot>
-					</table>
+			<div class="columns print-linear">
+				<div class="column">
+					<div class="box is-shadowless">
+						<h2>Steam Outlet</h2>
+						<div class="table-container">
+							<table class="table">
+								<tbody>
+									<tr>
+										<th>{FIELD_DATA['prod_steam_pressure'].label}</th>
+										<td class="has-text-right">{$formData.prod_steam_pressure}</td>
+										<td>{FIELD_DATA['prod_steam_pressure'].unit}</td>
+									</tr>
+									<tr>
+										<th>{FIELD_DATA['prod_steam_temp'].label}</th>
+										<td class="has-text-right">{$formData.prod_steam_temp}</td>
+										<td>{FIELD_DATA['prod_steam_temp'].unit}</td>
+									</tr>
+									<tr>
+										<th>{FIELD_DATA['prod_steam_volume'].label}</th>
+										<td class="has-text-right">{$formData.prod_steam_volume}</td>
+										<td>{FIELD_DATA['prod_steam_volume'].unit}</td>
+									</tr>
+									<tr>
+										<th>เอลทาลปีไอน้ำ</th>
+										<td class="has-text-right">
+											<NumberFormatter value={$steam_enthalpy} />
+										</td>
+										<td>kJ/kg</td>
+									</tr>
+									<tr>
+										<th>เอลทาลปีน้ำป้อนเข้า</th>
+										<td class="has-text-right">
+											<NumberFormatter value={$feedwater_enthalpy} />
+										</td>
+										<td>kJ/kg</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="column">
+					<div class="box is-shadowless">
+						<h2>รายละเอียดต้นทุน Steam</h2>
+						<div class="table-container">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>รายการ</th>
+										<th class="has-text-right">เป็นเงิน</th>
+										<th>หน่วย</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>ค่าเชื้อเพลิง</td>
+										<td class="has-text-right">
+											<MoneyFormatter value={$fuel_cost} />
+										</td>
+										<td>บาท/ตัน</td>
+									</tr>
+									<tr>
+										<td>อื่นๆ 30%</td>
+										<td class="has-text-right">
+											<MoneyFormatter value={$other_cost} />
+										</td>
+										<td>บาท/ตัน</td>
+									</tr>
+								</tbody>
+								<tfoot>
+									<tr>
+										<th>รวมต้นทุนทั้งหมด</th>
+										<th class="has-text-right">
+											<MoneyFormatter value={$total_cost} />
+										</th>
+										<th>บาท/ตัน</th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		{/if}

@@ -202,7 +202,7 @@
 					</table>
 				</div>
 			</div>
-			<div class="columns">
+			<div class="columns print-linear">
 				<div class="column">
 					<div class="box is-shadowless">
 						<h2>Steam Outlet</h2>
@@ -380,7 +380,7 @@
 					</table>
 				</div>
 			</div>
-			<div class="columns">
+			<div class="columns print-linear">
 				<div class="column">
 					<div class="box is-shadowless">
 						<h2>Steam Outlet</h2>
@@ -820,6 +820,8 @@
 			</div>
 		{/if}
 	</div>
-	<hr />
-	<FormStep bind:currentStep />
+	<hr class:is-hidden={isPrinting} />
+	<div class:is-hidden={isPrinting}>
+		<FormStep bind:currentStep />
+	</div>
 </div>
