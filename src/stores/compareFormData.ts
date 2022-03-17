@@ -1,22 +1,31 @@
 import { derived, writable } from 'svelte/store';
-import type { TrigenInputDataType } from 'types/trigenTypes';
+import type { CompareInputDataType } from 'types/trigenTypes';
 import { FUEL_DATA } from 'data/fuelData';
 
 import { T_ph, h_pT, h_ps, s_pT } from 'utils/xsteam';
 
-export const formData = writable<TrigenInputDataType>({
+export const formData = writable<CompareInputDataType>({
 	hr_per_day: 24,
 	day_per_year: 330,
 	electrical_cost: 3.7,
-	max_steam_volume: 20,
-	max_steam_pressure: 25,
-	prod_steam_volume: 16,
-	prod_steam_pressure: 22.5,
-	prod_steam_temp: 226,
-	input_steam_temp: 107,
-	input_steam_pressure: 0.3,
-	boiler_efficiency: 90.74,
-	fuel_type: 'ไม้สับ',
+	old_max_steam_volume: 20,
+	old_max_steam_pressure: 25,
+	old_prod_steam_volume: 11,
+	old_prod_steam_pressure: 22.5,
+	old_prod_steam_temp: 226,
+	old_input_steam_temp: 107,
+	old_input_steam_pressure: 0.3,
+	old_boiler_efficiency: 80.5,
+	old_fuel_type: 'ไม้สับ',
+	new_max_steam_volume: 20,
+	new_max_steam_pressure: 25,
+	new_prod_steam_volume: 16,
+	new_prod_steam_pressure: 22.5,
+	new_prod_steam_temp: 226,
+	new_input_steam_temp: 107,
+	new_input_steam_pressure: 0.3,
+	new_boiler_efficiency: 90.74,
+	new_fuel_type: 'ไม้สับ',
 	isentropic_efficiency: 53,
 	generator_efficiency: 95,
 	outlet_pressure: 12.5,
@@ -24,26 +33,26 @@ export const formData = writable<TrigenInputDataType>({
 });
 
 export const steam_enthalpy = derived(formData, ($formData) => {
-	return h_pT($formData.prod_steam_pressure + 1, $formData.prod_steam_temp);
+	return h_pT($formData.old_prod_steam_pressure + 1, $formData.old_prod_steam_temp);
 });
 
 export const feedwater_enthalpy = derived(formData, ($formData) => {
-	return h_pT($formData.prod_steam_pressure + 1, $formData.input_steam_temp);
+	return h_pT($formData.old_prod_steam_pressure + 1, $formData.old_input_steam_temp);
 });
 
 export const fuel_usage_rate = derived(
 	[formData, steam_enthalpy, feedwater_enthalpy],
 	([$formData, $steam_enthalpy, $feedwater_enthalpy]) => {
 		return (
-			($formData.prod_steam_volume * ($steam_enthalpy - $feedwater_enthalpy)) /
-			((FUEL_DATA[$formData.fuel_type].lhv * $formData.boiler_efficiency) / 100)
+			($formData.old_prod_steam_volume * ($steam_enthalpy - $feedwater_enthalpy)) /
+			((FUEL_DATA[$formData.old_fuel_type].lhv * $formData.old_boiler_efficiency) / 100)
 		);
 	}
 );
 
 export const fuel_cost = derived([formData, fuel_usage_rate], ([$formData, $fuel_usage_rate]) => {
 	return Math.ceil(
-		($fuel_usage_rate * FUEL_DATA[$formData.fuel_type].price) / $formData.prod_steam_volume
+		($fuel_usage_rate * FUEL_DATA[$formData.old_fuel_type].price) / $formData.old_prod_steam_volume
 	);
 });
 
@@ -58,7 +67,7 @@ export const total_cost = derived([fuel_cost, other_cost], ([$fuel_cost, $other_
 export const turbine_outlet_enthalpy = derived(
 	[formData, steam_enthalpy],
 	([$formData, $steam_enthalpy]) => {
-		const a = s_pT($formData.prod_steam_pressure + 1, $formData.prod_steam_temp);
+		const a = s_pT($formData.old_prod_steam_pressure + 1, $formData.old_prod_steam_temp);
 		const b = h_ps($formData.outlet_pressure + 1, a);
 		return $steam_enthalpy - ($steam_enthalpy - b) * ($formData.isentropic_efficiency / 100);
 	}
@@ -75,7 +84,10 @@ export const output_energy = derived(
 	[formData, steam_enthalpy, turbine_outlet_enthalpy],
 	([$formData, $steam_enthalpy, $turbine_outlet_enthalpy]) => {
 		return (
-			$formData.prod_steam_volume * 1000 * (1 / 3600) * ($steam_enthalpy - $turbine_outlet_enthalpy)
+			$formData.old_prod_steam_volume *
+			1000 *
+			(1 / 3600) *
+			($steam_enthalpy - $turbine_outlet_enthalpy)
 		);
 	}
 );
@@ -101,7 +113,7 @@ export const rt_cooling = derived(kw_cooling, ($kw_cooling) => {
 });
 
 export const fc_boiler = derived(formData, ($formData) =>
-	Math.ceil($formData.max_steam_volume * 2000000)
+	Math.ceil($formData.old_max_steam_volume * 2000000)
 );
 export const fc_steam = derived(prod_energy, ($prod_energy) => Math.ceil($prod_energy * 80000));
 export const fc_chiller = derived(rt_cooling, ($rt_cooling) => Math.ceil($rt_cooling * 20000));
@@ -119,7 +131,7 @@ export const fc_total = derived(
 
 export const ac_electricity = derived(formData, ($formData) =>
 	Math.ceil(
-		$formData.prod_steam_volume *
+		$formData.old_prod_steam_volume *
 			8 *
 			$formData.hr_per_day *
 			$formData.day_per_year *

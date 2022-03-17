@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { FIELD_DATA } from 'data/fieldData';
+	import { FIELD_DATA } from 'data/trigenFieldData';
 	import type { Writable } from 'svelte/store';
-	import type { TrigenInputDataType } from 'types/trigenTypes';
 
-	export let formData: Writable<TrigenInputDataType>;
+	export let formData: Writable<any>;
 
 	export let fieldName;
 	export let min: number | null = FIELD_DATA[fieldName].min;

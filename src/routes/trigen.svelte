@@ -8,7 +8,7 @@
 	import NumberFormatter from 'components/NumberFormatter.svelte';
 	import MoneyFormatter from 'components/MoneyFormatter.svelte';
 
-	import { FIELD_DATA } from 'data/fieldData';
+	import { FIELD_DATA } from 'data/trigenFieldData';
 	import { FUEL_DATA } from 'data/fuelData';
 	import {
 		formData,

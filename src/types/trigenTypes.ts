@@ -18,17 +18,47 @@ export interface TrigenInputDataType {
 
 	max_steam_volume: number;
 	max_steam_pressure: number;
-
 	prod_steam_volume: number;
 	prod_steam_pressure: number;
 	prod_steam_temp: number;
-
 	input_steam_temp: number;
 	input_steam_pressure: number;
-
 	boiler_efficiency: number;
 
 	fuel_type: FuelType;
+
+	isentropic_efficiency: number;
+	generator_efficiency: number;
+
+	outlet_pressure: number;
+
+	required_steam_flow_rate: number;
+}
+
+export interface CompareInputDataType {
+	hr_per_day: number;
+	day_per_year: number;
+	electrical_cost: number;
+
+	old_max_steam_volume: number;
+	old_max_steam_pressure: number;
+	old_prod_steam_volume: number;
+	old_prod_steam_pressure: number;
+	old_prod_steam_temp: number;
+	old_input_steam_temp: number;
+	old_input_steam_pressure: number;
+	old_boiler_efficiency: number;
+	old_fuel_type: FuelType;
+
+	new_max_steam_volume: number;
+	new_max_steam_pressure: number;
+	new_prod_steam_volume: number;
+	new_prod_steam_pressure: number;
+	new_prod_steam_temp: number;
+	new_input_steam_temp: number;
+	new_input_steam_pressure: number;
+	new_boiler_efficiency: number;
+	new_fuel_type: FuelType;
 
 	isentropic_efficiency: number;
 	generator_efficiency: number;

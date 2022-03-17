@@ -1,13 +1,13 @@
 import type { TrigenInputDataType } from 'types/trigenTypes';
 
-export type FieldDataKey = keyof TrigenInputDataType;
+export type TrigenFieldDataKey = keyof TrigenInputDataType;
 
 type PartialRecord<K extends keyof any, T> = {
 	[P in K]?: T;
 };
 
-export type FieldDataType = PartialRecord<
-	FieldDataKey,
+export type TrigenFieldDataType = PartialRecord<
+	TrigenFieldDataKey,
 	{
 		label: string;
 		placeholder?: string;
@@ -17,7 +17,7 @@ export type FieldDataType = PartialRecord<
 	}
 >;
 
-export const FIELD_DATA: FieldDataType = {
+export const FIELD_DATA: TrigenFieldDataType = {
 	hr_per_day: {
 		label: 'ชั่วโมงการทำงานต่อวัน',
 		unit: 'ชั่วโมง/วัน',
