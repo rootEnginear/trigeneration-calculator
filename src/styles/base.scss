@@ -123,4 +123,6 @@ tr > td:last-child {
 
 img {
 	max-width: 500px;
+	max-height: 300px;
+	object-fit: contain;
 }

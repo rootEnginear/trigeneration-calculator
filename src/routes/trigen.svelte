@@ -399,7 +399,7 @@
 		{/if}{#if currentStep === 4 || isPrinting}
 			<h1>5 — Economical Analysis</h1>
 			<figure class="image">
-				<img src="img/econ.jpg" alt="" />
+				<img src="img/econ.png" alt="" />
 			</figure>
 			<div class="box is-shadowless">
 				<h2>Payback Period</h2>

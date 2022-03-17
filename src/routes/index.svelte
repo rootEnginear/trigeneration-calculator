@@ -19,7 +19,7 @@
 					<span class="icon is-small">
 						<i class="fa-solid fa-industry" />
 					</span>
-					<span>ติดตั้งระบบ Trigeneration</span>
+					<span>ติดตั้งระบบ Trigeneration ใหม่</span>
 				</a>
 			</div>
 			<div class="column">
@@ -27,7 +27,7 @@
 					<span class="icon is-small">
 						<i class="fa-solid fa-scale-unbalanced" />
 					</span>
-					<span>เปรียบเทียบข้อมูลโรงงาน หากติดตั้งระบบ Trigeneration</span>
+					<span>เปรียบเทียบ Boiler เก่า-ใหม่ พร้อมติดตั้งระบบ Trigeneration</span>
 				</a>
 			</div>
 		</div>
