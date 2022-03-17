@@ -54,7 +54,7 @@
 </script>
 
 <svelte:head>
-	<title>ติดตั้งระบบ Trigeneration — คำนวณความคุ้มค่าในการติดตั้งระบบ Trigeneration</title>
+	<title>ติดตั้งระบบ Trigeneration ใหม่ — คำนวณความคุ้มค่าในการติดตั้งระบบ Trigeneration</title>
 </svelte:head>
 
 <div class="box">
@@ -87,9 +87,9 @@
 		{#if currentStep === 0 || isPrinting}
 			<h1>1 — ข้อมูลทั่วไป</h1>
 			<div class="box is-shadowless">
-				<Input fieldName="hr_per_day" />
-				<Input fieldName="day_per_year" />
-				<Input fieldName="electrical_cost" />
+				<Input fieldName="hr_per_day" {formData} />
+				<Input fieldName="day_per_year" {formData} />
+				<Input fieldName="electrical_cost" {formData} />
 			</div>
 		{/if}{#if currentStep === 1 || isPrinting}
 			<h1>2 — Boiler</h1>
@@ -99,24 +99,24 @@
 			<div class="box is-shadowless">
 				<h2>ข้อมูล Boiler</h2>
 				<div class="columns">
-					<div class="column"><Input fieldName="max_steam_volume" /></div>
-					<div class="column"><Input fieldName="max_steam_pressure" /></div>
+					<div class="column"><Input fieldName="max_steam_volume" {formData} /></div>
+					<div class="column"><Input fieldName="max_steam_pressure" {formData} /></div>
 				</div>
 				<div class="columns">
 					<div class="column">
-						<Input fieldName="prod_steam_volume" max={$formData.max_steam_volume} />
+						<Input fieldName="prod_steam_volume" max={$formData.max_steam_volume} {formData} />
 					</div>
 					<div class="column">
-						<Input fieldName="prod_steam_pressure" max={$formData.max_steam_pressure} />
+						<Input fieldName="prod_steam_pressure" max={$formData.max_steam_pressure} {formData} />
 					</div>
 				</div>
 				<div class="columns">
-					<div class="column"><Input fieldName="prod_steam_temp" /></div>
-					<div class="column"><Input fieldName="input_steam_temp" /></div>
+					<div class="column"><Input fieldName="prod_steam_temp" {formData} /></div>
+					<div class="column"><Input fieldName="input_steam_temp" {formData} /></div>
 				</div>
 				<div class="columns">
-					<div class="column"><Input fieldName="input_steam_pressure" /></div>
-					<div class="column"><Input fieldName="boiler_efficiency" /></div>
+					<div class="column"><Input fieldName="input_steam_pressure" {formData} /></div>
+					<div class="column"><Input fieldName="boiler_efficiency" {formData} /></div>
 				</div>
 			</div>
 			<div class="box is-shadowless">
@@ -280,14 +280,14 @@
 							<tr>
 								<th>{FIELD_DATA['isentropic_efficiency'].label}</th>
 								<td>
-									<InlineInput fieldName="isentropic_efficiency" />
+									<InlineInput fieldName="isentropic_efficiency" {formData} />
 								</td>
 								<td>{FIELD_DATA['isentropic_efficiency'].unit}</td>
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['generator_efficiency'].label}</th>
 								<td>
-									<InlineInput fieldName="generator_efficiency" />
+									<InlineInput fieldName="generator_efficiency" {formData} />
 								</td>
 								<td>{FIELD_DATA['generator_efficiency'].unit}</td>
 							</tr>
@@ -302,7 +302,7 @@
 						<tbody>
 							<tr>
 								<th>{FIELD_DATA['outlet_pressure'].label}</th>
-								<td><InlineInput fieldName="outlet_pressure" /></td>
+								<td><InlineInput fieldName="outlet_pressure" {formData} /></td>
 								<td>{FIELD_DATA['outlet_pressure'].unit}</td>
 							</tr>
 							<tr>
@@ -362,6 +362,7 @@
 									><InlineInput
 										fieldName="required_steam_flow_rate"
 										max={$formData.prod_steam_volume}
+										{formData}
 									/></td
 								>
 								<td>{FIELD_DATA['required_steam_flow_rate'].unit}</td>

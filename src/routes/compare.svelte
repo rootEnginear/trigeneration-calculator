@@ -3,12 +3,14 @@
 	import Input from 'components/Input.svelte';
 	import FormStep from 'components/FormStep.svelte';
 
+	import { formData } from 'stores/compareFormData';
+
 	let currentStep = 0;
 </script>
 
 <svelte:head>
 	<title
-		>เปรียบเทียบข้อมูลโรงงาน หากติดตั้งระบบ Trigeneration — คำนวณความคุ้มค่าในการติดตั้งระบบ
+		>เปรียบเทียบ Boiler เก่า-ใหม่ พร้อมติดตั้งระบบ Trigeneration — คำนวณความคุ้มค่าในการติดตั้งระบบ
 		Trigeneration</title
 	>
 </svelte:head>
@@ -26,9 +28,9 @@
 		{#if currentStep === 0}
 			<h1>1 — ข้อมูลทั่วไป</h1>
 			<div class="box is-shadowless">
-				<Input fieldName="hr_per_day" />
-				<Input fieldName="day_per_year" />
-				<Input fieldName="electrical_cost" />
+				<Input fieldName="hr_per_day" {formData} />
+				<Input fieldName="day_per_year" {formData} />
+				<Input fieldName="electrical_cost" {formData} />
 			</div>
 		{/if}
 	</div>
