@@ -15,7 +15,7 @@
 				src="img/trigen_sys.jpg"
 				alt=""
 				decoding="async"
-				loading="lazy"
+				loading="eager"
 				width="500"
 				height="300"
 			/>
