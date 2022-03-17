@@ -29,7 +29,21 @@
 		output_energy,
 		prod_energy,
 		kw_cooling,
-		rt_cooling
+		rt_cooling,
+		fc_boiler,
+		fc_steam,
+		fc_chiller,
+		fc_other,
+		fc_total,
+		ac_maintenance,
+		ac_electricity,
+		ac_total,
+		sc_steam,
+		sc_chiller,
+		sc_total,
+		econ_n,
+		ac_additional,
+		sc_fuel
 	} from 'stores/compareFormData';
 
 	let currentStep = 0;
@@ -601,6 +615,206 @@
 								<td>RT</td>
 							</tr>
 						</tbody>
+					</table>
+				</div>
+			</div>
+		{/if}
+		{#if currentStep === 4 || isPrinting}
+			<h1>5 — Economical Analysis</h1>
+			<figure class="image">
+				<img src="img/econ.png" alt="" />
+			</figure>
+			<div class="box is-shadowless">
+				<h2>Payback Period</h2>
+				<div class="table-container">
+					<table class="table">
+						<tbody>
+							<tr class="">
+								<th
+									><a href="#fixedCost" class="button is-fullwidth is-danger is-light">Fixed Cost</a
+									></th
+								>
+								<td class="has-text-right">
+									<MoneyFormatter value={$fc_total} />
+								</td>
+								<td>บาท</td>
+							</tr>
+							<tr class="">
+								<th
+									><a href="#annualCost" class="button is-fullwidth is-warning is-light"
+										>Annual Cost</a
+									></th
+								>
+								<td class="has-text-right">
+									<MoneyFormatter value={$ac_total} />
+								</td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr class="">
+								<th
+									><a href="#saveCost" class="button is-fullwidth is-success is-light">Save Cost</a
+									></th
+								>
+								<td class="has-text-right">
+									<MoneyFormatter value={$sc_total} />
+								</td>
+								<td>บาท/ปี</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>n</th>
+								<th class="has-text-right">
+									<NumberFormatter value={$econ_n} digits={2} />
+								</th>
+								<th>ปี</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<div class="box is-shadowless">
+				<h2 id="fixedCost">Fixed Cost</h2>
+				<div class="table-container">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>รายการปรับปรุง</th>
+								<th class="has-text-right">ราคา</th>
+								<th>หน่วย</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>ค่าก่อสร้างและติดตั้ง Boiler ตัวใหม่</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$fc_boiler} />
+								</td>
+								<td>บาท</td>
+							</tr>
+							<tr>
+								<td>ค่าก่อสร้างและติดตั้ง Steam Expander</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$fc_steam} />
+								</td>
+								<td>บาท</td>
+							</tr>
+							<tr>
+								<td>ค่าติดตั้ง Absorption Chiller</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$fc_chiller} />
+								</td>
+								<td>บาท</td>
+							</tr>
+							<tr>
+								<td>อื่นๆ (ค่าระบบน้ำ, ตรวจวัดประสิทธิภาพ)</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$fc_other} />
+								</td>
+								<td>บาท</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>รวมค่าลงทุนทั้งหมด</th>
+								<th class="has-text-right">
+									<MoneyFormatter value={$fc_total} />
+								</th>
+								<th>บาท</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<div class="box is-shadowless">
+				<h2 id="annualCost">Annual Cost</h2>
+				<div class="table-container">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>ค่าใช้จ่ายที่เพิ่ม</th>
+								<th class="has-text-right">เป็นเงิน</th>
+								<th>หน่วย</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>ค่าบำรุงรักษา</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$ac_maintenance} />
+								</td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr>
+								<td>ค่าใช้จ่ายค่า Steam ที่เพิ่มขึ้น เป็นเวลา 1 ปี</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$ac_additional} />
+								</td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr>
+								<td>ค่าไฟฟ้าสำหรับระบบ Trigeneration</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$ac_electricity} />
+								</td>
+								<td>บาท/ปี</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>รวมค่าใช้จ่ายที่เพิ่มขึ้นเมื่อติดตั้งระบบ Trigeneration</th>
+								<th class="has-text-right">
+									<MoneyFormatter value={$ac_total} />
+								</th>
+								<th>บาท/ปี</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<div class="box is-shadowless">
+				<h2 id="saveCost">Save Cost</h2>
+				<div class="table-container">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>รายการประหยัด</th>
+								<th class="has-text-right">เป็นเงิน</th>
+								<th>หน่วย</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>ค่าไฟที่ประหยัดได้จากการผลิตไฟของ Steam Expander</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$sc_steam} />
+								</td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr>
+								<td>ค่าไฟฟ้าที่ประหยัดจากการติดตั้ง Absorption Chiller</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$sc_chiller} />
+								</td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr>
+								<td>ผลประหยัดค่าเชื้อเพลิง boiler (เทียบกับเครื่องเดิม)</td>
+								<td class="has-text-right">
+									<MoneyFormatter value={$sc_fuel} />
+								</td>
+								<td>บาท/ปี</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>รวมผลประหยัดทั้งหมด</th>
+								<th class="has-text-right">
+									<MoneyFormatter value={$sc_total} />
+								</th>
+								<th>บาท/ปี</th>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			</div>

@@ -502,7 +502,7 @@
 								<td>บาท</td>
 							</tr>
 							<tr>
-								<td>อื่นๆ (ค่าระบบน้ำตรวจวัดประสิทธิภาพ)</td>
+								<td>อื่นๆ (ค่าระบบน้ำ, ตรวจวัดประสิทธิภาพ)</td>
 								<td class="has-text-right">
 									<MoneyFormatter value={$fc_other} />
 								</td>
