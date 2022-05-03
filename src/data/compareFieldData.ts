@@ -33,7 +33,7 @@ export const FIELD_DATA: CompareFieldDataType = {
 	electrical_cost: {
 		label: 'ค่าไฟ',
 		unit: 'บาท/ยูนิต',
-		min: 1,
+		min: 2,
 		max: 13
 	},
 	// OLD

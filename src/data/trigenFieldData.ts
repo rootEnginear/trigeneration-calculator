@@ -34,7 +34,7 @@ export const FIELD_DATA: TrigenFieldDataType = {
 	electrical_cost: {
 		label: 'ค่าไฟ',
 		unit: 'บาท/ยูนิต',
-		min: 1,
+		min: 2,
 		max: 13
 	},
 	max_steam_volume: {
