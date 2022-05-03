@@ -2,8 +2,8 @@
 	import { afterUpdate } from 'svelte';
 
 	import Steps from 'components/Steps.svelte';
-	import Input from 'components/Input.svelte';
-	import InlineInput from 'components/InlineInput.svelte';
+	import Input from 'components/LegacyInput.svelte';
+	import InlineInput from 'components/LegacyInlineInput.svelte';
 	import FormStep from 'components/FormStep.svelte';
 	import NumberFormatter from 'components/NumberFormatter.svelte';
 	import MoneyFormatter from 'components/MoneyFormatter.svelte';
