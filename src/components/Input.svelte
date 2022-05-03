@@ -5,8 +5,8 @@
 	export let store: Writable<any>;
 
 	export let fieldName;
-	export let min: number | null = FIELD_DATA[fieldName].min;
-	export let max: number | null = FIELD_DATA[fieldName].max;
+	export let min: number | null = FIELD_DATA[fieldName]?.min;
+	export let max: number | null = FIELD_DATA[fieldName]?.max;
 
 	export let value = $store;
 

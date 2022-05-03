@@ -11,9 +11,11 @@
 	import { FIELD_DATA } from 'data/trigenFieldData';
 	import { FUEL_DATA } from 'data/fuelData';
 	import {
+		// PG1
 		hr_per_day,
 		day_per_year,
 		electrical_cost,
+		// PG2
 		max_steam_volume,
 		max_steam_pressure,
 		prod_steam_volume,
@@ -22,44 +24,65 @@
 		input_steam_temp,
 		input_steam_pressure,
 		boiler_efficiency,
+		//
 		fuel_type,
 		fuel_lhv,
 		fuel_price,
+		//
+		custom_other_cost,
+		other_cost,
+		// PG3
 		isentropic_efficiency,
 		generator_efficiency,
 		outlet_pressure,
+		// PG4
 		cop,
 		required_steam_flow_rate,
-		user_custom_other_cost,
-		user_custom_waste_enthalpy,
+		custom_waste_enthalpy,
 		waste_enthalpy,
+		// PG5
+		fc_boiler,
+		fc_steam,
+		fc_chiller,
+		fc_other,
+		custom_fc_boiler,
+		custom_fc_steam,
+		custom_fc_chiller,
+		custom_fc_other,
+		fc_user_1,
+		fc_user_2,
+		fc_total,
+		//
+		ac_maintenance,
+		ac_electricity,
+		custom_ac_maintenance,
+		custom_ac_electricity,
+		ac_user_1,
+		ac_user_2,
+		ac_total,
+		//
+		sc_steam,
+		sc_chiller,
+		sc_user,
+		sc_total,
+		//
+		econ_n,
+		econ_steam_cost_per_year,
+		// COMPUTED
 		steam_enthalpy,
 		feedwater_enthalpy,
 		fuel_usage_rate,
 		fuel_cost,
-		other_cost,
 		total_cost,
 		turbine_outlet_enthalpy,
 		turbine_outlet_temp,
 		output_energy,
 		prod_energy,
 		kw_cooling,
-		rt_cooling,
-		fc_boiler,
-		fc_steam,
-		fc_chiller,
-		fc_other,
-		fc_total,
-		ac_maintenance,
-		ac_electricity,
-		ac_total,
-		sc_steam,
-		sc_chiller,
-		sc_total,
-		econ_n
+		rt_cooling
 	} from 'stores/trigenFormData';
 
-	let currentStep = 3;
+	let currentStep = 0;
 	let isPrinting = false;
 
 	function print() {
@@ -288,7 +311,7 @@
 										<td>
 											<span>อื่นๆ 30%&emsp;</span>
 											<input
-												bind:checked={$user_custom_other_cost}
+												bind:checked={$custom_other_cost}
 												type="checkbox"
 												id="custom-other-cost"
 												class="switch"
@@ -296,7 +319,7 @@
 											<label for="custom-other-cost">&nbsp;</label>
 										</td>
 										<td class="has-text-right">
-											{#if $user_custom_other_cost}
+											{#if $custom_other_cost}
 												<InlineInput fieldName="other_cost" store={other_cost} {FIELD_DATA} />
 											{:else}
 												<MoneyFormatter value={$other_cost} />
@@ -488,7 +511,7 @@
 								<th>เอลทาลปีไอน้ำทิ้ง</th>
 								<td>
 									<input
-										bind:checked={$user_custom_waste_enthalpy}
+										bind:checked={$custom_waste_enthalpy}
 										type="checkbox"
 										id="custom-waste-enthalpy"
 										class="switch"
@@ -496,7 +519,7 @@
 									<label for="custom-waste-enthalpy">&nbsp;</label>
 								</td>
 								<td class="has-text-right">
-									{#if $user_custom_waste_enthalpy}
+									{#if $custom_waste_enthalpy}
 										<InlineInput
 											fieldName="waste_enthalpy"
 											store={waste_enthalpy}
@@ -537,7 +560,7 @@
 			</figure>
 			<div class="box is-shadowless">
 				<h2>Payback Period</h2>
-				<div class="table-container">
+				<div class="table-container m-0">
 					<table class="table">
 						<tbody>
 							<tr class="">
@@ -583,6 +606,11 @@
 						</tfoot>
 					</table>
 				</div>
+				<p style="text-align:right;margin:0">
+					<small>
+						ต้นทุนผลิตไอน้ำใช้งานต่อปี: <MoneyFormatter value={$econ_steam_cost_per_year} /> บาท/ปี
+					</small>
+				</p>
 			</div>
 			<div class="box is-shadowless">
 				<h2 id="fixedCost">Fixed Cost</h2>
@@ -591,36 +619,126 @@
 						<thead>
 							<tr>
 								<th>รายการปรับปรุง</th>
-								<th class="has-text-right">ราคา</th>
+								<th>&nbsp;</th>
+								<th class="has-text-right" style="min-width:144px">ราคา</th>
 								<th>หน่วย</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>ค่าก่อสร้างและติดตั้ง Boiler </td>
+								<td>ค่าก่อสร้างและติดตั้ง Boiler</td>
+								<td>
+									<input
+										bind:checked={$custom_fc_boiler}
+										type="checkbox"
+										id="custom-fc-boiler"
+										class="switch"
+									/>
+									<label for="custom-fc-boiler">&nbsp;</label>
+								</td>
 								<td class="has-text-right">
-									<MoneyFormatter value={$fc_boiler} />
+									{#if $custom_fc_boiler}
+										<InlineInput fieldName="fc_boiler" store={fc_boiler} {FIELD_DATA} width={120} />
+									{:else}
+										<MoneyFormatter value={$fc_boiler} />
+									{/if}
 								</td>
 								<td>บาท</td>
 							</tr>
 							<tr>
 								<td>ค่าก่อสร้างและติดตั้ง Steam Expander</td>
+								<td>
+									<input
+										bind:checked={$custom_fc_steam}
+										type="checkbox"
+										id="custom-fc-steam"
+										class="switch"
+									/>
+									<label for="custom-fc-steam">&nbsp;</label>
+								</td>
 								<td class="has-text-right">
-									<MoneyFormatter value={$fc_steam} />
+									{#if $custom_fc_steam}
+										<InlineInput fieldName="fc_steam" store={fc_steam} {FIELD_DATA} width={120} />
+									{:else}
+										<MoneyFormatter value={$fc_steam} />
+									{/if}
 								</td>
 								<td>บาท</td>
 							</tr>
 							<tr>
 								<td>ค่าติดตั้ง Absorption Chiller</td>
+								<td>
+									<input
+										bind:checked={$custom_fc_chiller}
+										type="checkbox"
+										id="custom-fc-chiller"
+										class="switch"
+									/>
+									<label for="custom-fc-chiller">&nbsp;</label>
+								</td>
 								<td class="has-text-right">
-									<MoneyFormatter value={$fc_chiller} />
+									{#if $custom_fc_chiller}
+										<InlineInput
+											fieldName="fc_chiller"
+											store={fc_chiller}
+											{FIELD_DATA}
+											width={120}
+										/>
+									{:else}
+										<MoneyFormatter value={$fc_chiller} />
+									{/if}
 								</td>
 								<td>บาท</td>
 							</tr>
 							<tr>
 								<td>อื่นๆ (ค่าระบบน้ำ, ตรวจวัดประสิทธิภาพ)</td>
+								<td>
+									<input
+										bind:checked={$custom_fc_other}
+										type="checkbox"
+										id="custom-fc-other"
+										class="switch"
+									/>
+									<label for="custom-fc-other">&nbsp;</label>
+								</td>
 								<td class="has-text-right">
-									<MoneyFormatter value={$fc_other} />
+									{#if $custom_fc_other}
+										<InlineInput fieldName="fc_other" store={fc_other} {FIELD_DATA} width={120} />
+									{:else}
+										<MoneyFormatter value={$fc_other} />
+									{/if}
+								</td>
+								<td>บาท</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div style="display:flex;gap:8px;align-items:center">
+										<span style="white-space:nowrap">อื่นๆ (1)</span>
+										<input
+											type="text"
+											class="input is-fullwidth"
+											placeholder="ใส่รายละเอียดรายการอื่นๆ"
+										/>
+									</div>
+								</td>
+								<td class="has-text-right">
+									<InlineInput fieldName="fc_user_1" store={fc_user_1} {FIELD_DATA} width={120} />
+								</td>
+								<td>บาท</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div style="display:flex;gap:8px;align-items:center">
+										<span style="white-space:nowrap">อื่นๆ (2)</span>
+										<input
+											type="text"
+											class="input is-fullwidth"
+											placeholder="ใส่รายละเอียดรายการอื่นๆ"
+										/>
+									</div>
+								</td>
+								<td class="has-text-right">
+									<InlineInput fieldName="fc_user_2" store={fc_user_2} {FIELD_DATA} width={120} />
 								</td>
 								<td>บาท</td>
 							</tr>
@@ -628,6 +746,7 @@
 						<tfoot>
 							<tr>
 								<th>รวมค่าลงทุนทั้งหมด</th>
+								<th>&nbsp;</th>
 								<th class="has-text-right">
 									<MoneyFormatter value={$fc_total} />
 								</th>
@@ -644,6 +763,7 @@
 						<thead>
 							<tr>
 								<th>ค่าใช้จ่ายที่เพิ่ม</th>
+								<th>&nbsp;</th>
 								<th class="has-text-right">เป็นเงิน</th>
 								<th>หน่วย</th>
 							</tr>
@@ -651,15 +771,83 @@
 						<tbody>
 							<tr>
 								<td>ค่าบำรุงรักษา</td>
+								<td>
+									<input
+										bind:checked={$custom_ac_maintenance}
+										type="checkbox"
+										id="custom-ac-maintenance"
+										class="switch"
+									/>
+									<label for="custom-ac-maintenance">&nbsp;</label>
+								</td>
 								<td class="has-text-right">
-									<MoneyFormatter value={$ac_maintenance} />
+									{#if $custom_ac_maintenance}
+										<InlineInput
+											fieldName="ac_maintenance"
+											store={ac_maintenance}
+											{FIELD_DATA}
+											width={120}
+										/>
+									{:else}
+										<MoneyFormatter value={$ac_maintenance} />
+									{/if}
 								</td>
 								<td>บาท/ปี</td>
 							</tr>
 							<tr>
 								<td>ค่าไฟฟ้าสำหรับเดินระบบ Trigeneration (เฉพาะส่วนของ Boiler Turbine)</td>
+								<td>
+									<input
+										bind:checked={$custom_ac_electricity}
+										type="checkbox"
+										id="custom-ac-electricity"
+										class="switch"
+									/>
+									<label for="custom-ac-electricity">&nbsp;</label>
+								</td>
 								<td class="has-text-right">
-									<MoneyFormatter value={$ac_electricity} />
+									{#if $custom_ac_electricity}
+										<InlineInput
+											fieldName="ac_electricity"
+											store={ac_electricity}
+											{FIELD_DATA}
+											width={120}
+										/>
+									{:else}
+										<MoneyFormatter value={$ac_electricity} />
+									{/if}
+								</td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div style="display:flex;gap:8px;align-items:center">
+										<span style="white-space:nowrap">อื่นๆ (1)</span>
+										<input
+											type="text"
+											class="input is-fullwidth"
+											placeholder="ใส่รายละเอียดรายการอื่นๆ"
+										/>
+									</div>
+								</td>
+								<td class="has-text-right">
+									<InlineInput fieldName="ac_user_1" store={ac_user_1} {FIELD_DATA} width={120} />
+								</td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<div style="display:flex;gap:8px;align-items:center">
+										<span style="white-space:nowrap">อื่นๆ (2)</span>
+										<input
+											type="text"
+											class="input is-fullwidth"
+											placeholder="ใส่รายละเอียดรายการอื่นๆ"
+										/>
+									</div>
+								</td>
+								<td class="has-text-right">
+									<InlineInput fieldName="ac_user_2" store={ac_user_2} {FIELD_DATA} width={120} />
 								</td>
 								<td>บาท/ปี</td>
 							</tr>
@@ -699,6 +887,22 @@
 								<td>ค่าไฟฟ้าที่ประหยัดจากการติดตั้ง Absorption Chiller</td>
 								<td class="has-text-right">
 									<MoneyFormatter value={$sc_chiller} />
+								</td>
+								<td>บาท/ปี</td>
+							</tr>
+							<tr>
+								<td>
+									<div style="display:flex;gap:8px;align-items:center">
+										<span style="white-space:nowrap">อื่นๆ</span>
+										<input
+											type="text"
+											class="input is-fullwidth"
+											placeholder="ใส่รายละเอียดรายการอื่นๆ"
+										/>
+									</div>
+								</td>
+								<td class="has-text-right">
+									<InlineInput fieldName="sc_user" store={sc_user} {FIELD_DATA} width={120} />
 								</td>
 								<td>บาท/ปี</td>
 							</tr>

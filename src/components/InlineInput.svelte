@@ -5,9 +5,11 @@
 	export let store: Writable<any>;
 
 	export let fieldName;
-	export let min: number | null = FIELD_DATA[fieldName].min;
-	export let max: number | null = FIELD_DATA[fieldName].max;
-	export let step: number | null = FIELD_DATA[fieldName].step;
+	export let min: number | null = FIELD_DATA[fieldName]?.min;
+	export let max: number | null = FIELD_DATA[fieldName]?.max;
+	export let step: number | null = FIELD_DATA[fieldName]?.step;
+
+	export let width = 100;
 
 	export let value = $store;
 
@@ -42,7 +44,7 @@
 			{max}
 			{step}
 			bind:value
-			style="min-width:100px"
+			style="min-width:{width}px"
 		/>
 		{#if error}
 			<span class="icon is-small is-left">
