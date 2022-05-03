@@ -88,7 +88,7 @@ export const FIELD_DATA: TrigenFieldDataType = {
 		label: 'ค่า LHV',
 		unit: ''
 	},
-	fuel_cost: {
+	fuel_price: {
 		label: 'ค่าเชื้อเพลิง',
 		unit: ''
 	},

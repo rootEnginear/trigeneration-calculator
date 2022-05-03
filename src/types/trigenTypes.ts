@@ -28,7 +28,7 @@ export interface TrigenInputDataType {
 
 	fuel_type: FuelType;
 	fuel_lhv: number;
-	fuel_cost: number;
+	fuel_price: number;
 
 	isentropic_efficiency: number;
 	generator_efficiency: number;

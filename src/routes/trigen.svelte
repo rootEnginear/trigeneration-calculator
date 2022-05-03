@@ -11,7 +11,26 @@
 	import { FIELD_DATA } from 'data/trigenFieldData';
 	import { FUEL_DATA } from 'data/fuelData';
 	import {
-		formData,
+		hr_per_day,
+		day_per_year,
+		electrical_cost,
+		max_steam_volume,
+		max_steam_pressure,
+		prod_steam_volume,
+		prod_steam_pressure,
+		prod_steam_temp,
+		input_steam_temp,
+		input_steam_pressure,
+		boiler_efficiency,
+		fuel_type,
+		fuel_lhv,
+		fuel_price,
+		isentropic_efficiency,
+		generator_efficiency,
+		outlet_pressure,
+		required_steam_flow_rate,
+		user_custom_other_cost,
+		custom_other_cost,
 		steam_enthalpy,
 		feedwater_enthalpy,
 		fuel_usage_rate,
@@ -87,9 +106,9 @@
 		{#if currentStep === 0 || isPrinting}
 			<h1>1 — ข้อมูลทั่วไป</h1>
 			<div class="box is-shadowless">
-				<Input fieldName="hr_per_day" {formData} {FIELD_DATA} />
-				<Input fieldName="day_per_year" {formData} {FIELD_DATA} />
-				<Input fieldName="electrical_cost" {formData} {FIELD_DATA} />
+				<Input fieldName="hr_per_day" store={hr_per_day} {FIELD_DATA} />
+				<Input fieldName="day_per_year" store={day_per_year} {FIELD_DATA} />
+				<Input fieldName="electrical_cost" store={electrical_cost} {FIELD_DATA} />
 			</div>
 		{/if}
 		{#if currentStep === 1 || isPrinting}
@@ -100,36 +119,46 @@
 			<div class="box is-shadowless">
 				<h2>ข้อมูล Boiler</h2>
 				<div class="columns">
-					<div class="column"><Input fieldName="max_steam_volume" {formData} {FIELD_DATA} /></div>
-					<div class="column"><Input fieldName="max_steam_pressure" {formData} {FIELD_DATA} /></div>
+					<div class="column">
+						<Input fieldName="max_steam_volume" store={max_steam_volume} {FIELD_DATA} />
+					</div>
+					<div class="column">
+						<Input fieldName="max_steam_pressure" store={max_steam_pressure} {FIELD_DATA} />
+					</div>
 				</div>
 				<div class="columns">
 					<div class="column">
 						<Input
 							fieldName="prod_steam_volume"
-							max={$formData.max_steam_volume}
-							{formData}
+							store={prod_steam_volume}
+							max={$max_steam_volume}
 							{FIELD_DATA}
 						/>
 					</div>
 					<div class="column">
 						<Input
 							fieldName="prod_steam_pressure"
-							max={$formData.max_steam_pressure}
-							{formData}
+							store={prod_steam_pressure}
+							max={$max_steam_pressure}
 							{FIELD_DATA}
 						/>
 					</div>
 				</div>
 				<div class="columns">
-					<div class="column"><Input fieldName="prod_steam_temp" {formData} {FIELD_DATA} /></div>
-					<div class="column"><Input fieldName="input_steam_temp" {formData} {FIELD_DATA} /></div>
+					<div class="column">
+						<Input fieldName="prod_steam_temp" store={prod_steam_temp} {FIELD_DATA} />
+					</div>
+					<div class="column">
+						<Input fieldName="input_steam_temp" store={input_steam_temp} {FIELD_DATA} />
+					</div>
 				</div>
 				<div class="columns">
 					<div class="column">
-						<Input fieldName="input_steam_pressure" {formData} {FIELD_DATA} />
+						<Input fieldName="input_steam_pressure" store={input_steam_pressure} {FIELD_DATA} />
 					</div>
-					<div class="column"><Input fieldName="boiler_efficiency" {formData} {FIELD_DATA} /></div>
+					<div class="column">
+						<Input fieldName="boiler_efficiency" store={boiler_efficiency} {FIELD_DATA} />
+					</div>
 				</div>
 			</div>
 			<div class="box is-shadowless">
@@ -147,7 +176,7 @@
 								<td>เชื้อเพลิงที่ใช้</td>
 								<td>
 									<div class="select is-fullwidth" style="width:200px">
-										<select bind:value={$formData.fuel_type}>
+										<select bind:value={$fuel_type}>
 											{#each Object.keys(FUEL_DATA) as fuel_name}
 												<option value={fuel_name}>{fuel_name}</option>
 											{/each}
@@ -160,10 +189,10 @@
 							<tr>
 								<td>ค่า LHV</td>
 								<td class="has-text-right">
-									{#if $formData.fuel_type === 'อื่นๆ'}
-										<InlineInput fieldName="fuel_lhv" {formData} {FIELD_DATA} />
+									{#if $fuel_type === 'อื่นๆ'}
+										<InlineInput fieldName="fuel_lhv" store={fuel_lhv} {FIELD_DATA} />
 									{:else}
-										<span>{FUEL_DATA[$formData.fuel_type].lhv}</span>
+										<span>{FUEL_DATA[$fuel_type].lhv}</span>
 									{/if}
 								</td>
 								<td>kJ/kg</td>
@@ -171,10 +200,10 @@
 							<tr>
 								<td>ค่าเชื้อเพลิง</td>
 								<td class="has-text-right">
-									{#if $formData.fuel_type === 'อื่นๆ'}
-										<InlineInput fieldName="fuel_cost" {formData} {FIELD_DATA} />
+									{#if $fuel_type === 'อื่นๆ'}
+										<InlineInput fieldName="fuel_price" store={fuel_price} {FIELD_DATA} />
 									{:else}
-										<MoneyFormatter value={FUEL_DATA[$formData.fuel_type].price} />
+										<MoneyFormatter value={FUEL_DATA[$fuel_type].price} />
 									{/if}
 								</td>
 								<td>บาท/ตัน</td>
@@ -201,17 +230,17 @@
 								<tbody>
 									<tr>
 										<th>{FIELD_DATA['prod_steam_pressure'].label}</th>
-										<td class="has-text-right">{$formData.prod_steam_pressure}</td>
+										<td class="has-text-right">{$prod_steam_pressure}</td>
 										<td>{FIELD_DATA['prod_steam_pressure'].unit}</td>
 									</tr>
 									<tr>
 										<th>{FIELD_DATA['prod_steam_temp'].label}</th>
-										<td class="has-text-right">{$formData.prod_steam_temp}</td>
+										<td class="has-text-right">{$prod_steam_temp}</td>
 										<td>{FIELD_DATA['prod_steam_temp'].unit}</td>
 									</tr>
 									<tr>
 										<th>{FIELD_DATA['prod_steam_volume'].label}</th>
-										<td class="has-text-right">{$formData.prod_steam_volume}</td>
+										<td class="has-text-right">{$prod_steam_volume}</td>
 										<td>{FIELD_DATA['prod_steam_volume'].unit}</td>
 									</tr>
 									<tr>
@@ -257,7 +286,7 @@
 										<td>
 											<span>อื่นๆ 30%&emsp;</span>
 											<input
-												bind:checked={$formData.user_custom_other_cost}
+												bind:checked={$user_custom_other_cost}
 												type="checkbox"
 												id="custom-other-cost"
 												class="switch"
@@ -265,8 +294,12 @@
 											<label for="custom-other-cost">&nbsp;</label>
 										</td>
 										<td class="has-text-right">
-											{#if $formData.user_custom_other_cost}
-												<InlineInput fieldName="custom_other_cost" {formData} {FIELD_DATA} />
+											{#if $user_custom_other_cost}
+												<InlineInput
+													fieldName="custom_other_cost"
+													store={custom_other_cost}
+													{FIELD_DATA}
+												/>
 											{:else}
 												<MoneyFormatter value={$other_cost} />
 											{/if}
@@ -308,17 +341,17 @@
 						<tbody>
 							<tr>
 								<th>{FIELD_DATA['prod_steam_pressure'].label}</th>
-								<td class="has-text-right">{$formData.prod_steam_pressure}</td>
+								<td class="has-text-right">{$prod_steam_pressure}</td>
 								<td>{FIELD_DATA['prod_steam_pressure'].unit}</td>
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['prod_steam_temp'].label}</th>
-								<td class="has-text-right">{$formData.prod_steam_temp}</td>
+								<td class="has-text-right">{$prod_steam_temp}</td>
 								<td>{FIELD_DATA['prod_steam_temp'].unit}</td>
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['prod_steam_volume'].label.replace('การผลิต', '')}</th>
-								<td class="has-text-right">{$formData.prod_steam_volume}</td>
+								<td class="has-text-right">{$prod_steam_volume}</td>
 								<td>{FIELD_DATA['prod_steam_volume'].unit}</td>
 							</tr>
 							<tr>
@@ -331,14 +364,22 @@
 							<tr>
 								<th>{FIELD_DATA['isentropic_efficiency'].label}</th>
 								<td>
-									<InlineInput fieldName="isentropic_efficiency" {formData} {FIELD_DATA} />
+									<InlineInput
+										fieldName="isentropic_efficiency"
+										store={isentropic_efficiency}
+										{FIELD_DATA}
+									/>
 								</td>
 								<td>{FIELD_DATA['isentropic_efficiency'].unit}</td>
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['generator_efficiency'].label}</th>
 								<td>
-									<InlineInput fieldName="generator_efficiency" {formData} {FIELD_DATA} />
+									<InlineInput
+										fieldName="generator_efficiency"
+										store={generator_efficiency}
+										{FIELD_DATA}
+									/>
 								</td>
 								<td>{FIELD_DATA['generator_efficiency'].unit}</td>
 							</tr>
@@ -353,7 +394,13 @@
 						<tbody>
 							<tr>
 								<th>{FIELD_DATA['outlet_pressure'].label}</th>
-								<td><InlineInput fieldName="outlet_pressure" {formData} {FIELD_DATA} /></td>
+								<td
+									><InlineInput
+										fieldName="outlet_pressure"
+										store={outlet_pressure}
+										{FIELD_DATA}
+									/></td
+								>
 								<td>{FIELD_DATA['outlet_pressure'].unit}</td>
 							</tr>
 							<tr>
@@ -372,7 +419,7 @@
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['prod_steam_volume'].label.replace('การผลิต', '')}</th>
-								<td class="has-text-right">{$formData.prod_steam_volume}</td>
+								<td class="has-text-right">{$prod_steam_volume}</td>
 								<td>{FIELD_DATA['prod_steam_volume'].unit}</td>
 							</tr>
 							<tr>
@@ -395,7 +442,7 @@
 			</div>
 		{/if}
 		{#if currentStep === 3 || isPrinting}
-			<h1>4 — Double Effect Absorption Chiller</h1>
+			<h1>4 — Absorption Chiller</h1>
 			<figure class="image">
 				<img
 					src="img/chiller.jpg"
@@ -420,8 +467,8 @@
 								<td
 									><InlineInput
 										fieldName="required_steam_flow_rate"
-										max={$formData.prod_steam_volume}
-										{formData}
+										store={required_steam_flow_rate}
+										max={$prod_steam_volume}
 										{FIELD_DATA}
 									/></td
 								>

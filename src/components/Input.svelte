@@ -2,13 +2,13 @@
 	import type { Writable } from 'svelte/store';
 
 	export let FIELD_DATA;
-	export let formData: Writable<any>;
+	export let store: Writable<any>;
 
 	export let fieldName;
 	export let min: number | null = FIELD_DATA[fieldName].min;
 	export let max: number | null = FIELD_DATA[fieldName].max;
 
-	export let value = $formData[fieldName];
+	export let value = $store;
 
 	const checkMinMax = (_) => {
 		if (min !== null && value < min)
@@ -19,7 +19,7 @@
 	};
 
 	const updateFormData = (_) => {
-		$formData[fieldName] = value;
+		$store = value;
 	};
 
 	const guardValue = (_) => {
