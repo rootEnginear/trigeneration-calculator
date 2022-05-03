@@ -7,6 +7,7 @@
 	export let fieldName;
 	export let min: number | null = FIELD_DATA[fieldName].min;
 	export let max: number | null = FIELD_DATA[fieldName].max;
+	export let step: number | null = FIELD_DATA[fieldName].step;
 
 	export let value = $store;
 
@@ -39,8 +40,9 @@
 			type="number"
 			{min}
 			{max}
+			{step}
 			bind:value
-			style="min-width:80px"
+			style="min-width:100px"
 		/>
 		{#if error}
 			<span class="icon is-small is-left">

@@ -14,6 +14,7 @@ export type TrigenFieldDataType = PartialRecord<
 		unit: string;
 		min?: number;
 		max?: number;
+		step?: number;
 	}
 >;
 
@@ -115,9 +116,19 @@ export const FIELD_DATA: TrigenFieldDataType = {
 		unit: 'ตัน/ชั่วโมง',
 		min: 0
 	},
-	custom_other_cost: {
+	cop: {
+		label: 'COP',
+		unit: '',
+		min: 1,
+		max: 1.6,
+		step: 0.05
+	},
+	other_cost: {
 		label: 'อื่นๆ 30%',
-		unit: 'บาท/ตัน',
-		min: 0
+		unit: 'บาท/ตัน'
+	},
+	waste_enthalpy: {
+		label: 'เอลทาลปีไอน้ำทิ้ง',
+		unit: 'kJ/kg'
 	}
 };

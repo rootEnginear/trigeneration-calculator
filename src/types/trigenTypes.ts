@@ -35,10 +35,12 @@ export interface TrigenInputDataType {
 
 	outlet_pressure: number;
 
+	cop: number;
 	required_steam_flow_rate: number;
 
-	user_custom_other_cost: boolean;
-	custom_other_cost: number;
+	other_cost: number;
+
+	waste_enthalpy: number;
 }
 
 export interface CompareInputDataType {

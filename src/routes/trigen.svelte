@@ -28,8 +28,11 @@
 		isentropic_efficiency,
 		generator_efficiency,
 		outlet_pressure,
+		cop,
 		required_steam_flow_rate,
 		user_custom_other_cost,
+		user_custom_waste_enthalpy,
+		waste_enthalpy,
 		steam_enthalpy,
 		feedwater_enthalpy,
 		fuel_usage_rate,
@@ -56,7 +59,7 @@
 		econ_n
 	} from 'stores/trigenFormData';
 
-	let currentStep = 0;
+	let currentStep = 3;
 	let isPrinting = false;
 
 	function print() {
@@ -294,11 +297,7 @@
 										</td>
 										<td class="has-text-right">
 											{#if $user_custom_other_cost}
-												<InlineInput
-													fieldName="custom_other_cost"
-													store={other_cost}
-													{FIELD_DATA}
-												/>
+												<InlineInput fieldName="other_cost" store={other_cost} {FIELD_DATA} />
 											{:else}
 												<MoneyFormatter value={$other_cost} />
 											{/if}
@@ -458,11 +457,15 @@
 						<tbody>
 							<tr>
 								<th>COP</th>
-								<td class="has-text-right">1.45</td>
+								<th>&nbsp;</th>
+								<td class="has-text-right">
+									<InlineInput fieldName="cop" store={cop} {FIELD_DATA} />
+								</td>
 								<td />
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['required_steam_flow_rate'].label}</th>
+								<td>&nbsp;</td>
 								<td
 									><InlineInput
 										fieldName="required_steam_flow_rate"
@@ -475,6 +478,7 @@
 							</tr>
 							<tr>
 								<th>เอลทาลปีไอน้ำขาเข้า</th>
+								<td>&nbsp;</td>
 								<td class="has-text-right">
 									<NumberFormatter value={$turbine_outlet_enthalpy} />
 								</td>
@@ -482,11 +486,32 @@
 							</tr>
 							<tr>
 								<th>เอลทาลปีไอน้ำทิ้ง</th>
-								<td class="has-text-right">419.17</td>
+								<td>
+									<input
+										bind:checked={$user_custom_waste_enthalpy}
+										type="checkbox"
+										id="custom-waste-enthalpy"
+										class="switch"
+									/>
+									<label for="custom-waste-enthalpy">&nbsp;</label>
+								</td>
+								<td class="has-text-right">
+									{#if $user_custom_waste_enthalpy}
+										<InlineInput
+											fieldName="waste_enthalpy"
+											store={waste_enthalpy}
+											{FIELD_DATA}
+											max={$turbine_outlet_enthalpy}
+										/>
+									{:else}
+										<span>{$waste_enthalpy}</span>
+									{/if}
+								</td>
 								<td>kJ/kg</td>
 							</tr>
 							<tr>
 								<th>ความเย็นที่ผลิตได้ (kW)</th>
+								<td>&nbsp;</td>
 								<td class="has-text-right">
 									<NumberFormatter value={$kw_cooling} />
 								</td>
@@ -494,6 +519,7 @@
 							</tr>
 							<tr>
 								<th>ความเย็นที่ผลิตได้ (RT)</th>
+								<td>&nbsp;</td>
 								<td class="has-text-right">
 									<NumberFormatter value={$rt_cooling} />
 								</td>
