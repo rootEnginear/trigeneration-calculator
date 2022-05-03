@@ -241,7 +241,7 @@
 								<thead>
 									<tr>
 										<th>รายการ</th>
-										<th class="has-text-right">เป็นเงิน</th>
+										<th class="has-text-right" style="width: 100%">เป็นเงิน</th>
 										<th>หน่วย</th>
 									</tr>
 								</thead>
@@ -254,9 +254,22 @@
 										<td>บาท/ตัน</td>
 									</tr>
 									<tr>
-										<td>อื่นๆ 30%</td>
+										<td>
+											<span>อื่นๆ 30%&emsp;</span>
+											<input
+												bind:checked={$formData.user_custom_other_cost}
+												type="checkbox"
+												id="custom-other-cost"
+												class="switch"
+											/>
+											<label for="custom-other-cost">&nbsp;</label>
+										</td>
 										<td class="has-text-right">
-											<MoneyFormatter value={$other_cost} />
+											{#if $formData.user_custom_other_cost}
+												<InlineInput fieldName="custom_other_cost" {formData} {FIELD_DATA} />
+											{:else}
+												<MoneyFormatter value={$other_cost} />
+											{/if}
 										</td>
 										<td>บาท/ตัน</td>
 									</tr>

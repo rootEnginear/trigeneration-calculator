@@ -114,5 +114,10 @@ export const FIELD_DATA: TrigenFieldDataType = {
 		label: 'อัตราไอน้ำป้อนเข้า',
 		unit: 'ตัน/ชั่วโมง',
 		min: 0
+	},
+	custom_other_cost: {
+		label: 'อื่นๆ 30%',
+		unit: 'บาท/ตัน',
+		min: 0
 	}
 };

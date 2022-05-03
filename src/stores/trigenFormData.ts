@@ -22,7 +22,10 @@ export const formData = writable<TrigenInputDataType>({
 	isentropic_efficiency: 53,
 	generator_efficiency: 95,
 	outlet_pressure: 12.5,
-	required_steam_flow_rate: 5
+	required_steam_flow_rate: 5,
+
+	user_custom_other_cost: false,
+	custom_other_cost: 100
 });
 
 export const steam_enthalpy = derived(formData, ($formData) => {
@@ -53,7 +56,8 @@ export const fuel_cost = derived([formData, fuel_usage_rate], ([$formData, $fuel
 	return Math.ceil(($fuel_usage_rate * price) / $formData.prod_steam_volume);
 });
 
-export const other_cost = derived(fuel_cost, ($fuel_cost) => {
+export const other_cost = derived([formData, fuel_cost], ([$formData, $fuel_cost]) => {
+	if ($formData.user_custom_other_cost) return $formData.custom_other_cost;
 	return Math.ceil($fuel_cost * 0.3);
 });
 

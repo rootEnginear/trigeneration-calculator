@@ -27,6 +27,7 @@ $steps-completed-color: $yellow;
 $steps-active-color: $yellow;
 
 @import 'bulma-o-steps/bulma-steps.sass';
+@import 'bulma-switch/src/sass/index.sass';
 
 .container {
 	min-height: 100vh;

@@ -36,6 +36,9 @@ export interface TrigenInputDataType {
 	outlet_pressure: number;
 
 	required_steam_flow_rate: number;
+
+	user_custom_other_cost: boolean;
+	custom_other_cost: number;
 }
 
 export interface CompareInputDataType {

@@ -33,7 +33,15 @@
 
 <div class="field">
 	<div class="control is-expanded" class:has-icons-left={error}>
-		<input class="input" class:is-danger={error} type="number" {min} {max} bind:value />
+		<input
+			class="input"
+			class:is-danger={error}
+			type="number"
+			{min}
+			{max}
+			bind:value
+			style="min-width:80px"
+		/>
 		{#if error}
 			<span class="icon is-small is-left">
 				<i class="fas fa-exclamation-triangle" />
