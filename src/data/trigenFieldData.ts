@@ -33,7 +33,8 @@ export const FIELD_DATA: TrigenFieldDataType = {
 	electrical_cost: {
 		label: 'ค่าไฟ',
 		unit: 'บาท/ยูนิต',
-		min: 0
+		min: 1,
+		max: 13
 	},
 	max_steam_volume: {
 		label: 'อัตราการผลิตไอน้ำสูงสุด',
@@ -81,9 +82,15 @@ export const FIELD_DATA: TrigenFieldDataType = {
 	},
 	fuel_type: {
 		label: 'เชื้อเพลิงที่ใช้',
-		unit: '',
-		min: 0,
-		max: 0
+		unit: ''
+	},
+	fuel_lhv: {
+		label: 'ค่า LHV',
+		unit: ''
+	},
+	fuel_cost: {
+		label: 'ค่าเชื้อเพลิง',
+		unit: ''
 	},
 	isentropic_efficiency: {
 		label: 'ประสิทธิภาพไอเซนโทรปิก',

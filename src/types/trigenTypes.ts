@@ -9,7 +9,8 @@ export type FuelType =
 	| 'ถ่านหิน 5000 kcal'
 	| 'ถ่านหิน 5500 kcal'
 	| 'น้ำมันเตา 600 2%S'
-	| 'น้ำมันเตา 1500 2%S';
+	| 'น้ำมันเตา 1500 2%S'
+	| 'อื่นๆ';
 
 export interface TrigenInputDataType {
 	hr_per_day: number;
@@ -26,6 +27,8 @@ export interface TrigenInputDataType {
 	boiler_efficiency: number;
 
 	fuel_type: FuelType;
+	fuel_lhv: number;
+	fuel_cost: number;
 
 	isentropic_efficiency: number;
 	generator_efficiency: number;

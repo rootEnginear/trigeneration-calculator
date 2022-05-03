@@ -151,6 +151,7 @@
 											{#each Object.keys(FUEL_DATA) as fuel_name}
 												<option value={fuel_name}>{fuel_name}</option>
 											{/each}
+											<option value="อื่นๆ">อื่นๆ</option>
 										</select>
 									</div>
 								</td>
@@ -158,13 +159,23 @@
 							</tr>
 							<tr>
 								<td>ค่า LHV</td>
-								<td class="has-text-right">{FUEL_DATA[$formData.fuel_type].lhv}</td>
+								<td class="has-text-right">
+									{#if $formData.fuel_type === 'อื่นๆ'}
+										<InlineInput fieldName="fuel_lhv" {formData} {FIELD_DATA} />
+									{:else}
+										<span>{FUEL_DATA[$formData.fuel_type].lhv}</span>
+									{/if}
+								</td>
 								<td>kJ/kg</td>
 							</tr>
 							<tr>
 								<td>ค่าเชื้อเพลิง</td>
 								<td class="has-text-right">
-									<MoneyFormatter value={FUEL_DATA[$formData.fuel_type].price} />
+									{#if $formData.fuel_type === 'อื่นๆ'}
+										<InlineInput fieldName="fuel_cost" {formData} {FIELD_DATA} />
+									{:else}
+										<MoneyFormatter value={FUEL_DATA[$formData.fuel_type].price} />
+									{/if}
 								</td>
 								<td>บาท/ตัน</td>
 							</tr>

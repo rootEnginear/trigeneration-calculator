@@ -33,7 +33,8 @@ export const FIELD_DATA: CompareFieldDataType = {
 	electrical_cost: {
 		label: 'ค่าไฟ',
 		unit: 'บาท/ยูนิต',
-		min: 0
+		min: 1,
+		max: 13
 	},
 	// OLD
 	old_max_steam_volume: {

@@ -17,6 +17,8 @@ export const formData = writable<TrigenInputDataType>({
 	input_steam_pressure: 0.3,
 	boiler_efficiency: 90.74,
 	fuel_type: 'ไม้สับ',
+	fuel_lhv: 8000,
+	fuel_cost: 1000,
 	isentropic_efficiency: 53,
 	generator_efficiency: 95,
 	outlet_pressure: 12.5,
@@ -34,17 +36,21 @@ export const feedwater_enthalpy = derived(formData, ($formData) => {
 export const fuel_usage_rate = derived(
 	[formData, steam_enthalpy, feedwater_enthalpy],
 	([$formData, $steam_enthalpy, $feedwater_enthalpy]) => {
+		const lhv = FUEL_DATA[$formData.fuel_type]
+			? FUEL_DATA[$formData.fuel_type].lhv
+			: $formData.fuel_lhv;
 		return (
 			($formData.prod_steam_volume * ($steam_enthalpy - $feedwater_enthalpy)) /
-			((FUEL_DATA[$formData.fuel_type].lhv * $formData.boiler_efficiency) / 100)
+			((lhv * $formData.boiler_efficiency) / 100)
 		);
 	}
 );
 
 export const fuel_cost = derived([formData, fuel_usage_rate], ([$formData, $fuel_usage_rate]) => {
-	return Math.ceil(
-		($fuel_usage_rate * FUEL_DATA[$formData.fuel_type].price) / $formData.prod_steam_volume
-	);
+	const price = FUEL_DATA[$formData.fuel_type]
+		? FUEL_DATA[$formData.fuel_type].price
+		: $formData.fuel_cost;
+	return Math.ceil(($fuel_usage_rate * price) / $formData.prod_steam_volume);
 });
 
 export const other_cost = derived(fuel_cost, ($fuel_cost) => {
