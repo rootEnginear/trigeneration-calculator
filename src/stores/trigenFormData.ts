@@ -7,6 +7,7 @@ import { T_ph, h_pT, h_ps, s_pT } from 'utils/xsteam';
 export const hr_per_day = writable(24);
 export const day_per_year = writable(330);
 export const electrical_cost = writable(3.7);
+
 export const max_steam_volume = writable(20);
 export const max_steam_pressure = writable(25);
 export const prod_steam_volume = writable(16);
@@ -15,15 +16,18 @@ export const prod_steam_temp = writable(226);
 export const input_steam_temp = writable(107);
 export const input_steam_pressure = writable(0.3);
 export const boiler_efficiency = writable(90.74);
+
 export const fuel_type = writable('ไม้สับ');
 export const fuel_lhv = writable(8000);
 export const fuel_price = writable(1000);
+
+export const user_custom_other_cost = writable(false);
+export const other_cost = writable(0);
+
 export const isentropic_efficiency = writable(53);
 export const generator_efficiency = writable(95);
 export const outlet_pressure = writable(12.5);
 export const required_steam_flow_rate = writable(5);
-export const user_custom_other_cost = writable(false);
-export const custom_other_cost = writable(100);
 
 export const steam_enthalpy = derived([prod_steam_pressure, prod_steam_temp], ([a, b]) => {
 	return h_pT(a + 1, b);
@@ -33,39 +37,38 @@ export const feedwater_enthalpy = derived([prod_steam_pressure, input_steam_temp
 	return h_pT(a + 1, b);
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const update_lhv_and_price = derived(fuel_type, (a) => {
+	if (a !== 'อื่นๆ') {
+		fuel_lhv.set(FUEL_DATA[a].lhv);
+		fuel_price.set(FUEL_DATA[a].price);
+	}
+	return a;
+});
+update_lhv_and_price.subscribe(() => 0);
+
 export const fuel_usage_rate = derived(
-	[fuel_type, fuel_lhv, prod_steam_volume, boiler_efficiency, steam_enthalpy, feedwater_enthalpy],
-	([
-		$fuel_type,
-		$fuel_lhv,
-		$prod_steam_volume,
-		$boiler_efficiency,
-		$steam_enthalpy,
-		$feedwater_enthalpy
-	]) => {
-		const lhv = FUEL_DATA[$fuel_type] ? FUEL_DATA[$fuel_type].lhv : $fuel_lhv;
+	[fuel_lhv, prod_steam_volume, boiler_efficiency, steam_enthalpy, feedwater_enthalpy],
+	([$fuel_lhv, $prod_steam_volume, $boiler_efficiency, $steam_enthalpy, $feedwater_enthalpy]) => {
 		return (
 			($prod_steam_volume * ($steam_enthalpy - $feedwater_enthalpy)) /
-			((lhv * $boiler_efficiency) / 100)
+			(($fuel_lhv * $boiler_efficiency) / 100)
 		);
 	}
 );
 
 export const fuel_cost = derived(
-	[fuel_type, fuel_price, prod_steam_volume, fuel_usage_rate],
-	([$fuel_type, $fuel_price, $prod_steam_volume, $fuel_usage_rate]) => {
-		const price = FUEL_DATA[$fuel_type] ? FUEL_DATA[$fuel_type].price : $fuel_price;
-		return Math.ceil(($fuel_usage_rate * price) / $prod_steam_volume);
+	[fuel_price, prod_steam_volume, fuel_usage_rate],
+	([$fuel_price, $prod_steam_volume, $fuel_usage_rate]) => {
+		return Math.ceil(($fuel_usage_rate * $fuel_price) / $prod_steam_volume);
 	}
 );
 
-export const other_cost = derived(
-	[user_custom_other_cost, custom_other_cost, fuel_cost],
-	([$user_custom_other_cost, $custom_other_cost, $fuel_cost]) => {
-		if ($user_custom_other_cost) return $custom_other_cost;
-		return Math.ceil($fuel_cost * 0.3);
-	}
-);
+const update_fuel_cost = derived([user_custom_other_cost, fuel_cost], ([a, b]) => {
+	other_cost.set(Math.ceil(b * 0.3));
+	return [a, b];
+});
+update_fuel_cost.subscribe(() => 0);
 
 export const total_cost = derived([fuel_cost, other_cost], ([$fuel_cost, $other_cost]) => {
 	return $fuel_cost + $other_cost;

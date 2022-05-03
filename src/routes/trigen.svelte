@@ -30,7 +30,6 @@
 		outlet_pressure,
 		required_steam_flow_rate,
 		user_custom_other_cost,
-		custom_other_cost,
 		steam_enthalpy,
 		feedwater_enthalpy,
 		fuel_usage_rate,
@@ -192,7 +191,7 @@
 									{#if $fuel_type === 'อื่นๆ'}
 										<InlineInput fieldName="fuel_lhv" store={fuel_lhv} {FIELD_DATA} />
 									{:else}
-										<span>{FUEL_DATA[$fuel_type].lhv}</span>
+										<span>{$fuel_lhv}</span>
 									{/if}
 								</td>
 								<td>kJ/kg</td>
@@ -203,7 +202,7 @@
 									{#if $fuel_type === 'อื่นๆ'}
 										<InlineInput fieldName="fuel_price" store={fuel_price} {FIELD_DATA} />
 									{:else}
-										<MoneyFormatter value={FUEL_DATA[$fuel_type].price} />
+										<MoneyFormatter value={$fuel_price} />
 									{/if}
 								</td>
 								<td>บาท/ตัน</td>
@@ -297,7 +296,7 @@
 											{#if $user_custom_other_cost}
 												<InlineInput
 													fieldName="custom_other_cost"
-													store={custom_other_cost}
+													store={other_cost}
 													{FIELD_DATA}
 												/>
 											{:else}
