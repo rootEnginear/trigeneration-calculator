@@ -45,7 +45,6 @@ export const feedwater_enthalpy = derived([prod_steam_pressure, input_steam_temp
 	return h_pT(a + 1, b);
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const update_lhv_and_price = derived(fuel_type, (a) => {
 	if (a !== 'อื่นๆ') {
 		fuel_lhv.set(FUEL_DATA[a].lhv);

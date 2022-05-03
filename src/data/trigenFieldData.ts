@@ -19,6 +19,7 @@ export type TrigenFieldDataType = PartialRecord<
 >;
 
 export const FIELD_DATA: TrigenFieldDataType = {
+	// PG1
 	hr_per_day: {
 		label: 'ชั่วโมงการทำงานต่อวัน',
 		unit: 'ชั่วโมง/วัน',
@@ -37,6 +38,7 @@ export const FIELD_DATA: TrigenFieldDataType = {
 		min: 2,
 		max: 13
 	},
+	// PG2
 	max_steam_volume: {
 		label: 'อัตราการผลิตไอน้ำสูงสุด',
 		unit: 'ตัน/ชั่วโมง',
@@ -87,12 +89,20 @@ export const FIELD_DATA: TrigenFieldDataType = {
 	},
 	fuel_lhv: {
 		label: 'ค่า LHV',
-		unit: ''
+		unit: 'kJ/kg',
+		min: 0
 	},
 	fuel_price: {
 		label: 'ค่าเชื้อเพลิง',
-		unit: ''
+		unit: 'บาท/ตัน',
+		min: 0
 	},
+	other_cost: {
+		label: 'อื่นๆ 30%',
+		unit: 'บาท/ตัน',
+		min: 0
+	},
+	// PG3
 	isentropic_efficiency: {
 		label: 'ประสิทธิภาพไอเซนโทรปิก',
 		unit: '%',
@@ -111,11 +121,7 @@ export const FIELD_DATA: TrigenFieldDataType = {
 		min: 0,
 		max: 1000
 	},
-	required_steam_flow_rate: {
-		label: 'อัตราไอน้ำป้อนเข้า',
-		unit: 'ตัน/ชั่วโมง',
-		min: 0
-	},
+	// PG4
 	cop: {
 		label: 'COP',
 		unit: '',
@@ -123,12 +129,70 @@ export const FIELD_DATA: TrigenFieldDataType = {
 		max: 1.6,
 		step: 0.05
 	},
-	other_cost: {
-		label: 'อื่นๆ 30%',
-		unit: 'บาท/ตัน'
+	required_steam_flow_rate: {
+		label: 'อัตราไอน้ำป้อนเข้า',
+		unit: 'ตัน/ชั่วโมง',
+		min: 0
 	},
 	waste_enthalpy: {
 		label: 'เอลทาลปีไอน้ำทิ้ง',
-		unit: 'kJ/kg'
+		unit: 'kJ/kg',
+		min: 0
+	},
+	// PG5
+	fc_boiler: {
+		label: 'ค่าก่อสร้างและติดตั้ง Boiler',
+		unit: 'บาท',
+		min: 0
+	},
+	fc_steam: {
+		label: 'ค่าก่อสร้างและติดตั้ง Steam Expander',
+		unit: 'บาท',
+		min: 0
+	},
+	fc_chiller: {
+		label: 'ค่าติดตั้ง Absorption Chiller',
+		unit: 'บาท',
+		min: 0
+	},
+	fc_other: {
+		label: 'อื่นๆ (ค่าระบบน้ำ, ตรวจวัดประสิทธิภาพ)',
+		unit: 'บาท',
+		min: 0
+	},
+	fc_user_1: {
+		label: 'อื่นๆ (1)',
+		unit: 'บาท',
+		min: 0
+	},
+	fc_user_2: {
+		label: 'อื่นๆ (2)',
+		unit: 'บาท',
+		min: 0
+	},
+	ac_maintenance: {
+		label: 'ค่าบำรุงรักษา',
+		unit: 'บาท/ปี',
+		min: 0
+	},
+	ac_electricity: {
+		label: 'ค่าไฟฟ้าสำหรับเดินระบบ Trigeneration (เฉพาะส่วนของ Boiler Turbine)',
+		unit: 'บาท/ปี',
+		min: 0
+	},
+	ac_user_1: {
+		label: 'อื่นๆ (1)',
+		unit: 'บาท/ปี',
+		min: 0
+	},
+	ac_user_2: {
+		label: 'อื่นๆ (2)',
+		unit: 'บาท/ปี',
+		min: 0
+	},
+	sc_user: {
+		label: 'อื่นๆ',
+		unit: 'บาท/ปี',
+		min: 0
 	}
 };
