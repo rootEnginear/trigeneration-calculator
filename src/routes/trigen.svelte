@@ -208,6 +208,13 @@
 											<option value="อื่นๆ">อื่นๆ</option>
 										</select>
 									</div>
+									{#if $fuel_type === 'อื่นๆ'}
+									<input
+										type="text"
+										class="input is-fullwidth"
+										placeholder="ชื่อเชื้อเพลิงที่ใช้"
+									/>
+									{/if}
 								</td>
 								<td />
 							</tr>

@@ -12,12 +12,12 @@
 		<hr />
 		<figure class="image">
 			<img
-				src="img/trigen_sys.jpg"
+				src="img/trigen_sys.png"
 				alt=""
 				decoding="async"
 				loading="eager"
-				width="500"
-				height="300"
+				width="600"
+				height="337.5"
 			/>
 		</figure>
 		<div class="columns">
