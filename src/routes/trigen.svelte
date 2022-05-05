@@ -209,11 +209,11 @@
 										</select>
 									</div>
 									{#if $fuel_type === 'อื่นๆ'}
-									<input
-										type="text"
-										class="input is-fullwidth"
-										placeholder="ชื่อเชื้อเพลิงที่ใช้"
-									/>
+										<input
+											type="text"
+											class="input is-fullwidth"
+											placeholder="ชื่อเชื้อเพลิงที่ใช้"
+										/>
 									{/if}
 								</td>
 								<td />
@@ -627,7 +627,7 @@
 							<tr>
 								<th>รายการปรับปรุง</th>
 								<th>&nbsp;</th>
-								<th class="has-text-right" style="min-width:144px">ราคา</th>
+								<th class="has-text-right">ราคา</th>
 								<th>หน่วย</th>
 							</tr>
 						</thead>

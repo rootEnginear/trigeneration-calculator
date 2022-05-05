@@ -227,13 +227,16 @@ export const sc_steam = derived(
 		return Math.ceil($prod_energy * $hr_per_day * $day_per_year * $electrical_cost);
 	}
 );
+
 export const sc_chiller = derived(
 	[rt_cooling, hr_per_day, day_per_year, electrical_cost],
 	([$rt_cooling, $hr_per_day, $day_per_year, $electrical_cost]) => {
 		return Math.ceil((0.75 - 0.114) * $rt_cooling * $hr_per_day * $day_per_year * $electrical_cost);
 	}
 );
+
 export const sc_user = writable(0);
+
 export const sc_total = derived(
 	[sc_steam, sc_chiller, sc_user],
 	([$sc_steam, $sc_chiller, $sc_user]) => {

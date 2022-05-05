@@ -16,6 +16,8 @@ export const old_input_steam_temp = writable(107);
 export const old_input_steam_pressure = writable(0.3);
 export const old_boiler_efficiency = writable(80.5);
 export const old_fuel_type = writable('ไม้สับ');
+export const old_fuel_lhv = writable(8000);
+export const old_fuel_price = writable(1000);
 export const new_max_steam_volume = writable(20);
 export const new_max_steam_pressure = writable(25);
 export const new_prod_steam_volume = writable(16);
@@ -25,10 +27,15 @@ export const new_input_steam_temp = writable(107);
 export const new_input_steam_pressure = writable(0.3);
 export const new_boiler_efficiency = writable(90.74);
 export const new_fuel_type = writable('ไม้สับ');
+export const new_fuel_lhv = writable(8000);
+export const new_fuel_price = writable(1000);
 export const isentropic_efficiency = writable(53);
 export const generator_efficiency = writable(95);
 export const outlet_pressure = writable(12.5);
 export const required_steam_flow_rate = writable(5);
+
+export const new_boiler_type = writable(0);
+export const cop = writable(1.45);
 
 export const old_steam_enthalpy = derived(
 	[old_prod_steam_pressure, old_prod_steam_temp],
@@ -44,38 +51,60 @@ export const old_feedwater_enthalpy = derived(
 	}
 );
 
+const update_old_lhv_and_price = derived(old_fuel_type, (a) => {
+	if (a !== 'อื่นๆ') {
+		old_fuel_lhv.set(FUEL_DATA[a].lhv);
+		old_fuel_price.set(FUEL_DATA[a].price);
+	}
+	return a;
+});
+update_old_lhv_and_price.subscribe(() => 0);
+
+const update_new_lhv_and_price = derived(new_fuel_type, (a) => {
+	if (a !== 'อื่นๆ') {
+		new_fuel_lhv.set(FUEL_DATA[a].lhv);
+		new_fuel_price.set(FUEL_DATA[a].price);
+	}
+	return a;
+});
+update_new_lhv_and_price.subscribe(() => 0);
+
 export const old_fuel_usage_rate = derived(
 	[
 		old_prod_steam_volume,
-		old_fuel_type,
+		old_fuel_lhv,
 		old_boiler_efficiency,
 		old_steam_enthalpy,
 		old_feedwater_enthalpy
 	],
 	([
 		$old_prod_steam_volume,
-		$old_fuel_type,
+		$old_fuel_lhv,
 		$old_boiler_efficiency,
 		$steam_enthalpy,
 		$feedwater_enthalpy
 	]) => {
 		return (
 			($old_prod_steam_volume * ($steam_enthalpy - $feedwater_enthalpy)) /
-			((FUEL_DATA[$old_fuel_type].lhv * $old_boiler_efficiency) / 100)
+			(($old_fuel_lhv * $old_boiler_efficiency) / 100)
 		);
 	}
 );
 
 export const old_fuel_cost = derived(
-	[old_fuel_type, old_prod_steam_volume, old_fuel_usage_rate],
-	([$old_fuel_type, $old_prod_steam_volume, $fuel_usage_rate]) => {
-		return Math.ceil(($fuel_usage_rate * FUEL_DATA[$old_fuel_type].price) / $old_prod_steam_volume);
+	[old_fuel_price, old_prod_steam_volume, old_fuel_usage_rate],
+	([$old_fuel_price, $old_prod_steam_volume, $fuel_usage_rate]) => {
+		return Math.ceil(($fuel_usage_rate * $old_fuel_price) / $old_prod_steam_volume);
 	}
 );
 
-export const old_other_cost = derived(old_fuel_cost, ($fuel_cost) => {
-	return Math.ceil($fuel_cost * 0.3);
+export const custom_old_other_cost = writable(false);
+export const old_other_cost = writable(0);
+const update_old_other_cost = derived([custom_old_other_cost, old_fuel_cost], ([a, b]) => {
+	old_other_cost.set(Math.ceil(b * 0.3));
+	return [a, b];
 });
+update_old_other_cost.subscribe(() => 0);
 
 export const old_total_cost = derived(
 	[old_fuel_cost, old_other_cost],
@@ -101,35 +130,39 @@ export const new_feedwater_enthalpy = derived(
 export const new_fuel_usage_rate = derived(
 	[
 		new_prod_steam_volume,
-		new_fuel_type,
+		new_fuel_lhv,
 		new_boiler_efficiency,
 		new_steam_enthalpy,
 		new_feedwater_enthalpy
 	],
 	([
 		$new_prod_steam_volume,
-		$new_fuel_type,
+		$new_fuel_lhv,
 		$new_boiler_efficiency,
 		$steam_enthalpy,
 		$feedwater_enthalpy
 	]) => {
 		return (
 			($new_prod_steam_volume * ($steam_enthalpy - $feedwater_enthalpy)) /
-			((FUEL_DATA[$new_fuel_type].lhv * $new_boiler_efficiency) / 100)
+			(($new_fuel_lhv * $new_boiler_efficiency) / 100)
 		);
 	}
 );
 
 export const new_fuel_cost = derived(
-	[new_fuel_type, new_prod_steam_volume, new_fuel_usage_rate],
-	([$new_fuel_type, $new_prod_steam_volume, $fuel_usage_rate]) => {
-		return Math.ceil(($fuel_usage_rate * FUEL_DATA[$new_fuel_type].price) / $new_prod_steam_volume);
+	[new_fuel_price, new_prod_steam_volume, new_fuel_usage_rate],
+	([$new_fuel_price, $new_prod_steam_volume, $fuel_usage_rate]) => {
+		return Math.ceil(($fuel_usage_rate * $new_fuel_price) / $new_prod_steam_volume);
 	}
 );
 
-export const new_other_cost = derived(new_fuel_cost, ($fuel_cost) => {
-	return Math.ceil($fuel_cost * 0.3);
+export const custom_new_other_cost = writable(false);
+export const new_other_cost = writable(0);
+const update_new_other_cost = derived([custom_new_other_cost, new_fuel_cost], ([a, b]) => {
+	new_other_cost.set(Math.ceil(b * 0.3));
+	return [a, b];
 });
+update_new_other_cost.subscribe(() => 0);
 
 export const new_total_cost = derived(
 	[new_fuel_cost, new_other_cost],
@@ -189,10 +222,18 @@ export const prod_energy = derived(
 	}
 );
 
+export const custom_waste_enthalpy = writable(false);
+export const waste_enthalpy = writable(0);
+const update_waste_enthalpy = derived(custom_waste_enthalpy, (a) => {
+	waste_enthalpy.set(419.17);
+	return a;
+});
+update_waste_enthalpy.subscribe(() => 0);
+
 export const kw_cooling = derived(
-	[required_steam_flow_rate, turbine_outlet_enthalpy],
-	([$required_steam_flow_rate, $turbine_outlet_enthalpy]) => {
-		return 1.45 * $required_steam_flow_rate * 1000 * (($turbine_outlet_enthalpy - 419.17) / 3600);
+	[cop, required_steam_flow_rate, turbine_outlet_enthalpy],
+	([$cop, $required_steam_flow_rate, $turbine_outlet_enthalpy]) => {
+		return $cop * $required_steam_flow_rate * 1000 * (($turbine_outlet_enthalpy - 419.17) / 3600);
 	}
 );
 
@@ -200,41 +241,107 @@ export const rt_cooling = derived(kw_cooling, ($kw_cooling) => {
 	return $kw_cooling / 3.517;
 });
 
-export const fc_boiler = derived(new_max_steam_volume, ($new_max_steam_volume) =>
-	Math.ceil($new_max_steam_volume * 2000000)
+export const custom_fc_boiler = writable(false);
+export const fc_boiler = writable(4000000);
+const update_fc_boiler = derived([custom_fc_boiler, new_max_steam_volume], ([a, b]) => {
+	fc_boiler.set(Math.ceil(b * 2000000));
+	return [a, b];
+});
+update_fc_boiler.subscribe(() => 0);
+
+export const custom_fc_steam = writable(false);
+export const fc_steam = writable(19395160);
+const update_fc_steam = derived([custom_fc_steam, prod_energy], ([a, b]) => {
+	fc_steam.set(Math.ceil(b * 80000));
+	return [a, b];
+});
+update_fc_steam.subscribe(() => 0);
+
+export const custom_fc_chiller = writable(false);
+export const fc_chiller = writable(26819294);
+const update_fc_chiller = derived([custom_fc_chiller, rt_cooling], ([a, b]) => {
+	fc_chiller.set(Math.ceil(b * 20000));
+	return [a, b];
+});
+update_fc_chiller.subscribe(() => 0);
+
+export const custom_fc_other = writable(false);
+export const fc_other = writable(8621446);
+const update_fc_other = derived(
+	[custom_fc_other, fc_boiler, fc_steam, fc_chiller],
+	([a, b, c, d]) => {
+		fc_other.set(Math.ceil(0.1 * [b, c, d].reduce((aa, ab) => aa + ab, 0)));
+		return [a, b, c, d];
+	}
 );
-export const fc_steam = derived(prod_energy, ($prod_energy) => Math.ceil($prod_energy * 80000));
-export const fc_chiller = derived(rt_cooling, ($rt_cooling) => Math.ceil($rt_cooling * 20000));
-export const fc_other = derived(
-	[fc_boiler, fc_steam, fc_chiller],
-	([$fc_boiler, $fc_steam, $fc_chiller]) =>
-		Math.ceil(0.1 * [$fc_boiler, $fc_steam, $fc_chiller].reduce((a, b) => a + b, 0))
-);
+update_fc_other.subscribe(() => 0);
+
+export const fc_user_1 = writable(0);
+export const fc_user_2 = writable(0);
+
+export const fc_repair = writable(0);
+
 export const fc_total = derived(
-	[fc_boiler, fc_steam, fc_chiller, fc_other],
-	([$fc_boiler, $fc_steam, $fc_chiller, $fc_other]) => {
-		return [$fc_boiler, $fc_steam, $fc_chiller, $fc_other].reduce((a, c) => a + c, 0);
+	[fc_boiler, fc_steam, fc_chiller, fc_other, fc_user_1, fc_user_2, new_boiler_type, fc_repair],
+	([
+		$fc_boiler,
+		$fc_steam,
+		$fc_chiller,
+		$fc_other,
+		$fc_user_1,
+		$fc_user_2,
+		$new_boiler_type,
+		$fc_repair
+	]) => {
+		const sum_list =
+			$new_boiler_type === 0
+				? [$fc_boiler, $fc_steam, $fc_chiller, $fc_other, $fc_user_1, $fc_user_2]
+				: [$fc_repair, $fc_steam, $fc_chiller, $fc_other, $fc_user_1, $fc_user_2];
+		return sum_list.reduce((a, c) => a + c, 0);
 	}
 );
 
-export const ac_electricity = derived(
-	[new_prod_steam_volume, hr_per_day, day_per_year, electrical_cost],
-	([$new_prod_steam_volume, $hr_per_day, $day_per_year, $electrical_cost]) =>
-		Math.ceil($new_prod_steam_volume * 8 * $hr_per_day * $day_per_year * $electrical_cost)
+export const custom_ac_electricity = writable(false);
+export const ac_electricity = writable(4160103);
+const update_ac_electricity = derived(
+	[custom_ac_electricity, new_prod_steam_volume, hr_per_day, day_per_year, electrical_cost],
+	([a, $prod_steam_volume, $hr_per_day, $day_per_year, $electrical_cost]) => {
+		ac_electricity.set(
+			Math.ceil($prod_steam_volume * 8 * $hr_per_day * $day_per_year * $electrical_cost)
+		);
+		return [a, $prod_steam_volume, $hr_per_day, $day_per_year, $electrical_cost];
+	}
 );
+update_ac_electricity.subscribe(() => 0);
+
 export const ac_additional = derived(
 	[new_total_cost, prod_steam_diff, hr_per_day, day_per_year],
 	([$new_total_cost, $prod_steam_diff, $hr_per_day, $day_per_year]) => {
 		return $new_total_cost * $hr_per_day * $day_per_year * $prod_steam_diff;
 	}
 );
-export const ac_maintenance = derived(ac_electricity, ($ac_electricity) =>
-	Math.ceil(0.1 * $ac_electricity)
+
+export const custom_ac_maintenance = writable(false);
+export const ac_maintenance = writable(41601024);
+const update_ac_maintenance = derived(
+	[custom_ac_maintenance, ac_electricity],
+	([a, $ac_electricity]) => {
+		ac_maintenance.set(Math.ceil(0.1 * $ac_electricity));
+		return [a, $ac_electricity];
+	}
 );
+update_ac_maintenance.subscribe(() => 0);
+
+export const ac_user_1 = writable(0);
+export const ac_user_2 = writable(0);
+
 export const ac_total = derived(
-	[ac_maintenance, ac_electricity, ac_additional],
-	([$ac_maintenance, $ac_electricity, $ac_additional]) => {
-		return [$ac_maintenance, $ac_electricity, $ac_additional].reduce((a, c) => a + c, 0);
+	[ac_maintenance, ac_electricity, ac_additional, ac_user_1, ac_user_2],
+	([$ac_maintenance, $ac_electricity, $ac_additional, $ac_user_1, $ac_user_2]) => {
+		return [$ac_maintenance, $ac_electricity, $ac_additional, $ac_user_1, $ac_user_2].reduce(
+			(a, c) => a + c,
+			0
+		);
 	}
 );
 
@@ -244,12 +351,14 @@ export const sc_steam = derived(
 		return Math.ceil($prod_energy * $hr_per_day * $day_per_year * $electrical_cost);
 	}
 );
+
 export const sc_chiller = derived(
 	[rt_cooling, hr_per_day, day_per_year, electrical_cost],
 	([$rt_cooling, $hr_per_day, $day_per_year, $electrical_cost]) => {
 		return Math.ceil((0.75 - 0.114) * $rt_cooling * $hr_per_day * $day_per_year * $electrical_cost);
 	}
 );
+
 export const sc_fuel = derived(
 	[old_prod_steam_volume, hr_per_day, day_per_year, old_total_cost, new_total_cost],
 	([$old_prod_steam_volume, $hr_per_day, $day_per_year, $old_total_cost, $new_total_cost]) => {
@@ -258,10 +367,14 @@ export const sc_fuel = derived(
 		);
 	}
 );
+
+export const sc_user_1 = writable(0);
+export const sc_user_2 = writable(0);
+
 export const sc_total = derived(
-	[sc_steam, sc_chiller, sc_fuel],
-	([$sc_steam, $sc_chiller, $sc_fuel]) => {
-		return [$sc_steam, $sc_chiller, $sc_fuel].reduce((a, c) => a + c, 0);
+	[sc_steam, sc_chiller, sc_fuel, sc_user_1, sc_user_2],
+	([$sc_steam, $sc_chiller, $sc_fuel, $sc_user_1, $sc_user_2]) => {
+		return [$sc_steam, $sc_chiller, $sc_fuel, $sc_user_1, $sc_user_2].reduce((a, c) => a + c, 0);
 	}
 );
 
@@ -269,5 +382,12 @@ export const econ_n = derived(
 	[fc_total, ac_total, sc_total],
 	([$fc_total, $ac_total, $sc_total]) => {
 		return $fc_total / ($sc_total - $ac_total);
+	}
+);
+
+export const econ_steam_cost_per_year = derived(
+	[new_prod_steam_volume, hr_per_day, day_per_year, new_total_cost],
+	([$prod_steam_volume, $hr_per_day, $day_per_year, $total_cost]) => {
+		return [$prod_steam_volume, $hr_per_day, $day_per_year, $total_cost].reduce((a, c) => a * c);
 	}
 );

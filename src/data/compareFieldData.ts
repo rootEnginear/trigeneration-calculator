@@ -161,5 +161,110 @@ export const FIELD_DATA: CompareFieldDataType = {
 		label: 'อัตราไอน้ำป้อนเข้า',
 		unit: 'ตัน/ชั่วโมง',
 		min: 0
+	},
+	old_fuel_lhv: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	old_fuel_price: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	new_fuel_lhv: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	new_fuel_price: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	old_other_cost: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	new_other_cost: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	cop: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	waste_enthalpy: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	fc_user_1: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	fc_user_2: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	ac_user_1: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	ac_user_2: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	sc_user_1: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	sc_user_2: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	fc_boiler: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	fc_steam: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	fc_chiller: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	fc_other: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	ac_maintenance: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	ac_electricity: {
+		label: '',
+		unit: '',
+		min: 0
+	},
+	fc_repair: {
+		label: '',
+		unit: '',
+		min: 0
 	}
 };
