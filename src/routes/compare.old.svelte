@@ -2,8 +2,8 @@
 	import { afterUpdate } from 'svelte';
 
 	import Steps from 'components/Steps.svelte';
-	import Input from 'components/Input.svelte';
-	import InlineInput from 'components/InlineInput.svelte';
+	import Input from 'components/LegacyInput.svelte';
+	import InlineInput from 'components/LegacyInlineInput.svelte';
 	import FormStep from 'components/FormStep.svelte';
 	import NumberFormatter from 'components/NumberFormatter.svelte';
 	import MoneyFormatter from 'components/MoneyFormatter.svelte';
@@ -11,31 +11,7 @@
 	import { FIELD_DATA } from 'data/compareFieldData.old';
 	import { FUEL_DATA } from 'data/fuelData';
 	import {
-		hr_per_day,
-		day_per_year,
-		electrical_cost,
-		old_max_steam_volume,
-		old_max_steam_pressure,
-		old_prod_steam_volume,
-		old_prod_steam_pressure,
-		old_prod_steam_temp,
-		old_input_steam_temp,
-		old_input_steam_pressure,
-		old_boiler_efficiency,
-		old_fuel_type,
-		new_max_steam_volume,
-		new_max_steam_pressure,
-		new_prod_steam_volume,
-		new_prod_steam_pressure,
-		new_prod_steam_temp,
-		new_input_steam_temp,
-		new_input_steam_pressure,
-		new_boiler_efficiency,
-		new_fuel_type,
-		isentropic_efficiency,
-		generator_efficiency,
-		outlet_pressure,
-		required_steam_flow_rate,
+		formData,
 		old_steam_enthalpy,
 		old_feedwater_enthalpy,
 		old_fuel_usage_rate,
@@ -68,7 +44,7 @@
 		econ_n,
 		ac_additional,
 		sc_fuel
-	} from 'stores/compareFormData';
+	} from 'stores/compareFormData.old';
 
 	let currentStep = 0;
 	let isPrinting = false;
@@ -122,9 +98,9 @@
 		{#if currentStep === 0 || isPrinting}
 			<h1>1 — ข้อมูลทั่วไป</h1>
 			<div class="box is-shadowless">
-				<Input fieldName="hr_per_day" store={hr_per_day} {FIELD_DATA} />
-				<Input fieldName="day_per_year" store={day_per_year} {FIELD_DATA} />
-				<Input fieldName="electrical_cost" store={electrical_cost} {FIELD_DATA} />
+				<Input fieldName="hr_per_day" {formData} {FIELD_DATA} />
+				<Input fieldName="day_per_year" {formData} {FIELD_DATA} />
+				<Input fieldName="electrical_cost" {formData} {FIELD_DATA} />
 			</div>
 		{/if}
 		{#if currentStep === 1 || isPrinting}
@@ -136,48 +112,44 @@
 				<h2>ข้อมูล Boiler เก่า</h2>
 				<div class="columns">
 					<div class="column">
-						<Input fieldName="old_max_steam_volume" store={old_max_steam_volume} {FIELD_DATA} />
+						<Input fieldName="old_max_steam_volume" {formData} {FIELD_DATA} />
 					</div>
 					<div class="column">
-						<Input fieldName="old_max_steam_pressure" store={old_max_steam_pressure} {FIELD_DATA} />
+						<Input fieldName="old_max_steam_pressure" {formData} {FIELD_DATA} />
 					</div>
 				</div>
 				<div class="columns">
 					<div class="column">
 						<Input
 							fieldName="old_prod_steam_volume"
-							store={old_prod_steam_volume}
-							max={$old_max_steam_volume}
+							max={$formData.old_max_steam_volume}
+							{formData}
 							{FIELD_DATA}
 						/>
 					</div>
 					<div class="column">
 						<Input
 							fieldName="old_prod_steam_pressure"
-							store={old_prod_steam_pressure}
-							max={$old_max_steam_pressure}
+							max={$formData.old_max_steam_pressure}
+							{formData}
 							{FIELD_DATA}
 						/>
 					</div>
 				</div>
 				<div class="columns">
 					<div class="column">
-						<Input fieldName="old_prod_steam_temp" store={old_prod_steam_temp} {FIELD_DATA} />
+						<Input fieldName="old_prod_steam_temp" {formData} {FIELD_DATA} />
 					</div>
 					<div class="column">
-						<Input fieldName="old_input_steam_temp" store={old_input_steam_temp} {FIELD_DATA} />
+						<Input fieldName="old_input_steam_temp" {formData} {FIELD_DATA} />
 					</div>
 				</div>
 				<div class="columns">
 					<div class="column">
-						<Input
-							fieldName="old_input_steam_pressure"
-							store={old_input_steam_pressure}
-							{FIELD_DATA}
-						/>
+						<Input fieldName="old_input_steam_pressure" {formData} {FIELD_DATA} />
 					</div>
 					<div class="column">
-						<Input fieldName="old_boiler_efficiency" store={old_boiler_efficiency} {FIELD_DATA} />
+						<Input fieldName="old_boiler_efficiency" {formData} {FIELD_DATA} />
 					</div>
 				</div>
 			</div>
@@ -196,7 +168,7 @@
 								<td>เชื้อเพลิงที่ใช้</td>
 								<td>
 									<div class="select is-fullwidth" style="width:200px">
-										<select bind:value={$old_fuel_type}>
+										<select bind:value={$formData.old_fuel_type}>
 											{#each Object.keys(FUEL_DATA) as fuel_name}
 												<option value={fuel_name}>{fuel_name}</option>
 											{/each}
@@ -207,13 +179,13 @@
 							</tr>
 							<tr>
 								<td>ค่า LHV</td>
-								<td class="has-text-right">{FUEL_DATA[$old_fuel_type].lhv}</td>
+								<td class="has-text-right">{FUEL_DATA[$formData.old_fuel_type].lhv}</td>
 								<td>kJ/kg</td>
 							</tr>
 							<tr>
 								<td>ค่าเชื้อเพลิง</td>
 								<td class="has-text-right">
-									<MoneyFormatter value={FUEL_DATA[$old_fuel_type].price} />
+									<MoneyFormatter value={FUEL_DATA[$formData.old_fuel_type].price} />
 								</td>
 								<td>บาท/ตัน</td>
 							</tr>
@@ -239,17 +211,17 @@
 								<tbody>
 									<tr>
 										<th>{FIELD_DATA['old_prod_steam_pressure'].label}</th>
-										<td class="has-text-right">{$old_prod_steam_pressure}</td>
+										<td class="has-text-right">{$formData.old_prod_steam_pressure}</td>
 										<td>{FIELD_DATA['old_prod_steam_pressure'].unit}</td>
 									</tr>
 									<tr>
 										<th>{FIELD_DATA['old_prod_steam_temp'].label}</th>
-										<td class="has-text-right">{$old_prod_steam_temp}</td>
+										<td class="has-text-right">{$formData.old_prod_steam_temp}</td>
 										<td>{FIELD_DATA['old_prod_steam_temp'].unit}</td>
 									</tr>
 									<tr>
 										<th>{FIELD_DATA['old_prod_steam_volume'].label}</th>
-										<td class="has-text-right">{$old_prod_steam_volume}</td>
+										<td class="has-text-right">{$formData.old_prod_steam_volume}</td>
 										<td>{FIELD_DATA['old_prod_steam_volume'].unit}</td>
 									</tr>
 									<tr>
@@ -318,48 +290,44 @@
 				<h2>ข้อมูล Boiler ใหม่</h2>
 				<div class="columns">
 					<div class="column">
-						<Input fieldName="new_max_steam_volume" store={new_max_steam_volume} {FIELD_DATA} />
+						<Input fieldName="new_max_steam_volume" {formData} {FIELD_DATA} />
 					</div>
 					<div class="column">
-						<Input fieldName="new_max_steam_pressure" store={new_max_steam_pressure} {FIELD_DATA} />
+						<Input fieldName="new_max_steam_pressure" {formData} {FIELD_DATA} />
 					</div>
 				</div>
 				<div class="columns">
 					<div class="column">
 						<Input
 							fieldName="new_prod_steam_volume"
-							store={new_prod_steam_volume}
-							max={$new_max_steam_volume}
+							max={$formData.new_max_steam_volume}
+							{formData}
 							{FIELD_DATA}
 						/>
 					</div>
 					<div class="column">
 						<Input
 							fieldName="new_prod_steam_pressure"
-							store={new_prod_steam_pressure}
-							max={$new_max_steam_pressure}
+							max={$formData.new_max_steam_pressure}
+							{formData}
 							{FIELD_DATA}
 						/>
 					</div>
 				</div>
 				<div class="columns">
 					<div class="column">
-						<Input fieldName="new_prod_steam_temp" store={new_prod_steam_temp} {FIELD_DATA} />
+						<Input fieldName="new_prod_steam_temp" {formData} {FIELD_DATA} />
 					</div>
 					<div class="column">
-						<Input fieldName="new_input_steam_temp" store={new_input_steam_temp} {FIELD_DATA} />
+						<Input fieldName="new_input_steam_temp" {formData} {FIELD_DATA} />
 					</div>
 				</div>
 				<div class="columns">
 					<div class="column">
-						<Input
-							fieldName="new_input_steam_pressure"
-							store={new_input_steam_pressure}
-							{FIELD_DATA}
-						/>
+						<Input fieldName="new_input_steam_pressure" {formData} {FIELD_DATA} />
 					</div>
 					<div class="column">
-						<Input fieldName="new_boiler_efficiency" store={new_boiler_efficiency} {FIELD_DATA} />
+						<Input fieldName="new_boiler_efficiency" {formData} {FIELD_DATA} />
 					</div>
 				</div>
 			</div>
@@ -378,7 +346,7 @@
 								<td>เชื้อเพลิงที่ใช้</td>
 								<td>
 									<div class="select is-fullwidth" style="width:200px">
-										<select bind:value={$new_fuel_type}>
+										<select bind:value={$formData.new_fuel_type}>
 											{#each Object.keys(FUEL_DATA) as fuel_name}
 												<option value={fuel_name}>{fuel_name}</option>
 											{/each}
@@ -389,13 +357,13 @@
 							</tr>
 							<tr>
 								<td>ค่า LHV</td>
-								<td class="has-text-right">{FUEL_DATA[$new_fuel_type].lhv}</td>
+								<td class="has-text-right">{FUEL_DATA[$formData.new_fuel_type].lhv}</td>
 								<td>kJ/kg</td>
 							</tr>
 							<tr>
 								<td>ค่าเชื้อเพลิง</td>
 								<td class="has-text-right">
-									<MoneyFormatter value={FUEL_DATA[$new_fuel_type].price} />
+									<MoneyFormatter value={FUEL_DATA[$formData.new_fuel_type].price} />
 								</td>
 								<td>บาท/ตัน</td>
 							</tr>
@@ -421,17 +389,17 @@
 								<tbody>
 									<tr>
 										<th>{FIELD_DATA['new_prod_steam_pressure'].label}</th>
-										<td class="has-text-right">{$new_prod_steam_pressure}</td>
+										<td class="has-text-right">{$formData.new_prod_steam_pressure}</td>
 										<td>{FIELD_DATA['new_prod_steam_pressure'].unit}</td>
 									</tr>
 									<tr>
 										<th>{FIELD_DATA['new_prod_steam_temp'].label}</th>
-										<td class="has-text-right">{$new_prod_steam_temp}</td>
+										<td class="has-text-right">{$formData.new_prod_steam_temp}</td>
 										<td>{FIELD_DATA['new_prod_steam_temp'].unit}</td>
 									</tr>
 									<tr>
 										<th>{FIELD_DATA['new_prod_steam_volume'].label}</th>
-										<td class="has-text-right">{$new_prod_steam_volume}</td>
+										<td class="has-text-right">{$formData.new_prod_steam_volume}</td>
 										<td>{FIELD_DATA['new_prod_steam_volume'].unit}</td>
 									</tr>
 									<tr>
@@ -515,17 +483,17 @@
 						<tbody>
 							<tr>
 								<th>{FIELD_DATA['new_prod_steam_pressure'].label}</th>
-								<td class="has-text-right">{$new_prod_steam_pressure}</td>
+								<td class="has-text-right">{$formData.new_prod_steam_pressure}</td>
 								<td>{FIELD_DATA['new_prod_steam_pressure'].unit}</td>
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['new_prod_steam_temp'].label}</th>
-								<td class="has-text-right">{$new_prod_steam_temp}</td>
+								<td class="has-text-right">{$formData.new_prod_steam_temp}</td>
 								<td>{FIELD_DATA['new_prod_steam_temp'].unit}</td>
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['new_prod_steam_volume'].label.replace('การผลิต', '')}</th>
-								<td class="has-text-right">{$new_prod_steam_volume}</td>
+								<td class="has-text-right">{$formData.new_prod_steam_volume}</td>
 								<td>{FIELD_DATA['new_prod_steam_volume'].unit}</td>
 							</tr>
 							<tr>
@@ -538,22 +506,14 @@
 							<tr>
 								<th>{FIELD_DATA['isentropic_efficiency'].label}</th>
 								<td>
-									<InlineInput
-										fieldName="isentropic_efficiency"
-										store={isentropic_efficiency}
-										{FIELD_DATA}
-									/>
+									<InlineInput fieldName="isentropic_efficiency" {formData} {FIELD_DATA} />
 								</td>
 								<td>{FIELD_DATA['isentropic_efficiency'].unit}</td>
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['generator_efficiency'].label}</th>
 								<td>
-									<InlineInput
-										fieldName="generator_efficiency"
-										store={generator_efficiency}
-										{FIELD_DATA}
-									/>
+									<InlineInput fieldName="generator_efficiency" {formData} {FIELD_DATA} />
 								</td>
 								<td>{FIELD_DATA['generator_efficiency'].unit}</td>
 							</tr>
@@ -568,13 +528,7 @@
 						<tbody>
 							<tr>
 								<th>{FIELD_DATA['outlet_pressure'].label}</th>
-								<td
-									><InlineInput
-										fieldName="outlet_pressure"
-										store={outlet_pressure}
-										{FIELD_DATA}
-									/></td
-								>
+								<td><InlineInput fieldName="outlet_pressure" {formData} {FIELD_DATA} /></td>
 								<td>{FIELD_DATA['outlet_pressure'].unit}</td>
 							</tr>
 							<tr>
@@ -593,7 +547,7 @@
 							</tr>
 							<tr>
 								<th>{FIELD_DATA['new_prod_steam_volume'].label.replace('การผลิต', '')}</th>
-								<td class="has-text-right">{$new_prod_steam_volume}</td>
+								<td class="has-text-right">{$formData.new_prod_steam_volume}</td>
 								<td>{FIELD_DATA['new_prod_steam_volume'].unit}</td>
 							</tr>
 							<tr>
@@ -641,8 +595,8 @@
 								<td
 									><InlineInput
 										fieldName="required_steam_flow_rate"
-										store={required_steam_flow_rate}
-										max={$new_prod_steam_volume}
+										max={$formData.new_prod_steam_volume}
+										{formData}
 										{FIELD_DATA}
 									/></td
 								>
