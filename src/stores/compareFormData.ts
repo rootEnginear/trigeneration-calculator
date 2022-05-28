@@ -180,20 +180,20 @@ const prod_steam_diff = derived(
 
 export const turbine_outlet_enthalpy = derived(
 	[
-		old_prod_steam_pressure,
-		old_prod_steam_temp,
+		new_prod_steam_pressure,
+		new_prod_steam_temp,
 		outlet_pressure,
 		isentropic_efficiency,
 		new_steam_enthalpy
 	],
 	([
-		$old_prod_steam_pressure,
-		$old_prod_steam_temp,
+		$new_prod_steam_pressure,
+		$new_prod_steam_temp,
 		$outlet_pressure,
 		$isentropic_efficiency,
 		$steam_enthalpy
 	]) => {
-		const a = s_pT($old_prod_steam_pressure + 1, $old_prod_steam_temp);
+		const a = s_pT($new_prod_steam_pressure + 1, $new_prod_steam_temp);
 		const b = h_ps($outlet_pressure + 1, a);
 		return $steam_enthalpy - ($steam_enthalpy - b) * ($isentropic_efficiency / 100);
 	}
@@ -231,9 +231,14 @@ const update_waste_enthalpy = derived(custom_waste_enthalpy, (a) => {
 update_waste_enthalpy.subscribe(() => 0);
 
 export const kw_cooling = derived(
-	[cop, required_steam_flow_rate, turbine_outlet_enthalpy],
-	([$cop, $required_steam_flow_rate, $turbine_outlet_enthalpy]) => {
-		return $cop * $required_steam_flow_rate * 1000 * (($turbine_outlet_enthalpy - 419.17) / 3600);
+	[cop, required_steam_flow_rate, turbine_outlet_enthalpy, waste_enthalpy],
+	([$cop, $required_steam_flow_rate, $turbine_outlet_enthalpy, $waste_enthalpy]) => {
+		return (
+			$cop *
+			$required_steam_flow_rate *
+			1000 *
+			(($turbine_outlet_enthalpy - $waste_enthalpy) / 3600)
+		);
 	}
 );
 
